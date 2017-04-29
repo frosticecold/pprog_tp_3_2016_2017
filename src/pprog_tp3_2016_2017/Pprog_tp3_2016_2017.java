@@ -5,6 +5,8 @@
  */
 package pprog_tp3_2016_2017;
 
+import system.listas.listaTipoEvento;
+
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
@@ -15,7 +17,9 @@ public class Pprog_tp3_2016_2017 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        listaTipoEvento lte = new listaTipoEvento();
+        lte.lerFicheiroConfig();
+        lte.escreverOutput();
     }
     
 }
