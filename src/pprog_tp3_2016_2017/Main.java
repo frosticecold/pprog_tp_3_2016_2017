@@ -5,13 +5,14 @@
  */
 package pprog_tp3_2016_2017;
 
+import gui.Principal;
 import system.listas.listaTipoEvento;
 
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class Pprog_tp3_2016_2017 {
+public class Main {
 
     /**
      * @param args the command line arguments
@@ -20,6 +21,8 @@ public class Pprog_tp3_2016_2017 {
         listaTipoEvento lte = new listaTipoEvento();
         lte.lerFicheiroConfig();
         lte.escreverOutput();
+        
+        Principal p = new Principal();
     }
     
 }
