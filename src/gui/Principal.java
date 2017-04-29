@@ -5,10 +5,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.Timer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -86,6 +82,7 @@ public class Principal extends JFrame implements ActionListener {
             System.exit(0);
         }
         if(e.getSource() == atribuir_cand){
+            AtribuirCandidatura ac = new AtribuirCandidatura();
         }
     }
 
