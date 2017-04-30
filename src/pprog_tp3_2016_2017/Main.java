@@ -5,7 +5,7 @@
  */
 package pprog_tp3_2016_2017;
 
-import gui.Principal;
+import system.gui.Principal;
 import system.listas.listaTipoEvento;
 
 /**

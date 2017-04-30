@@ -1,5 +1,6 @@
 package system.evento;
 
+import java.util.Objects;
 import system.listas.ListaCandidatura;
 import system.listas.ListaOrganizador;
 import utils.Data;
@@ -8,7 +9,7 @@ import utils.Data;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class Evento {
+public abstract class Evento {
 
     private String titulo, descricao;
     private Data dataInicio, dataFim;
@@ -119,6 +120,37 @@ public class Evento {
         this.listaCandidatura = listaCandidatura;
     }
 
-  
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Evento other = (Evento) obj;
+        if (!(this.titulo.equals(other.titulo))) {
+            return false;
+        }
+        if (!this.descricao.equals(other.descricao)) {
+            return false;
+        }
+        if (!this.dataInicio.equals(other.dataInicio)) {
+            return false;
+        }
+        if (!this.dataFim.equals(other.dataFim)) {
+            return false;
+        }
+        if (!this.listaOrganizador.equals(other.listaOrganizador)) {
+            return false;
+        }
+        if (!this.listaCandidatura.equals(other.listaCandidatura)) {
+            return false;
+        }
+        return true;
+    }
 
 }

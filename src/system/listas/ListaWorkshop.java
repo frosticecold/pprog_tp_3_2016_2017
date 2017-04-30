@@ -16,4 +16,11 @@ public class ListaWorkshop {
         lwp = new ArrayList<>();
     }
 
+    public boolean addWorkshop(Workshop wk) {
+        if (!lwp.contains(wk)) {
+            return lwp.add(wk);
+        }
+        return false;
+    }
+
 }
