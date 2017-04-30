@@ -1,10 +1,12 @@
 package system.user;
 
+import java.util.Objects;
+
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class Utilizador {
+public class Utilizador implements Comparable<Utilizador> {
 
     private String nome, username, email, password;
 
@@ -23,6 +25,13 @@ public class Utilizador {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public Utilizador(Utilizador u) {
+        this.nome = u.getNome();
+        this.username = u.getUsername();
+        this.email = u.getEmail();
+        this.password = u.getPassword();
     }
 
     /**
@@ -79,6 +88,32 @@ public class Utilizador {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
+        //+ ", username=" + username + ", email=" + email;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Utilizador u = (Utilizador) obj;
+        return this.nome.equals(u.nome) && this.email.equals(u.email) && this.username.equals(u.username);
+    }
+
+    @Override
+    public int compareTo(Utilizador u) {
+        return this.getNome().compareTo(u.getNome());
     }
 
 }

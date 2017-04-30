@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pprog_tp3_2016_2017;
+package system;
 
-import system.gui.Principal;
-import system.listas.listaTipoEvento;
+import javax.swing.JOptionPane;
+import system.gui.JanelaPrincipal;
 
 /**
  *
@@ -18,11 +18,11 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        listaTipoEvento lte = new listaTipoEvento();
-        lte.lerFicheiroConfig();
-        lte.escreverOutput();
-        
-        Principal p = new Principal();
+//        listaTipoEvento lte = new listaTipoEvento();
+//        lte.lerFicheiroConfig();
+//        lte.escreverOutput();
+        CentroEventos ce = new CentroEventos();
+        JanelaPrincipal p = new JanelaPrincipal(ce);
     }
-    
+
 }

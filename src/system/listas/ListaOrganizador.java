@@ -18,8 +18,8 @@ public class ListaOrganizador {
     }
     
     public boolean add(Utilizador u) {
-        Organizador o = (Organizador) u;
-        return add(o);
+        Organizador o = new Organizador(u);
+        return lo.add(o);
     }
     
     public boolean remove(Organizador o) {
@@ -33,5 +33,9 @@ public class ListaOrganizador {
             }
         }
         return false;
+    }
+    
+    public boolean contains(Utilizador u){
+    return lo.contains(u);
     }
 }

@@ -1,28 +1,45 @@
 package system.listas;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
-import system.evento.Evento;
 import system.user.Utilizador;
 
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class RegistoUtilizador {
+public class RegistoUtilizador implements Iterable<Utilizador> {
 
-    List<Utilizador> lu;
+    List<Utilizador> lista = new ArrayList<>();
 
     public RegistoUtilizador() {
-        lu = new ArrayList<>();
     }
 
     public boolean add(Utilizador u) {
-        return lu.add(u);
+        return lista.add(u);
     }
 
     public boolean remove(Utilizador u) {
-        return lu.remove(u);
+        return lista.remove(u);
+    }
+
+    @Override
+    public Iterator<Utilizador> iterator() {
+        return lista.iterator();
+    }
+
+    public void sort() {
+        Collections.sort(lista);
+    }
+
+    public Utilizador get(int i) {
+        return lista.get(i);
+    }
+
+    public int size() {
+        return lista.size();
     }
 
 }

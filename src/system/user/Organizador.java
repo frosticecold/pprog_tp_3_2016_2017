@@ -14,4 +14,12 @@ public class Organizador extends Utilizador {
         super(nome, username, email, password);
     }
 
+    public Organizador(Utilizador u) {
+        super(u);
+    }
+    
+    public boolean equals(Object obj){
+    return super.equals(obj);
+    }
+
 }

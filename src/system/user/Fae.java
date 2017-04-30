@@ -14,4 +14,9 @@ public class Fae extends Utilizador {
         super(nome, username, email, password);
     }
 
+    public Fae(Utilizador u) {
+        super(u.getNome(), u.getUsername(), u.getEmail(), u.getPassword());
+
+    }
+
 }

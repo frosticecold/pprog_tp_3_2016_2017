@@ -1,7 +1,7 @@
 package system.evento;
 
-import java.util.Objects;
 import system.listas.ListaCandidatura;
+import system.listas.ListaFae;
 import system.listas.ListaOrganizador;
 import utils.Data;
 
@@ -9,14 +9,16 @@ import utils.Data;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public abstract class Evento {
+public abstract class Evento implements Comparable<Evento> {
 
     private String titulo, descricao;
     private Data dataInicio, dataFim;
     //periodo atribuiçao ??
 
-    private ListaOrganizador listaOrganizador;
-    private ListaCandidatura listaCandidatura;
+    private ListaOrganizador listaOrganizador = new ListaOrganizador();
+
+    private ListaCandidatura listaCandidatura = new ListaCandidatura();
+    private ListaFae listaFae = new ListaFae();
 
     private String TITULO_OMISSAO = "Sem Titulo",
             DESCRICAO_OMISSAO = "Sem descrição";
@@ -78,6 +80,10 @@ public abstract class Evento {
         return listaCandidatura;
     }
 
+    public ListaFae getListaFae() {
+        return listaFae;
+    }
+
     /**
      * @param titulo the titulo to set
      */
@@ -120,6 +126,10 @@ public abstract class Evento {
         this.listaCandidatura = listaCandidatura;
     }
 
+    public void setListaFae(ListaFae listaFae) {
+        this.listaFae = listaFae;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -152,5 +162,16 @@ public abstract class Evento {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return titulo;
+    }
+
+    @Override
+    public int compareTo(Evento o) {
+        return this.getTitulo().compareTo(o.getTitulo());
+    }
+    
 
 }
