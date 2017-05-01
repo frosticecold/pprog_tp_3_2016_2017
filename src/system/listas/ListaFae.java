@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import system.user.Fae;
+import system.user.Utilizador;
 
 /**
  *
@@ -11,7 +12,9 @@ import system.user.Fae;
  */
 public class ListaFae implements Iterable<Fae> {
 
-    List<Fae> lista= new ArrayList<>();;
+    List<Fae> lista = new ArrayList<>();
+
+    ;
 
     public ListaFae() {
     }
@@ -21,6 +24,12 @@ public class ListaFae implements Iterable<Fae> {
             return lista.add(f);
         }
         return false;
+    }
+
+    public boolean adicionarFae(Utilizador u) {
+        Fae f = new Fae(u);
+        return lista.add(f);
+
     }
 
     @Override
@@ -33,9 +42,13 @@ public class ListaFae implements Iterable<Fae> {
             lista.add(fae);
         }
     }
-    
-    public int size(){
+
+    public int size() {
         return lista.size();
+    }
+
+    public Fae get(int i) {
+        return lista.get(i);
     }
 
 }

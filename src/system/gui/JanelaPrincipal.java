@@ -19,15 +19,15 @@ import system.Teste;
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
 public class JanelaPrincipal extends JFrame implements ActionListener {
-    
+
     private JMenuBar menubar;
-    private JMenu menu, ficheiro, func, help;
-    private JMenuItem sair, about, debug;
+    private JMenu menu, ficheiro, iniciar, about_menu, debug_menu;
+    private JMenuItem sair, about, debug_item;
     private JMenuItem atribuir_cand, decidir_cand, submeter_cand;
-    
+
     private CentroEventos ce;
     private static String ICON_FOLDER = "icons/";
-    
+
     public JanelaPrincipal(CentroEventos ce) {
         super("Aplicação PPROG TP3");
         this.ce = ce;
@@ -38,49 +38,54 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setVisible(true);
     }
-    
+
     public void initComponents() {
         menubar = new JMenuBar();
-        
+
         menu = new JMenu("Menu");
         menu.setMnemonic(KeyEvent.VK_M);
-        
-        func = new JMenu("Iniciar");
-        func.setMnemonic(KeyEvent.VK_I);
-        
-        debug = new JMenuItem("Carregador valores Debug");
-        debug.addActionListener(this);
+
+        iniciar = new JMenu("Iniciar");
+        iniciar.setMnemonic(KeyEvent.VK_I);
+
         atribuir_cand = new JMenuItem("Atribuir Candidatura");
         atribuir_cand.addActionListener(this);
         decidir_cand = new JMenuItem("Decidir Candidatura");
         submeter_cand = new JMenuItem("Submeter Candidatura");
-        
-        func.add(atribuir_cand);
-        func.add(decidir_cand);
-        func.add(submeter_cand);
-        
+
+        iniciar.add(atribuir_cand);
+        iniciar.add(decidir_cand);
+        iniciar.add(submeter_cand);
+
         ficheiro = new JMenu("Ficheiro");
         ficheiro.setMnemonic(KeyEvent.VK_F);
-        
+
         sair = new JMenuItem("Sair");
         sair.setIcon(new ImageIcon(this.getClass().getClassLoader().getResource(ICON_FOLDER + "exit.png")));
         sair.addActionListener(this);
-        
-        help = new JMenu("?");
+
+        about_menu = new JMenu("?");
         about = new JMenuItem("Acerca");
         about.addActionListener(this);
-        help.add(debug);
-        help.add(about);
-        
-        menu.add(func);
+        about_menu.add(about);
+
+        debug_menu = new JMenu("Debug");
+        debug_item = new JMenuItem("Carregador valores Debug");
+        debug_item.addActionListener(this);
+        debug_menu.add(debug_item);
+        debug_menu.add(debug_item);
+
+        menu.add(iniciar);
+        menu.add(ficheiro);
         menu.addSeparator();
         menu.add(sair);
         menubar.add(menu);
         //menubar.add(Box.createHorizontalGlue());
-        menubar.add(help);
+        menubar.add(debug_menu);
+        menubar.add(about_menu);
         setJMenuBar(menubar);
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == about) {
@@ -90,14 +95,18 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
             System.exit(0);
         }
         if (e.getSource() == atribuir_cand) {
-            AtribuirCandidatura ac = new AtribuirCandidatura(ce);
+            if (ce.getRegistoEventos().size() > 0) {
+                AtribuirCandidatura ac = new AtribuirCandidatura(ce);
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Erro, não existem Eventos.", "Erro!", JOptionPane.ERROR_MESSAGE);
+            }
         }
-        if (e.getSource() == debug) {
+        if (e.getSource() == debug_item) {
             Teste t = new Teste();
-            t.init();
+            t.init(ce);
             ce.setRegistoEventos(t.getRe());
             ce.setRegistoUtilizadores(t.getRu());
         }
     }
-    
+
 }

@@ -3,8 +3,8 @@ package system.listas;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import system.algoritmo.Algoritmo;
 import utils.lerFicheiroConfig;
+import system.algoritmo.AlgoritmoAtribuicao;
 
 /**
  *

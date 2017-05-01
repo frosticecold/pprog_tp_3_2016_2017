@@ -1,18 +1,20 @@
 package system.listas;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import system.evento.Evento;
+import utils.Data;
 
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class RegistoEvento implements Iterable<Evento>, InterfaceListaLerConfig<Evento> {
+public class RegistoEvento implements Iterable<Evento> {
 
-    List<Evento> lista=new ArrayList<>();;
+    List<Evento> lista = new ArrayList<>();
 
     public RegistoEvento() {
 
@@ -26,7 +28,6 @@ public class RegistoEvento implements Iterable<Evento>, InterfaceListaLerConfig<
         return lista.remove(e);
     }
 
-
     public List<Evento> getListaEventoPorOrganizador(String username) {
         List<Evento> le = new ArrayList<>();
         for (Evento e : lista) {
@@ -38,12 +39,36 @@ public class RegistoEvento implements Iterable<Evento>, InterfaceListaLerConfig<
         return le;
     }
 
+    public List<Evento> getListaEventoAtivoPorOrganizador(String username) {
+        Calendar cal = Calendar.getInstance();
+        Data dataHoje = new Data(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
+        List<Evento> listaEventosAtivos = new ArrayList<>();
+
+        for (Evento e : lista) {
+            if (e.getListaOrganizador().isOrganizadorEvento(username)) {
+                if (dataHoje.diferenca(e.getDataInicio()) >= 0 && dataHoje.diferenca(e.getDataFim()) <= 0) {
+                    listaEventosAtivos.add(e);
+                }
+            }
+        }
+        return listaEventosAtivos;
+    }
+
+    public Evento procurarEvento(String tituloEvento) {
+        for (Evento e : lista) {
+            if (tituloEvento.equals(e.getTitulo())) {
+                return e;
+            }
+        }
+        return null;
+    }
+
     @Override
     public Iterator<Evento> iterator() {
         return lista.iterator();
     }
 
-   public void sort() {
+    public void sort() {
         Collections.sort(lista);
     }
 

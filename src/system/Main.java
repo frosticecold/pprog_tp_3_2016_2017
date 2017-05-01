@@ -5,7 +5,10 @@
  */
 package system;
 
-import javax.swing.JOptionPane;
+import java.util.List;
+import system.algoritmo.Algteste;
+import system.candidatura.Atribuicao;
+import system.evento.Evento;
 import system.gui.JanelaPrincipal;
 
 /**
@@ -22,6 +25,9 @@ public class Main {
 //        lte.lerFicheiroConfig();
 //        lte.escreverOutput();
         CentroEventos ce = new CentroEventos();
+//        
+//        Teste t = new Teste();
+//        t.init(ce);
         JanelaPrincipal p = new JanelaPrincipal(ce);
     }
 

@@ -11,7 +11,7 @@ import utils.Data;
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
 public abstract class Evento implements Comparable<Evento> {
-    
+
     private String titulo, descricao;
     private Data dataInicio, dataFim;
     private Local local;
@@ -21,18 +21,18 @@ public abstract class Evento implements Comparable<Evento> {
     private ListaCandidatura listaCandidatura = new ListaCandidatura();
     private ListaFae listaFae = new ListaFae();
     private listaAtribuicao listaAtribuicao = new listaAtribuicao();
-    
+
     private String TITULO_OMISSAO = "Sem Titulo",
             DESCRICAO_OMISSAO = "Sem descrição";
-    
+
     public Evento() {
         titulo = TITULO_OMISSAO;
-        descricao = descricao;
+        descricao = DESCRICAO_OMISSAO;
         local = new Local();
         dataInicio = new Data();
         dataFim = new Data();
     }
-    
+
     public Evento(String titulo, String descricao, String nomeLocal, Data dataInicio, Data dataFim) {
         this.titulo = titulo;
         this.descricao = descricao;
@@ -82,11 +82,18 @@ public abstract class Evento implements Comparable<Evento> {
     public ListaCandidatura getListaCandidatura() {
         return listaCandidatura;
     }
-    
+
     public ListaFae getListaFae() {
         return listaFae;
     }
-    
+
+    /**
+     * @return the listaAtribuicao
+     */
+    public listaAtribuicao getListaAtribuicao() {
+        return listaAtribuicao;
+    }
+
     public Local getLocal() {
         return local;
     }
@@ -132,15 +139,22 @@ public abstract class Evento implements Comparable<Evento> {
     public void setListaCandidatura(ListaCandidatura listaCandidatura) {
         this.listaCandidatura = listaCandidatura;
     }
-    
+
     public void setListaFae(ListaFae listaFae) {
         this.listaFae = listaFae;
     }
-    
+
+    /**
+     * @param listaAtribuicao the listaAtribuicao to set
+     */
+    public void setListaAtribuicao(listaAtribuicao listaAtribuicao) {
+        this.listaAtribuicao = listaAtribuicao;
+    }
+
     public void setLocal(Local local) {
         this.local = local;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -173,15 +187,15 @@ public abstract class Evento implements Comparable<Evento> {
         }
         return true;
     }
-    
+
     @Override
     public String toString() {
         return titulo;
     }
-    
+
     @Override
     public int compareTo(Evento o) {
         return this.getTitulo().compareTo(o.getTitulo());
     }
-    
+
 }

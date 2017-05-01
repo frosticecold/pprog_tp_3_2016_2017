@@ -1,5 +1,6 @@
-package system.gui;
+package old;
 
+import system.gui.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -23,15 +24,16 @@ import system.CentroEventos;
 import system.evento.Evento;
 import system.listas.ListaFae;
 import system.listas.RegistoAlgoritmosAtribuicao;
+import system.listas.RegistoUtilizador;
 import system.user.Fae;
+import system.user.Utilizador;
 import system.algoritmo.AlgoritmoAtribuicao;
-import system.candidatura.Atribuicao;
 
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class AtribuirCandidatura extends JFrame implements ActionListener {
+public class AtribuirCandidatura_malfeito extends JFrame implements ActionListener {
 
     JPanel principal = new JPanel(new BorderLayout()), pnorte = new JPanel(new FlowLayout()), pcentro = new JPanel(new FlowLayout()), psul = new JPanel(new FlowLayout());
     JPanel psulesq = new JPanel(new FlowLayout()), psuldir = new JPanel(new FlowLayout());
@@ -39,7 +41,7 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
 
     JLabel labelEvento = new JLabel("Evento");
 
-    DefaultListModel<Fae> lmUtilizador = new DefaultListModel<>();
+    DefaultListModel<Utilizador> lmUtilizador = new DefaultListModel<>();
     DefaultListModel<Fae> lmAtrib = new DefaultListModel<>();
     DefaultComboBoxModel<Evento> lmEvento = new DefaultComboBoxModel<>();
     DefaultComboBoxModel<String> lmAlg = new DefaultComboBoxModel<>();
@@ -50,18 +52,15 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
     JComboBox<String> algoritmoComboBox = new JComboBox<>();
     JComboBox<Evento> eventoComboBox = new JComboBox<>();
 
-    private static String MENSAGEM_EVENTO = "Seleciona o Evento";
-    private static String MENSAGEM_ALGORITMO = "Seleciona o Algoritmo de Atribuição";
     //OtherOptions
     private CentroEventos ce;
 
-    private static Dimension LIST_DIMENSION = new Dimension(250, 250);
+    private static Dimension LIST_DIMENSION = new Dimension(150, 200);
     private static Dimension COMBOBOX_DIMENSION = new Dimension(150, 30);
-    private static Dimension TAMANHO_JANELA_MINIMO = new Dimension(650, 350);
-    private List<Fae> ListaFaeAtribuida = new ArrayList<>();
-    private List<Atribuicao> ListaAtribuicoes = new ArrayList<>();
+    private static Dimension TAMANHO_JANELA_MINIMO = new Dimension(450, 350);
+    private List<Fae> ListaAtribuida = new ArrayList<>();
 
-    public AtribuirCandidatura(CentroEventos ce) {
+    public AtribuirCandidatura_malfeito(CentroEventos ce) {
         super("Atribuir Candidatura");
         this.ce = ce;
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -85,7 +84,7 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
         if (ce.getRegistoEventos().size() != 0) {
             Evento ev = (Evento) eventoComboBox.getSelectedItem();
             if (ev != null && ev.getListaFae().size() != 0) {
-                copiarListaFae_Atribuidos_Para_Combobox(ev.getListaAtribuicao().obterTodosFaesAtribuidos());
+                copiarListaFaeParalmAtrib(ev.getListaFae());
             }
         }
 
@@ -94,7 +93,7 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
     public void initPanels() {
         //        pcentro.add(jlistUtilizadores);
         pnorte.add(labelEvento);
-        // pnorte.add(eventoComboBox);
+        pnorte.add(eventoComboBox);
         pnorte.setBorder(new EmptyBorder(10, 0, 0, 0));
         pcentro.add(spFonte);
         //pcentro.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -102,7 +101,6 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
         pcentro.add(spFim);
 //        pcentro.add(jlAtribuidos);
 
-        psulesq.add(eventoComboBox);
         psulesq.add(algoritmoComboBox);
         psulesq.add(atribui);
 
@@ -112,14 +110,14 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
         psul.add(psulesq);
         psul.add(new JSeparator());
         psul.add(psuldir);
-        //principal.add(pnorte, BorderLayout.NORTH);
+        principal.add(pnorte, BorderLayout.NORTH);
         principal.add(pcentro, BorderLayout.CENTER);
         principal.add(psul, BorderLayout.SOUTH);
         add(principal);
     }
 
     public void initLists() {
-        copiarListaUtilizadores(ce.getRegistoEventos().get(0).getListaFae());
+        copiarListaUtilizadores(ce.getRegistoUtilizadores());
 //        jlistUtilizadores.setListData(a);
 //        jlAtribuidos.setListData(b);
         jlistUtilizadores.setLayoutOrientation(JList.VERTICAL);
@@ -142,16 +140,34 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
             lmEvento.addElement(e);
         }
         eventoComboBox.setModel(lmEvento);
-        eventoComboBox.setPreferredSize(COMBOBOX_DIMENSION);
+
         algoritmoComboBox.setPreferredSize(COMBOBOX_DIMENSION);
 
-        copiarListaAlgoritmosParaComboBox(ce.getRegistoAlgoritmosAtribuicao());
+        copiarListaAlgoritmos(ce.getRegistoAlgoritmosAtribuicao());
         algoritmoComboBox.setModel(lmAlg);
 
         eventoComboBox.addActionListener(this);
-        eventoComboBox.setToolTipText(MENSAGEM_EVENTO);
-        algoritmoComboBox.setToolTipText(MENSAGEM_ALGORITMO);
 
+    }
+
+    private void copiarListaUtilizadores(RegistoUtilizador ru) {
+        for (Utilizador u : ru) {
+            lmUtilizador.addElement(u);
+        }
+    }
+
+    private void copiarListaAlgoritmos(RegistoAlgoritmosAtribuicao ra) {
+        for (String s : ra) {
+            lmAlg.addElement(s);
+        }
+
+    }
+
+    private void copiarListaFaeParalmAtrib(List<Fae> listaFaeAtrib) {
+        lmAtrib.clear();
+        for (Fae fae : listaFaeAtrib) {
+            lmAtrib.addElement(fae);
+        }
     }
 
     private void copiarListaFaeParalmAtrib(ListaFae listaFaeAtrib) {
@@ -171,56 +187,23 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
                 Evento ev = (Evento) eventoComboBox.getSelectedItem();
                 String nomeClasse = RegistoAlgoritmosAtribuicao.CLASSPATH + algoritmoComboBox.getSelectedItem();
                 AlgoritmoAtribuicao a = (AlgoritmoAtribuicao) Class.forName(nomeClasse).newInstance();
-                ListaAtribuicoes = a.atribui(ev);
-                copiarListaFaeParalmAtrib(ListaAtribuicoes);
+                //ListaAtribuida = a.atribui(ce, ev.getTitulo());
+                copiarListaFaeParalmAtrib(ListaAtribuida);
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                 JOptionPane.showMessageDialog(this, "A instanciação do algoritmo correu mal", "Erro!", JOptionPane.ERROR_MESSAGE);
             }
         }
         if (e.getSource() == guardar) {
-            if (!ListaAtribuicoes.isEmpty()) {
+            if (!ListaAtribuida.isEmpty()) {
                 Evento ev = (Evento) eventoComboBox.getSelectedItem();
-                if (ev.getListaAtribuicao().size() == 0) {
-                    ev.getListaAtribuicao().guardarAtribuicoes(ListaAtribuicoes);
-                } else {
-                    ev.getListaAtribuicao().limparListaAtribuicoes();
-                    ev.getListaAtribuicao().guardarAtribuicoes(ListaAtribuicoes);
-                }
+                ev.getListaFae().copiarListaFae(ListaAtribuida);
             }
         }
         if (e.getSource() == eventoComboBox) {
             lmAtrib.removeAllElements();
-            ListaAtribuicoes.clear();
-            ListaFaeAtribuida.clear();
             Evento ev = (Evento) eventoComboBox.getSelectedItem();
-            copiarListaFae_Atribuidos_Para_Combobox(ev.getListaAtribuicao().obterTodosFaesAtribuidos());
+            copiarListaFaeParalmAtrib(ev.getListaFae());
         }
     }
 
-    private void copiarListaUtilizadores(ListaFae listaFae) {
-        for (Fae f : listaFae) {
-            lmUtilizador.addElement(f);
-        }
-    }
-
-    private void copiarListaAlgoritmosParaComboBox(RegistoAlgoritmosAtribuicao ra) {
-        for (String s : ra) {
-            lmAlg.addElement(s);
-        }
-
-    }
-
-    private void copiarListaFaeParalmAtrib(List<Atribuicao> listaFaeAtrib) {
-        lmAtrib.clear();
-        for (Atribuicao a : listaFaeAtrib) {
-            lmAtrib.addElement(a.getFae());
-        }
-    }
-
-    private void copiarListaFae_Atribuidos_Para_Combobox(List<Fae> listaFae) {
-        lmAtrib.clear();
-        for (Fae f : listaFae) {
-            lmAtrib.addElement(f);
-        }
-    }
 }
