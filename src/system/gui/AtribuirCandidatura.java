@@ -180,14 +180,11 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
         if (e.getSource() == guardar) {
             if (!ListaAtribuicoes.isEmpty()) {
                 Evento ev = (Evento) eventoComboBox.getSelectedItem();
-                if (ev.getListaAtribuicao().size() == 0) {
-                    ev.getListaAtribuicao().guardarAtribuicoes(ListaAtribuicoes);
-                } else {
-                    ev.getListaAtribuicao().limparListaAtribuicoes();
-                    ev.getListaAtribuicao().guardarAtribuicoes(ListaAtribuicoes);
-                }
+                ev.getListaAtribuicao().clear();
+                ev.getListaAtribuicao().guardarAtribuicoes(ListaAtribuicoes);
             }
         }
+
         if (e.getSource() == eventoComboBox) {
             lmAtrib.removeAllElements();
             ListaAtribuicoes.clear();
