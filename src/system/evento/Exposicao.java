@@ -12,10 +12,8 @@ public class Exposicao extends Evento {
         super();
     }
 
-    public Exposicao(String titulo, String descricao, Data dataInicio, Data dataFim) {
-        super(titulo, descricao, dataInicio, dataFim);
+    public Exposicao(String titulo, String descricao,String nomeLocal, Data dataInicio, Data dataFim) {
+        super(titulo, descricao, nomeLocal, dataInicio, dataFim);
     }
-    
-    
 
 }

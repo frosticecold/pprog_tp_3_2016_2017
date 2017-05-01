@@ -51,32 +51,32 @@ public class Teste {
         ru.add(f14);
         ru.add(f15);
 
-        Congresso c1 = new Congresso("Congresso 1", "O congresso 1", new Data(2004, 8, 11), new Data(2008, 9, 24));
+        Congresso c1 = new Congresso("Congresso 1", "O congresso 1","Local 1", new Data(2004, 8, 11), new Data(2008, 9, 24));
         c1.getListaOrganizador().add(f1);
         c1.getListaOrganizador().add(f2);
-        Congresso c2 = new Congresso("Congresso 2", "O congresso 2", new Data(2006, 12, 25), new Data(2007, 1, 10));
+        Congresso c2 = new Congresso("Congresso 2", "O congresso 2","Local 2", new Data(2006, 12, 25), new Data(2007, 1, 10));
         c2.getListaOrganizador().add(f1);
         c2.getListaOrganizador().add(f3);
-        Congresso c3 = new Congresso("Congresso 3", "O congresso 3", new Data(2007, 2, 22), new Data(2007, 4, 25));
+        Congresso c3 = new Congresso("Congresso 3", "O congresso 3","Local 3", new Data(2007, 2, 22), new Data(2007, 4, 25));
         c3.getListaOrganizador().add(f2);
         c3.getListaOrganizador().add(f3);
-        Congresso c4 = new Congresso("Congresso 4", "O congresso 4", new Data(2008, 1, 1), new Data(2009, 1, 1));
+        Congresso c4 = new Congresso("Congresso 4", "O congresso 4","Local 4", new Data(2008, 1, 1), new Data(2009, 1, 1));
         c4.getListaOrganizador().add(f4);
         c4.getListaOrganizador().add(f5);
-        Congresso c5 = new Congresso("Congresso 5", "O congresso 5", new Data(2009, 5, 5), new Data(2009, 6, 01));
+        Congresso c5 = new Congresso("Congresso 5", "O congresso 5","Local 5", new Data(2009, 5, 5), new Data(2009, 6, 01));
         c5.getListaOrganizador().add(f1);
         c5.getListaOrganizador().add(f5);
 
-        Exposicao e1 = new Exposicao("Exposicao 1", "A exposicao 1", new Data(2004, 8, 11), new Data(2008, 9, 24));
+        Exposicao e1 = new Exposicao("Exposicao 1", "A exposicao 1","Expo 1", new Data(2004, 8, 11), new Data(2008, 9, 24));
         e1.getListaOrganizador().add(f1);
         e1.getListaOrganizador().add(f4);
-        Exposicao e2 = new Exposicao("Exposicao 2", "A exposicao 2", new Data(2006, 12, 25), new Data(2007, 1, 10));
+        Exposicao e2 = new Exposicao("Exposicao 2", "A exposicao 2","Expo 2", new Data(2006, 12, 25), new Data(2007, 1, 10));
         e2.getListaOrganizador().add(f2);
         e2.getListaOrganizador().add(f5);
-        Exposicao e3 = new Exposicao("Exposicao 3", "A exposicao 3", new Data(2007, 2, 22), new Data(2007, 4, 25));
+        Exposicao e3 = new Exposicao("Exposicao 3", "A exposicao 3","Expo 3", new Data(2007, 2, 22), new Data(2007, 4, 25));
         e3.getListaOrganizador().add(f3);
         e3.getListaOrganizador().add(f6);
-        Exposicao e4 = new Exposicao("Exposicao 4", "A exposicao 4", new Data(2009, 5, 5), new Data(2009, 6, 01));
+        Exposicao e4 = new Exposicao("Exposicao 4", "A exposicao 4","Expo 4", new Data(2009, 5, 5), new Data(2009, 6, 01));
         e4.getListaOrganizador().add(f6);
         e4.getListaOrganizador().add(f7);
 

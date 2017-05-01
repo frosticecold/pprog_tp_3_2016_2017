@@ -10,18 +10,18 @@ import utils.Data;
  */
 public class Congresso extends Evento {
 
-    private ListaWorkshop lwk = new ListaWorkshop();
+    private ListaWorkshop listaWorkshop = new ListaWorkshop();
 
     public Congresso() {
         super();
     }
 
-    public Congresso(String titulo, String descricao, Data dataInicio, Data dataFim) {
-        super(titulo, descricao, dataInicio, dataFim);
+    public Congresso(String titulo, String descricao,String nomeLocal, Data dataInicio, Data dataFim) {
+        super(titulo, descricao,nomeLocal, dataInicio, dataFim);
     }
 
     public ListaWorkshop getListaWorkshop() {
-        return lwk;
+        return listaWorkshop;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Congresso extends Evento {
             return false;
         }
         final Congresso other = (Congresso) obj;
-        if (!Objects.equals(this.lwk, other.lwk)) {
+        if (!Objects.equals(this.listaWorkshop, other.listaWorkshop)) {
             return false;
         }
 

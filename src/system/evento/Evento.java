@@ -1,5 +1,6 @@
 package system.evento;
 
+import system.listas.listaAtribuicao;
 import system.listas.ListaCandidatura;
 import system.listas.ListaFae;
 import system.listas.ListaOrganizador;
@@ -10,32 +11,34 @@ import utils.Data;
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
 public abstract class Evento implements Comparable<Evento> {
-
+    
     private String titulo, descricao;
     private Data dataInicio, dataFim;
+    private Local local;
     //periodo atribuiçao ??
 
     private ListaOrganizador listaOrganizador = new ListaOrganizador();
-
     private ListaCandidatura listaCandidatura = new ListaCandidatura();
     private ListaFae listaFae = new ListaFae();
-
+    private listaAtribuicao listaAtribuicao = new listaAtribuicao();
+    
     private String TITULO_OMISSAO = "Sem Titulo",
             DESCRICAO_OMISSAO = "Sem descrição";
-
+    
     public Evento() {
         titulo = TITULO_OMISSAO;
         descricao = descricao;
+        local = new Local();
         dataInicio = new Data();
         dataFim = new Data();
     }
-
-    public Evento(String titulo, String descricao, Data dataInicio, Data dataFim) {
+    
+    public Evento(String titulo, String descricao, String nomeLocal, Data dataInicio, Data dataFim) {
         this.titulo = titulo;
         this.descricao = descricao;
+        local = new Local(nomeLocal);
         this.dataInicio = new Data(dataInicio);
         this.dataFim = new Data(dataFim);
-        listaOrganizador = new ListaOrganizador();
     }
 
     /**
@@ -79,9 +82,13 @@ public abstract class Evento implements Comparable<Evento> {
     public ListaCandidatura getListaCandidatura() {
         return listaCandidatura;
     }
-
+    
     public ListaFae getListaFae() {
         return listaFae;
+    }
+    
+    public Local getLocal() {
+        return local;
     }
 
     /**
@@ -125,11 +132,15 @@ public abstract class Evento implements Comparable<Evento> {
     public void setListaCandidatura(ListaCandidatura listaCandidatura) {
         this.listaCandidatura = listaCandidatura;
     }
-
+    
     public void setListaFae(ListaFae listaFae) {
         this.listaFae = listaFae;
     }
-
+    
+    public void setLocal(Local local) {
+        this.local = local;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -142,7 +153,7 @@ public abstract class Evento implements Comparable<Evento> {
             return false;
         }
         final Evento other = (Evento) obj;
-        if (!(this.titulo.equals(other.titulo))) {
+        if (!this.titulo.equals(other.titulo)) {
             return false;
         }
         if (!this.descricao.equals(other.descricao)) {
@@ -162,16 +173,15 @@ public abstract class Evento implements Comparable<Evento> {
         }
         return true;
     }
-
+    
     @Override
     public String toString() {
         return titulo;
     }
-
+    
     @Override
     public int compareTo(Evento o) {
         return this.getTitulo().compareTo(o.getTitulo());
     }
     
-
 }

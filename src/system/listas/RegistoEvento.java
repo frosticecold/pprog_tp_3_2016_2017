@@ -10,7 +10,7 @@ import system.evento.Evento;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class RegistoEvento implements Iterable<Evento>, RegistoLista<Evento> {
+public class RegistoEvento implements Iterable<Evento>, InterfaceListaLerConfig<Evento> {
 
     List<Evento> lista=new ArrayList<>();;
 
@@ -25,6 +25,7 @@ public class RegistoEvento implements Iterable<Evento>, RegistoLista<Evento> {
     public boolean remove(Evento e) {
         return lista.remove(e);
     }
+
 
     public List<Evento> getListaEventoPorOrganizador(String username) {
         List<Evento> le = new ArrayList<>();

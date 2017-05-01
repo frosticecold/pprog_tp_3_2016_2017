@@ -10,7 +10,7 @@ import utils.lerFicheiroConfig;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class RegistoAlgoritmosAtribuicao implements Iterable<String>, RegistoLista<String> {
+public class RegistoAlgoritmosAtribuicao implements Iterable<String>, InterfaceListaLerConfig<String> {
 
     private List<String> la = new ArrayList<>();
     public static String CLASSPATH = "";

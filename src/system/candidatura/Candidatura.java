@@ -13,9 +13,9 @@ public class Candidatura {
     private static final String DESCRICAO_POR_OMISSAO = "sem descricao";
     private RepresentanteEmpresa re;
 
-    public Candidatura(String descricao) {
+    public Candidatura(String descricao, RepresentanteEmpresa re) {
         this.descricao = descricao;
-        this.re = new RepresentanteEmpresa();
+        this.re = re;
     }
 
     public Candidatura() {
@@ -35,7 +35,12 @@ public class Candidatura {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
+
+    public void setDados(String descricao, RepresentanteEmpresa re) {
+        this.descricao = descricao;
+        this.re = re;
+    }
+
     /**
      *
      * @return descricao da candidatura
@@ -44,9 +49,16 @@ public class Candidatura {
     public String toString() {
         return String.format(descricao);
     }
-    
-//    public boolean valida(){
-//        
-//    }
 
+    public boolean valida() {
+        boolean s = false;
+        boolean rep = false;
+        if (descricao != null && descricao.length() > 15) {
+            s = true;
+        }
+        if (re != null) {
+            rep = true;
+        }
+        return s && rep;
+    }
 }

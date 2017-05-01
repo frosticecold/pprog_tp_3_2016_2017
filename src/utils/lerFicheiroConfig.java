@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import system.listas.RegistoLista;
 import system.listas.listaTipoEvento;
+import system.listas.InterfaceListaLerConfig;
 
 /**
  *
@@ -19,7 +19,7 @@ public class lerFicheiroConfig {
     private static String CAMINHO_FICHEIRO_CONFIG_OMISSAO = "config.ini";
     private static String CLASS_PATH_OMISSAO = "classpath=";
 
-    public String lerFicheiroConfig(final String START_CONFIG, final String END_CONFIG, String CLASSPATH, RegistoLista rl) {
+    public String lerFicheiroConfig(final String START_CONFIG, final String END_CONFIG, String CLASSPATH, InterfaceListaLerConfig rl) {
         BufferedReader br;
         try {
             //File file = new File(CAMINHO_FICHEIRO_CONFIG);
