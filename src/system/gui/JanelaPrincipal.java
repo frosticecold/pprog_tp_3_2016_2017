@@ -24,6 +24,7 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
     private JMenu menu, ficheiro, iniciar, about_menu, debug_menu;
     private JMenuItem sair, about, debug_item;
     private JMenuItem atribuir_cand, decidir_cand, submeter_cand;
+    private JMenuItem carregar_ficheiro, gravar_ficheiro;
 
     private CentroEventos ce;
     private static String ICON_FOLDER = "icons/";
@@ -40,40 +41,14 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
     }
 
     public void initComponents() {
+        initMenuBar();
+    }
+
+    public void initMenuBar() {
         menubar = new JMenuBar();
-
-        menu = new JMenu("Menu");
-        menu.setMnemonic(KeyEvent.VK_M);
-
-        iniciar = new JMenu("Iniciar");
-        iniciar.setMnemonic(KeyEvent.VK_I);
-
-        atribuir_cand = new JMenuItem("Atribuir Candidatura");
-        atribuir_cand.addActionListener(this);
-        decidir_cand = new JMenuItem("Decidir Candidatura");
-        submeter_cand = new JMenuItem("Submeter Candidatura");
-
-        iniciar.add(atribuir_cand);
-        iniciar.add(decidir_cand);
-        iniciar.add(submeter_cand);
-
-        ficheiro = new JMenu("Ficheiro");
-        ficheiro.setMnemonic(KeyEvent.VK_F);
-
-        sair = new JMenuItem("Sair");
-        sair.setIcon(new ImageIcon(this.getClass().getClassLoader().getResource(ICON_FOLDER + "exit.png")));
-        sair.addActionListener(this);
-
-        about_menu = new JMenu("?");
-        about = new JMenuItem("Acerca");
-        about.addActionListener(this);
-        about_menu.add(about);
-
-        debug_menu = new JMenu("Debug");
-        debug_item = new JMenuItem("Carregador valores Debug");
-        debug_item.addActionListener(this);
-        debug_menu.add(debug_item);
-        debug_menu.add(debug_item);
+        initMenu();
+        initMenuAcerca();
+        initMenuDebug();
 
         menu.add(iniciar);
         menu.add(ficheiro);
@@ -84,6 +59,46 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         menubar.add(debug_menu);
         menubar.add(about_menu);
         setJMenuBar(menubar);
+
+    }
+
+    public void initMenu() {
+        menu = new JMenu("Menu");
+        menu.setMnemonic(KeyEvent.VK_M);
+
+        iniciar = new JMenu("Iniciar");
+        iniciar.setMnemonic(KeyEvent.VK_I);
+
+        atribuir_cand = new JMenuItem("Atribuir Candidatura");
+        decidir_cand = new JMenuItem("Decidir Candidatura");
+        submeter_cand = new JMenuItem("Submeter Candidatura");
+        atribuir_cand.addActionListener(this);
+        iniciar.add(atribuir_cand);
+        iniciar.add(decidir_cand);
+        iniciar.add(submeter_cand);
+
+        ficheiro = new JMenu("Ficheiro");
+        ficheiro.setMnemonic(KeyEvent.VK_F);
+
+        sair = new JMenuItem("Sair");
+        sair.setIcon(new ImageIcon(this.getClass().getClassLoader().getResource(ICON_FOLDER + "exit.png")));
+        sair.addActionListener(this);
+    }
+
+    public void initMenuAcerca() {
+        about_menu = new JMenu("?");
+        about = new JMenuItem("Acerca");
+        about.addActionListener(this);
+        about_menu.add(about);
+    }
+
+    public void initMenuDebug() {
+        debug_menu = new JMenu("Debug");
+        debug_item = new JMenuItem("Carregador valores Debug");
+        debug_item.addActionListener(this);
+        debug_menu.add(debug_item);
+        debug_menu.add(debug_item);
+
     }
 
     @Override
