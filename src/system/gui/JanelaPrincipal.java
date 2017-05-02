@@ -30,9 +30,10 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
     private static String ICON_FOLDER = "icons/";
     private static String ICON_EXIT = "exit.png", ICON_ABOUT = "about.gif",
             ICON_SAVE = "save.gif", ICON_PLUS = "plus.gif";
+    private static String TITULO_JANELA = "Aplicação PPROG TP3";
 
     public JanelaPrincipal(CentroEventos ce) {
-        super("Aplicação PPROG TP3");
+        super(TITULO_JANELA);
         this.ce = ce;
         initComponents();
         setLayout(new BorderLayout());
@@ -91,7 +92,10 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         atribuir_cand.setMnemonic(KeyEvent.VK_A);
         decidir_cand.setMnemonic(KeyEvent.VK_D);
         submeter_cand.setMnemonic(KeyEvent.VK_S);
+
         atribuir_cand.addActionListener(this);
+        decidir_cand.addActionListener(this);
+        submeter_cand.addActionListener(this);
 
         iniciar.add(atribuir_cand);
         iniciar.add(decidir_cand);
@@ -106,7 +110,7 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         definirIcon(carregar_ficheiro, ICON_PLUS);
         gravar_ficheiro = new JMenuItem("Gravar Ficheiro");
         definirIcon(gravar_ficheiro, ICON_SAVE);
-        
+
         ficheiro.add(carregar_ficheiro);
         ficheiro.add(gravar_ficheiro);
     }
@@ -142,6 +146,10 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Erro, não existem Eventos.", "Erro!", JOptionPane.ERROR_MESSAGE);
             }
+        }
+        if (e.getSource() == decidir_cand) {
+            DecidirCandidatura dc = new DecidirCandidatura(ce);
+
         }
         if (e.getSource() == debug_item) {
             Teste t = new Teste();
