@@ -61,7 +61,7 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
     //Estáticos
     private static int NR_LINHAS = 1, NR_COLUNAS = 2;
     private static int LIST_GAP = 10;
-    private static Dimension BUTTON_DIMENSION = new Dimension(95,30);
+    private static Dimension BUTTON_DIMENSION = new Dimension(95, 30);
     private static Dimension COMBOBOX_DIMENSION = new Dimension(150, 30);
     private static Dimension TAMANHO_JANELA_MINIMO = new Dimension(650, 350);
     private static String MENSAGEM_EVENTO = "Seleciona o Evento";
@@ -78,9 +78,8 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    //List<Fae> listaFaeFonte, List<Fae> listaAtribuir
     public void initComponents() {
-        //END TEST STUFF
+
         initLists();
         initComboBox();
         initButtons();
@@ -101,7 +100,10 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
     public void initPanels() {
         initPainelCentro();
         initPainelSul();
-        //principal.add(pnorte, BorderLayout.NORTH);
+        initPainelPrincipal();
+    }
+
+    public void initPainelPrincipal() {
         principal.add(pcentro, BorderLayout.CENTER);
         principal.add(psul, BorderLayout.SOUTH);
         add(principal);
@@ -122,8 +124,8 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
         psuldir.add(sair);
         psuldir.add(guardar);
 
-        psul.add(psulesq,BorderLayout.WEST);
-        psul.add(psuldir,BorderLayout.EAST);
+        psul.add(psulesq, BorderLayout.WEST);
+        psul.add(psuldir, BorderLayout.EAST);
     }
 
     public void initLists() {
