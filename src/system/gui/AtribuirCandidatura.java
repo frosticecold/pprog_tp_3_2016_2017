@@ -61,6 +61,7 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
     //Estáticos
     private static int NR_LINHAS = 1, NR_COLUNAS = 2;
     private static int LIST_GAP = 10;
+    private static Dimension BUTTON_DIMENSION = new Dimension(95,30);
     private static Dimension COMBOBOX_DIMENSION = new Dimension(150, 30);
     private static Dimension TAMANHO_JANELA_MINIMO = new Dimension(650, 350);
     private static String MENSAGEM_EVENTO = "Seleciona o Evento";
@@ -73,6 +74,7 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
         initComponents();
         setMinimumSize(TAMANHO_JANELA_MINIMO);
         setLocationRelativeTo(null);
+        pack();
         setVisible(true);
     }
 
@@ -136,8 +138,11 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
     }
 
     public void initButtons() {
+        atribui.setPreferredSize(BUTTON_DIMENSION);
         atribui.addActionListener(this);
+        sair.setPreferredSize(BUTTON_DIMENSION);
         sair.addActionListener(this);
+        guardar.setPreferredSize(BUTTON_DIMENSION);
         guardar.addActionListener(this);
     }
 
