@@ -5,10 +5,6 @@
  */
 package system;
 
-import java.util.List;
-import system.algoritmo.Algteste;
-import system.candidatura.Atribuicao;
-import system.evento.Evento;
 import system.gui.JanelaPrincipal;
 
 /**

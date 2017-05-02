@@ -51,7 +51,7 @@ public class listaAtribuicao implements Iterable<Atribuicao> {
         return lista.size();
     }
 
-    public void limparListaAtribuicoes() {
+    public void clear() {
         lista.clear();
     }
 }
