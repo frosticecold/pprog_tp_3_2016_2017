@@ -32,10 +32,10 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
     public JanelaPrincipal(CentroEventos ce) {
         super("Aplicação PPROG TP3");
         this.ce = ce;
+        initComponents();
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(450, 300));
-        initComponents();
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -65,24 +65,32 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
     public void initMenu() {
         menu = new JMenu("Menu");
         menu.setMnemonic(KeyEvent.VK_M);
+        initSubmenuIniciar();
+        initSubmenuFicheiro();
+        sair = new JMenuItem("Sair");
+        sair.setIcon(new ImageIcon(this.getClass().getClassLoader().getResource(ICON_FOLDER + "exit.png")));
+        sair.addActionListener(this);
+    }
 
+    public void initSubmenuIniciar() {
         iniciar = new JMenu("Iniciar");
         iniciar.setMnemonic(KeyEvent.VK_I);
 
         atribuir_cand = new JMenuItem("Atribuir Candidatura");
         decidir_cand = new JMenuItem("Decidir Candidatura");
         submeter_cand = new JMenuItem("Submeter Candidatura");
+        
         atribuir_cand.addActionListener(this);
+        
         iniciar.add(atribuir_cand);
         iniciar.add(decidir_cand);
         iniciar.add(submeter_cand);
 
+    }
+
+    public void initSubmenuFicheiro() {
         ficheiro = new JMenu("Ficheiro");
         ficheiro.setMnemonic(KeyEvent.VK_F);
-
-        sair = new JMenuItem("Sair");
-        sair.setIcon(new ImageIcon(this.getClass().getClassLoader().getResource(ICON_FOLDER + "exit.png")));
-        sair.addActionListener(this);
     }
 
     public void initMenuAcerca() {
