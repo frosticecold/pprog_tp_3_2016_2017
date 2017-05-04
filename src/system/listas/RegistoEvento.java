@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import system.evento.Evento;
+import system.user.Fae;
+import system.user.Organizador;
 import utils.Data;
 
 /**
@@ -78,5 +80,29 @@ public class RegistoEvento implements Iterable<Evento> {
 
     public int size() {
         return lista.size();
+    }
+
+    public List<Evento> getListaEventoPorOrganizador(Organizador o) {
+        List<Evento> le = new ArrayList<>();
+
+        for (Evento ev : lista) {
+            if (ev.getListaOrganizador().isOrganizadorEvento(o.getUsername())) {
+                le.add(ev);
+            }
+        }
+
+        return le;
+    }
+
+    public List<Evento> getListaEventoPorFae(Fae f) {
+        List<Evento> le = new ArrayList<>();
+
+        for (Evento ev : lista) {
+            if (ev.getListaFae().isFaeEvento(f.getUsername())) {
+                le.add(ev);
+            }
+        }
+
+        return le;
     }
 }

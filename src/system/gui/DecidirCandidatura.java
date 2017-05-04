@@ -3,31 +3,31 @@ package system.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JMenuItem;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import system.CentroEventos;
 import system.evento.Evento;
+import system.listas.RegistoEvento;
+import system.user.Fae;
 
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class DecidirCandidatura extends JFrame implements ActionListener {
+public class DecidirCandidatura extends JDialog implements ActionListener {
 
     //Checkboxes
     private JCheckBox aprovado = new JCheckBox("Aprovado"), reprovado = new JCheckBox("Reprovado");
@@ -40,27 +40,38 @@ public class DecidirCandidatura extends JFrame implements ActionListener {
     private JButton guardar = new JButton("Guardar"),
             sair = new JButton("Sair");
 
+    private JLabel lbEmpresa = new JLabel(TXT_LBL_EMPRESA);
     private JPanel principal = new JPanel(new BorderLayout()),
-            painelCheckbox = new JPanel(new BorderLayout()),
+            painelTopo = new JPanel(new GridLayout(NUM_LINHAS, NUM_COL, EMPTY_BORDER_GAP, EMPTY_BORDER_GAP)),
+            painelCheckbox = new JPanel(new FlowLayout(FlowLayout.CENTER, GAP_FLOWLAYOUT_WIDTH, GAP_FLOWLAYOUT_HEIGHT)),
+            painelInfo = new JPanel(new FlowLayout(FlowLayout.LEFT)),
+            painelCentro = new JPanel(new BorderLayout()),
             painelTextArea = new JPanel(new BorderLayout()),
             painelSul = new JPanel(new BorderLayout()),
             painelComboBox = new JPanel(new FlowLayout()),
             painelBotoes = new JPanel(new FlowLayout());
 
     //vars instância
-    private CentroEventos ce;
+    private RegistoEvento registoEvento;
+    private Fae f_user;
     private boolean flag_aprovacao = false;
 
     //vars classe
+    private static int GAP_FLOWLAYOUT_WIDTH = 100, GAP_FLOWLAYOUT_HEIGHT = 0;
+    private static int NUM_COL = 1, NUM_LINHAS = 2;
     private static int EMPTY_BORDER_GAP = 10;
     private static Dimension TAMANHO_JANELA_MINIMO = new Dimension(450, 350);
     private static String TITULO_JANELA = "Decidir Candidatura", TITULO_BORDER = "Decisão";
     private static String ICON_FOLDER = "icons/";
     private static String ICON_APROVADO = "correct.gif", ICON_REPROVADO = "incorrect.gif";
+    private static String TXT_LBL_EMPRESA = "Empresa: ", TXT_LBL_REPRESENTANTE = "Representante: ";
+    private static String TXT_VAZIO = "";
+    private static String TXT_EVENTO_SELECIONADO = "";
 
-    public DecidirCandidatura(CentroEventos ce) {
-        super(TITULO_JANELA);
-        this.ce = ce;
+    public DecidirCandidatura(JFrame frame, RegistoEvento re, Fae f) {
+        super(frame, TITULO_JANELA, true);
+        registoEvento = re;
+        f_user = f;
         initComponentes();
         setMinimumSize(TAMANHO_JANELA_MINIMO);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -76,9 +87,10 @@ public class DecidirCandidatura extends JFrame implements ActionListener {
         initPainelCentro();
         initPainelSul();
         adicionarPaineis();
-        
+
         //Teste
         copiarListaEventosParaListaComboBox();
+        TXT_EVENTO_SELECIONADO = eventoComboBox.getSelectedItem().toString();
     }
 
     private void initCheckboxes() {
@@ -105,17 +117,39 @@ public class DecidirCandidatura extends JFrame implements ActionListener {
     }
 
     private void initPainelTopo() {
-        //Add components
-        painelCheckbox.add(reprovado, BorderLayout.WEST);
-        painelCheckbox.add(aprovado, BorderLayout.EAST);
-
-        //Border
-        painelCheckbox.setBorder(new TitledBorder(new EtchedBorder(), TITULO_JANELA));
+        initPainelCheckbox();
+        initPainelInfo();
+        painelTopo.add(painelInfo);
+        painelTopo.add(painelCheckbox);
+        painelTopo.setBorder(new TitledBorder(new EtchedBorder(), TITULO_JANELA));
     }
 
     private void initPainelCentro() {
-        painelTextArea.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
         painelTextArea.add(textArea);
+        painelTextArea.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
+
+    }
+
+    private void initPainelSul() {
+        initPainelComboBox();
+        initPainelBotoes();
+        painelSul.add(painelComboBox, BorderLayout.WEST);
+        painelSul.add(painelBotoes, BorderLayout.EAST);
+    }
+
+    private void initPainelInfo() {
+        //painelInfo.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
+        painelInfo.add(lbEmpresa);
+
+    }
+
+    private void initPainelCheckbox() {
+        //Add components
+        painelCheckbox.add(aprovado);
+        painelCheckbox.add(reprovado);
+
+        //Border
+        //painelCheckbox.setBorder(new TitledBorder(new EtchedBorder(), TITULO_JANELA));
     }
 
     private void initPainelComboBox() {
@@ -127,26 +161,23 @@ public class DecidirCandidatura extends JFrame implements ActionListener {
         painelBotoes.add(guardar);
     }
 
-    private void initPainelSul() {
-        initPainelComboBox();
-        initPainelBotoes();
-        painelSul.add(painelComboBox, BorderLayout.WEST);
-        painelSul.add(painelBotoes, BorderLayout.EAST);
-    }
-
     private void adicionarPaineis() {
-        principal.add(painelCheckbox, BorderLayout.NORTH);
+        principal.add(painelTopo, BorderLayout.NORTH);
         principal.add(painelTextArea, BorderLayout.CENTER);
         principal.add(painelSul, BorderLayout.SOUTH);
         principal.setBorder(new EmptyBorder(EMPTY_BORDER_GAP, EMPTY_BORDER_GAP, EMPTY_BORDER_GAP, EMPTY_BORDER_GAP));
         add(principal);
     }
 
-    private void copiarListaEventosParaListaComboBox(){
-        for (Evento e : ce.getRegistoEventos()) {
-            listaModeloEventos.addElement(e);
+    private void copiarListaEventosParaListaComboBox() {
+        listaModeloEventos.removeAllElements();
+        for (Evento e : registoEvento) {
+            if (e.getListaFae().isFaeEvento(f_user.getUsername())) {
+                listaModeloEventos.addElement(e);
+            }
         }
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == sair) {
@@ -166,6 +197,14 @@ public class DecidirCandidatura extends JFrame implements ActionListener {
                 aprovado.setSelected(false);
             }
             flag_aprovacao = false;
+        }
+        if (e.getSource() == eventoComboBox) {
+            String temp = eventoComboBox.getSelectedItem().toString();
+            if (!temp.equals(TXT_EVENTO_SELECIONADO)) {
+                aprovado.setSelected(false);
+                reprovado.setSelected(false);
+                textArea.setText(TXT_VAZIO);
+            }
         }
     }
 

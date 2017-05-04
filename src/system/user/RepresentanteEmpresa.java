@@ -10,7 +10,7 @@ public class RepresentanteEmpresa extends Utilizador {
         super();
     }
 
-    public RepresentanteEmpresa(String nome, String username, String email, String password) {
+    public RepresentanteEmpresa(String nome, String username, String email, char[] password) {
         super(nome, username, email, password);
     }
 

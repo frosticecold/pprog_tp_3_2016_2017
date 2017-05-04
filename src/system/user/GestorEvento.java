@@ -10,7 +10,7 @@ public class GestorEvento extends Utilizador {
         super();
     }
 
-    public GestorEvento(String nome, String username, String email, String password) {
+    public GestorEvento(String nome, String username, String email, char[] password) {
         super(nome, username, email, password);
     }
 

@@ -21,9 +21,9 @@ public class Main {
 //        lte.lerFicheiroConfig();
 //        lte.escreverOutput();
         CentroEventos ce = new CentroEventos();
-//        
-//        Teste t = new Teste();
-//        t.init(ce);
+        
+        Teste t = new Teste();
+        t.init(ce);
         JanelaPrincipal p = new JanelaPrincipal(ce);
     }
 

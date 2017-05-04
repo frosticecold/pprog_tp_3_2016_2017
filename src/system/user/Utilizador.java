@@ -8,19 +8,23 @@ import java.util.Objects;
  */
 public class Utilizador implements Comparable<Utilizador> {
 
-    private String nome, username, email, password;
+    private String nome, username, email;
+    private char[] password;
+    
+    //Vars de Classe
+    private String DEFAULT_PASSWORD  = "123";
 
-    private String NOME_OMISSAO = "Sem nome", USERNAME_OMISSAO = "Sem username",
+    private static  String NOME_OMISSAO = "Sem nome", USERNAME_OMISSAO = "Sem username",
             EMAIL_OMISSAO = "Sem email";
 
     public Utilizador() {
         nome = NOME_OMISSAO;
         username = USERNAME_OMISSAO;
         email = EMAIL_OMISSAO;
-        password = "123";
+        password = DEFAULT_PASSWORD.toCharArray();
     }
 
-    public Utilizador(String nome, String username, String email, String password) {
+    public Utilizador(String nome, String username, String email, char[] password) {
         this.nome = nome;
         this.username = username;
         this.email = email;
@@ -58,7 +62,7 @@ public class Utilizador implements Comparable<Utilizador> {
     /**
      * @return the password
      */
-    public String getPassword() {
+    public char[] getPassword() {
         return password;
     }
 
@@ -86,7 +90,7 @@ public class Utilizador implements Comparable<Utilizador> {
     /**
      * @param password the password to set
      */
-    public void setPassword(String password) {
+    public void setPassword(char[] password) {
         this.password = password;
     }
 

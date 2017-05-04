@@ -1,10 +1,13 @@
 package system;
 
+import java.util.List;
 import system.evento.Congresso;
+import system.evento.Evento;
 import system.evento.Exposicao;
 import system.listas.RegistoEvento;
 import system.user.Utilizador;
 import system.listas.RegistoUtilizador;
+import system.user.Fae;
 import utils.Data;
 
 /**
@@ -15,25 +18,28 @@ public class Teste {
 
     RegistoUtilizador ru;
     RegistoEvento re;
+    private static char[] DP = "123".toCharArray();
 
     public void init(CentroEventos ce) {
-        ru = ce.getRegistoUtilizadores();
-        re = ce.getRegistoEventos();
-        Utilizador u1 = new Utilizador("Ana Maria", "ana.maria", "anamaria@abc.pt", "123");
-        Utilizador u2 = new Utilizador("Bernardo Noé", "b.noe", "bnoe@abc.pt", "123");
-        Utilizador u3 = new Utilizador("Carlos Costa", "ccosta", "ccosta@abc.pt", "123");
-        Utilizador u4 = new Utilizador("Domingos Neves", "domingos", "domingos@abc.pt", "123");
-        Utilizador u5 = new Utilizador("Fábia Lopes", "flopes", "flopes@abc.pt", "123");
-        Utilizador u6 = new Utilizador("Hércules", "herc", "herc@abc.pt", "123");
-        Utilizador u7 = new Utilizador("Joana Silva", "jsilva", "jsilva@abc.pt", "123");
-        Utilizador u8 = new Utilizador("Jorge Mendes", "jorgemendes", "jmendes@abc.pt", "123");
-        Utilizador u9 = new Utilizador("André Nicolau", "anicolau", "anicolau@abc.pt", "123");
-        Utilizador u10 = new Utilizador("Catia Ariana", "catiaa", "catiaa@abc.pt", "123");
-        Utilizador u11 = new Utilizador("Miguel Lopes", "miguellopes", "miguellopes@abc.pt", "123");
-        Utilizador u12 = new Utilizador("Luis Sousa", "luiss", "luiss@abc.pt", "123");
-        Utilizador u13 = new Utilizador("Tiago Silva", "tiagosilva", "tiagosilva@abc.pt", "123");
-        Utilizador u14 = new Utilizador("Andreia Antunes", "andreiaa", "andreiaa@abc.pt", "123");
-        Utilizador u15 = new Utilizador("Carlos Mendes", "cmendes", "cmendes@abc.pt", "123");
+
+        ru = new RegistoUtilizador();
+        re = new RegistoEvento();
+        Utilizador u1 = new Utilizador("Ana Maria", "ana.maria", "anamaria@abc.pt", DP);
+        Utilizador u2 = new Utilizador("Bernardo Noé", "b.noe", "bnoe@abc.pt", DP);
+        Utilizador u3 = new Utilizador("Carlos Costa", "ccosta", "ccosta@abc.pt", DP);
+        Utilizador u4 = new Utilizador("Domingos Neves", "domingos", "domingos@abc.pt", DP);
+        Utilizador u5 = new Utilizador("Fábia Lopes", "flopes", "flopes@abc.pt", DP);
+        Utilizador u6 = new Utilizador("Hércules", "herc", "herc@abc.pt", DP);
+        Utilizador u7 = new Utilizador("Joana Silva", "jsilva", "jsilva@abc.pt", DP);
+        Utilizador u8 = new Utilizador("Jorge Mendes", "jorgemendes", "jmendes@abc.pt", DP);
+        Utilizador u9 = new Utilizador("André Nicolau", "anicolau", "anicolau@abc.pt", DP);
+        Utilizador u10 = new Utilizador("Catia Ariana", "catiaa", "catiaa@abc.pt", DP);
+        Utilizador u11 = new Utilizador("Miguel Lopes", "miguellopes", "miguellopes@abc.pt", DP);
+        Utilizador u12 = new Utilizador("Luis Sousa", "luiss", "luiss@abc.pt", DP);
+        Utilizador u13 = new Utilizador("Tiago Silva", "tiagosilva", "tiagosilva@abc.pt", DP);
+        Utilizador u14 = new Utilizador("Andreia Antunes", "andreiaa", "andreiaa@abc.pt", DP);
+        Utilizador u15 = new Utilizador("Carlos Mendes", "cmendes", "cmendes@abc.pt", DP);
+        Utilizador u16 = new Utilizador("Raul","raul","raul@raul.pt",DP);
 
         ru.add(u1);
         ru.add(u2);
@@ -58,6 +64,11 @@ public class Teste {
         c1.getListaFae().adicionarFae(u10);
         c1.getListaFae().adicionarFae(u11);
         c1.getListaFae().adicionarFae(u12);
+        c1.getListaOrganizador().add(u14);
+        c1.getListaOrganizador().add(u15);
+//        System.out.println(c1.getListaOrganizador().isOrganizadorEvento(u14.getUsername()));
+//        System.out.println(c1.getListaOrganizador().isOrganizadorEvento(u15.getUsername()));
+
         Congresso c2 = new Congresso("Congresso 2", "O congresso 2", "Local 2", new Data(2015, 12, 25), new Data(2016, 1, 10));
         c2.getListaOrganizador().add(u1);
         c2.getListaOrganizador().add(u3);
@@ -125,13 +136,10 @@ public class Teste {
         re.add(e3);
         re.add(e4);
 
-//        //Teste
-//        System.out.println(Algoritmo.procurarUtilizadorIsOrganizadorEvento(e1, f1.getUsername()));
-//        System.out.println(Algoritmo.procurarUtilizadorIsOrganizadorEvento(e1, f2.getUsername()));
-//        System.out.println(Algoritmo.procurarUtilizadorIsOrganizadorEvento(e2, f1.getUsername()));
-//        System.out.println(Algoritmo.procurarUtilizadorIsOrganizadorEvento(e2, f5.getUsername()));
-//        System.out.println(Algoritmo.procurarUtilizadorIsOrganizadorEvento(e3, f3.getUsername()));
-//        System.out.println(Algoritmo.procurarUtilizadorIsOrganizadorEvento(e3, f6.getUsername()));
+        testeEventoPorOrganizador(u15.getUsername());
+
+        ce.setRegistoEventos(re);
+        ce.setRegistoUtilizadores(ru);
     }
 
     public RegistoUtilizador getRu() {
@@ -146,5 +154,17 @@ public class Teste {
         for (Utilizador utilizador : ru) {
             System.out.println(utilizador);
         }
+    }
+
+    public void testeEventoPorOrganizador(String username) {
+        List<Evento> le = re.getListaEventoPorOrganizador(username);
+        for (Evento evento : le) {
+            System.out.println("O utilizador " + username + " é organizador do evento: " + evento);
+        }
+    }
+
+    public Fae retornarFaeTeste() {
+        Utilizador u9 = new Utilizador("André Nicolau", "anicolau", "anicolau@abc.pt", DP);
+        return new Fae(u9);
     }
 }

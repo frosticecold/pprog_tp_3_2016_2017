@@ -10,16 +10,16 @@ public class Organizador extends Utilizador {
         super();
     }
 
-    public Organizador(String nome, String username, String email, String password) {
+    public Organizador(String nome, String username, String email, char[] password) {
         super(nome, username, email, password);
     }
 
     public Organizador(Utilizador u) {
         super(u);
     }
-    
-    public boolean equals(Object obj){
-    return super.equals(obj);
+
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 
 }

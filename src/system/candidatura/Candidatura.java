@@ -9,23 +9,23 @@ import system.user.RepresentanteEmpresa;
 public class Candidatura {
 
     private String descricao;
+    private RepresentanteEmpresa representanteEmpresa;
 
-    private static final String DESCRICAO_POR_OMISSAO = "sem descricao";
-    private RepresentanteEmpresa re;
+    private static final String DESCRICAO_POR_OMISSAO = "Sem Descricao";
 
     public Candidatura(String descricao, RepresentanteEmpresa re) {
         this.descricao = descricao;
-        this.re = re;
+        this.representanteEmpresa = re;
     }
 
     public Candidatura() {
         descricao = DESCRICAO_POR_OMISSAO;
-        this.re = new RepresentanteEmpresa();
+        this.representanteEmpresa = new RepresentanteEmpresa();
     }
 
     public Candidatura(Candidatura c) {
         this.descricao = c.descricao;
-        this.re = c.re;
+        this.representanteEmpresa = c.representanteEmpresa;
     }
 
     public String getDescricao() {
@@ -36,9 +36,17 @@ public class Candidatura {
         this.descricao = descricao;
     }
 
+    public RepresentanteEmpresa getRepresentanteEmpresa() {
+        return representanteEmpresa;
+    }
+
+    public void setRepresentanteEmpresa(RepresentanteEmpresa representanteEmpresa) {
+        this.representanteEmpresa = representanteEmpresa;
+    }
+
     public void setDados(String descricao, RepresentanteEmpresa re) {
         this.descricao = descricao;
-        this.re = re;
+        this.representanteEmpresa = re;
     }
 
     /**
@@ -56,7 +64,7 @@ public class Candidatura {
         if (descricao != null && descricao.length() > 15) {
             s = true;
         }
-        if (re != null) {
+        if (representanteEmpresa != null) {
             rep = true;
         }
         return s && rep;

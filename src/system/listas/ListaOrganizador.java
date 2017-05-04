@@ -10,32 +10,33 @@ import system.user.Utilizador;
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
 public class ListaOrganizador {
-    
-    List<Organizador> lo;
-    
+
+    List<Organizador> lista;
+
     public ListaOrganizador() {
-        lo = new ArrayList<>();
+        lista = new ArrayList<>();
     }
-    
+
     public boolean add(Utilizador u) {
         Organizador o = new Organizador(u);
-        return lo.add(o);
+        return lista.add(o);
     }
-    
+
     public boolean remove(Organizador o) {
         return remove(o);
     }
-    
+
     public boolean isOrganizadorEvento(String username) {
-        for (Organizador o : lo) {
+        for (Organizador o : lista) {
             if (o.getUsername().equals(username)) {
                 return true;
             }
         }
         return false;
     }
-    
-    public boolean contains(Utilizador u){
-    return lo.contains(u);
+
+    public boolean contains(Organizador o) {
+        return lista.contains(o);
     }
+    
 }

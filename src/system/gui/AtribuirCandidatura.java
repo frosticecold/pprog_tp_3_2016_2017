@@ -6,20 +6,20 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.border.EmptyBorder;
 import system.CentroEventos;
 import system.evento.Evento;
 import system.listas.ListaFae;
@@ -32,7 +32,7 @@ import system.candidatura.Atribuicao;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class AtribuirCandidatura extends JFrame implements ActionListener {
+public class AtribuirCandidatura extends JDialog implements ActionListener {
 
     private JPanel principal = new JPanel(new BorderLayout()),
             pcentro = new JPanel(new GridLayout(NR_LINHAS, NR_COLUNAS, LIST_GAP, LIST_GAP)),
@@ -67,8 +67,9 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
     private static String MENSAGEM_EVENTO = "Seleciona o Evento";
     private static String MENSAGEM_ALGORITMO = "Seleciona o Algoritmo de Atribuição";
 
-    public AtribuirCandidatura(CentroEventos ce) {
-        super("Atribuir Candidatura");
+    public AtribuirCandidatura(JFrame frame, CentroEventos ce) {
+        //super("Atribuir Candidatura");
+        super(frame, "Atribuir Candidatura", true);
         this.ce = ce;
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
@@ -79,7 +80,6 @@ public class AtribuirCandidatura extends JFrame implements ActionListener {
     }
 
     public void initComponents() {
-
         initLists();
         initComboBox();
         initButtons();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import system.user.Fae;
+import system.user.Organizador;
 import system.user.Utilizador;
 
 /**
@@ -49,6 +50,15 @@ public class ListaFae implements Iterable<Fae> {
 
     public Fae get(int i) {
         return lista.get(i);
+    }
+
+    public boolean isFaeEvento(String username) {
+        for (Fae f : lista) {
+            if (f.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

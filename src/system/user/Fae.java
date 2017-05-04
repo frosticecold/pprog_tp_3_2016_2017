@@ -10,7 +10,7 @@ public class Fae extends Utilizador {
         super();
     }
 
-    public Fae(String nome, String username, String email, String password) {
+    public Fae(String nome, String username, String email, char[] password) {
         super(nome, username, email, password);
     }
 
