@@ -3,8 +3,10 @@ package system.listas;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import system.candidatura.Atribuicao;
 import system.candidatura.Candidatura;
 import system.evento.Evento;
+import system.user.Fae;
 
 /**
  *
@@ -41,5 +43,7 @@ public class ListaCandidatura implements Iterable<Candidatura> {
     public int size(){
         return lista.size();
     }
+    
+
 
 }

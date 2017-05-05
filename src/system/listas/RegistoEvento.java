@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import system.candidatura.Atribuicao;
+import system.candidatura.Candidatura;
 import system.evento.Evento;
 import system.user.Fae;
 import system.user.Organizador;
@@ -115,5 +117,13 @@ public class RegistoEvento implements Iterable<Evento> {
         }
 
         return le;
+    }
+        public List<Fae> obterFaesPorCandidatura(Evento e , Candidatura c) {
+        List<Fae> listaFae = new ArrayList<>();
+            for ( Candidatura cd : e.getListaCandidatura()) {
+                if(c.getDescricao().equals(cd.getDescricao())){
+                //e.getListaAtribuicao().
+                }
+            }
     }
 }

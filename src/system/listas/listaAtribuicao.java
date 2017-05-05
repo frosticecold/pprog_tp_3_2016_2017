@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import system.candidatura.Atribuicao;
+import system.candidatura.Candidatura;
 import system.user.Fae;
 
 /**
@@ -54,4 +55,5 @@ public class listaAtribuicao implements Iterable<Atribuicao> {
     public void clear() {
         lista.clear();
     }
+
 }
