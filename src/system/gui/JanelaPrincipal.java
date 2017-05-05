@@ -213,6 +213,7 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         if (e.getSource() == carregar_ficheiro) {
             JFileChooser jfc = new JFileChooser();
             jfc.showOpenDialog(this);
+            jfc = null;
         }
         if (e.getSource() == login) {
             JanelaLogin jl = new JanelaLogin(this, ce.getRegistoUtilizadores());
