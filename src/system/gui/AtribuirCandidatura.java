@@ -75,6 +75,9 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
     private static String MENSAGEM_ALGORITMO = "Seleciona o Algoritmo de Atribuição";
     private static String MENSAGEM_ERRO_SEM_CANDIDATURAS = "Erro, sem candidaturas...";
     private static String TITULO_ERRO = "Erro";
+    private static String TOOLTIP_JLIST_FAEDISPONIVEIS = "Lista de Faes disponíveis";
+    private static String TOOLTIP_JLIST_LISTA_CANDIDATURAS = "Lista de Candidaturas disponíveis";
+    private static String TOOLTIP_JLIST_FAE_ATRIB_POR_CAND = "Lista de Faes Atribuidos à candidatura";
 
     public AtribuirCandidatura(JFrame frame, CentroEventos ce) {
         //super("Atribuir Candidatura");
@@ -153,6 +156,9 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         //Listeners
         jlistaCandidaturas.addListSelectionListener(this);
 
+        jlistFaeDisponiveis.setToolTipText(TOOLTIP_JLIST_FAEDISPONIVEIS);
+        jlistaCandidaturas.setToolTipText(TOOLTIP_JLIST_LISTA_CANDIDATURAS);
+        jlistFaeAtribuidos.setToolTipText(TOOLTIP_JLIST_FAE_ATRIB_POR_CAND);
     }
 
     public void initButtons() {
@@ -206,6 +212,15 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         }
     }
 
+    private void copiarListaFaePorCandidaturaJaGuardada(listaAtribuicao la, Candidatura c) {
+        lmFaeAtribuidos.clear();
+        for (Atribuicao a : la) {
+            if (a.getCandidatura().equals(c)) {
+                lmFaeAtribuidos.addElement(a.getFae());
+            }
+        }
+    }
+
     private void copiarListaAlgoritmosParaComboBox(RegistoAlgoritmosAtribuicao ra) {
         for (String s : ra) {
             lmAlg.addElement(s);
@@ -235,7 +250,13 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
                     String nomeClasse = RegistoAlgoritmosAtribuicao.CLASSPATH + algoritmoComboBox.getSelectedItem();
                     AlgoritmoAtribuicao a = (AlgoritmoAtribuicao) Class.forName(nomeClasse).newInstance();
                     ListaAtribuicoes = a.atribui(ev);
+                    if (jlistaCandidaturas.getSelectedIndex() != -1) {
+                        int num = jlistaCandidaturas.getSelectedIndex();
+                        jlistaCandidaturas.clearSelection();
+                        jlistaCandidaturas.setSelectedIndex(num);
+                    }else{
                     jlistaCandidaturas.setSelectedIndex(PRIMEIRO_ITEM);
+                    }
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                     JOptionPane.showMessageDialog(this, "A instanciação do algoritmo correu mal", "Erro!", JOptionPane.ERROR_MESSAGE);
                 }
@@ -263,7 +284,11 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         if (e.getSource() == jlistaCandidaturas) {
             Evento ev = (Evento) eventoComboBox.getSelectedItem();
             Candidatura c = (Candidatura) jlistaCandidaturas.getSelectedValue();
-            copiarListaFaePorCandidatura(ListaAtribuicoes, c);
+            if (ev.getListaAtribuicao().size() > 0 && ListaAtribuicoes.isEmpty()) {
+                copiarListaFaePorCandidaturaJaGuardada(ev.getListaAtribuicao(), c);
+            } else {
+                copiarListaFaePorCandidatura(ListaAtribuicoes, c);
+            }
         }
     }
 }
