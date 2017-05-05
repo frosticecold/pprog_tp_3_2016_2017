@@ -19,6 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import system.candidatura.Candidatura;
 import system.evento.Evento;
 import system.listas.RegistoEvento;
 import system.user.Fae;
@@ -32,7 +33,7 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
     //Checkboxes
     private JCheckBox aprovado = new JCheckBox("Aprovado"), reprovado = new JCheckBox("Reprovado");
     //TextArea
-    private JTextArea textArea = new JTextArea();
+    private JTextArea txtArea = new JTextArea();
     //ComboBox Eventos
     private DefaultComboBoxModel<Evento> listaModeloEventos = new DefaultComboBoxModel<>();
     private JComboBox<Evento> eventoComboBox = new JComboBox(listaModeloEventos);
@@ -125,7 +126,7 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
     }
 
     private void initPainelCentro() {
-        painelTextArea.add(textArea);
+        painelTextArea.add(txtArea);
         painelTextArea.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
 
     }
@@ -178,12 +179,26 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         }
     }
 
+    private boolean validarTexto() {
+        if (txtArea.getText().length() > 5) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == sair) {
             dispose();
         }
         if (e.getSource() == guardar) {
+            if (aprovado.isSelected() || reprovado.isSelected()) {
+                Evento ev = (Evento) eventoComboBox.getSelectedItem();
+                if (validarTexto()) {
+                    Candidatura c = ev.getListaCandidatura().novaCandidatura();
+                    //c.setDados(txtArea.getText(), re);
+                }
+            }
 
         }
         if (e.getSource() == aprovado) {
@@ -203,7 +218,7 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
             if (!temp.equals(TXT_EVENTO_SELECIONADO)) {
                 aprovado.setSelected(false);
                 reprovado.setSelected(false);
-                textArea.setText(TXT_VAZIO);
+                txtArea.setText(TXT_VAZIO);
             }
         }
     }

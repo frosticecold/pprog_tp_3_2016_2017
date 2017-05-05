@@ -22,7 +22,7 @@ public class ListaCandidatura implements Iterable<Candidatura> {
         return lista.add(c);
     }
 
-    public Candidatura novaCandidatura(Evento e) {
+    public Candidatura novaCandidatura() {
         return new Candidatura();
     }
 
