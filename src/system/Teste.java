@@ -49,7 +49,7 @@ public class Teste {
         Utilizador u13 = new Utilizador("Tiago Silva", "tiagosilva", "tiagosilva@abc.pt", DP);
         Utilizador u14 = new Utilizador("Andreia Antunes", "andreiaa", "andreiaa@abc.pt", DP);
         Utilizador u15 = new Utilizador("Carlos Mendes", "cmendes", "cmendes@abc.pt", DP);
-        Utilizador u16 = new Utilizador("Carlos Mendes", "cmendes", "cmendes@abc.pt", DP);
+        //Utilizador u16 = new Utilizador("Carlos Mendes", "cmendes", "cmendes@abc.pt", DP);
 
         //Utilizadores para Serem Representantes Empresa
         RepresentanteEmpresa rep1 = new RepresentanteEmpresa("Representante 1", "rep1", "rep1@rep1.pt", DP);
@@ -81,17 +81,20 @@ public class Teste {
         Congresso c1 = new Congresso("Congresso 1", "O congresso 1", "Local 1", new Data(2016, 8, 11), new Data(2018, 9, 24));
         c1.getListaOrganizador().add(u1);
         c1.getListaOrganizador().add(u2);
+        c1.getListaFae().adicionarFae(u7);
+        c1.getListaFae().adicionarFae(u8);
         c1.getListaFae().adicionarFae(u9);
         c1.getListaFae().adicionarFae(u10);
         c1.getListaFae().adicionarFae(u11);
         c1.getListaFae().adicionarFae(u12);
+        c1.getListaFae().adicionarFae(u13);
         c1.getListaOrganizador().add(u14);
         c1.getListaOrganizador().add(u15);
 
-        Candidatura cand1 = new Candidatura("OK", rep1);
-        Candidatura cand2 = new Candidatura("ASD", rep2);
-        Candidatura cand3 = new Candidatura("BCD", rep3);
-        Candidatura cand4 = new Candidatura("ZXC", rep4);
+        Candidatura cand1 = new Candidatura("Candidatura da Empresa X", rep1);
+        Candidatura cand2 = new Candidatura("Candidatura da Empresa Y", rep2);
+        Candidatura cand3 = new Candidatura("Candidatura da Empresa W", rep3);
+        Candidatura cand4 = new Candidatura("Candidatura da Empresa Z", rep4);
 
         c1.getListaCandidatura().addCandidatura(cand1);
         c1.getListaCandidatura().addCandidatura(cand2);
@@ -171,9 +174,9 @@ public class Teste {
         ce.setRegistoEventos(re);
         ce.setRegistoUtilizadores(ru);
 
-        compararSeDoisUtilizadoresIguais(u1, u2);
-        compararSeDoisUtilizadoresIguais(u1, u1);
-        compararSeDoisUtilizadoresIguais(u15, u16);
+//        compararSeDoisUtilizadoresIguais(u1, u2);
+//        compararSeDoisUtilizadoresIguais(u1, u1);
+//        compararSeDoisUtilizadoresIguais(u15, u16);
     }
 
     public RegistoUtilizador getRu() {

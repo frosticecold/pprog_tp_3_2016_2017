@@ -6,7 +6,7 @@ import system.user.Fae;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class Atribuicao {
+public class Atribuicao implements Comparable<Atribuicao> {
 
     private Fae fae;
     private Candidatura cd;
@@ -60,8 +60,18 @@ public class Atribuicao {
         this.decisao = decisao;
     }
 
+    public void setDados(Fae f, Candidatura cd) {
+        this.fae = f;
+        this.cd = cd;
+    }
+
     public String toString() {
         return fae.getNome() + " " + decisao.isDecisao();
+    }
+
+    @Override
+    public int compareTo(Atribuicao o) {
+        return this.getFae().getUsername().compareTo(o.getFae().getUsername());
     }
 
 }

@@ -31,15 +31,15 @@ import system.user.Fae;
 public class DecidirCandidatura extends JDialog implements ActionListener {
 
     //Checkboxes
-    private JCheckBox aprovado = new JCheckBox("Aprovado"), reprovado = new JCheckBox("Reprovado");
+    private JCheckBox aprovado = new JCheckBox(TXT_APROVADO), reprovado = new JCheckBox(TXT_REPROVADO);
     //TextArea
     private JTextArea txtArea = new JTextArea();
     //ComboBox Eventos
     private DefaultComboBoxModel<Evento> listaModeloEventos = new DefaultComboBoxModel<>();
     private JComboBox<Evento> eventoComboBox = new JComboBox(listaModeloEventos);
     //Botoes
-    private JButton guardar = new JButton("Guardar"),
-            sair = new JButton("Sair");
+    private JButton guardar = new JButton(TXT_GUARDAR),
+            sair = new JButton(TXT_SAIR);
 
     private JLabel lbEmpresa = new JLabel(TXT_LBL_EMPRESA);
     private JPanel principal = new JPanel(new BorderLayout()),
@@ -68,6 +68,8 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
     private static String TXT_LBL_EMPRESA = "Empresa: ", TXT_LBL_REPRESENTANTE = "Representante: ";
     private static String TXT_VAZIO = "";
     private static String TXT_EVENTO_SELECIONADO = "";
+    private static String TXT_APROVADO = "Aprovado", TXT_REPROVADO = "Reprovado";
+    private static String TXT_GUARDAR = "Guardar", TXT_SAIR = "Sair";
 
     public DecidirCandidatura(JFrame frame, RegistoEvento re, Fae f) {
         super(frame, TITULO_JANELA, true);
