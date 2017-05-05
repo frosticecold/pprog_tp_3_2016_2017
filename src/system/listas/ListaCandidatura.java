@@ -37,5 +37,9 @@ public class ListaCandidatura implements Iterable<Candidatura> {
         }
         return false;
     }
+    
+    public int size(){
+        return lista.size();
+    }
 
 }

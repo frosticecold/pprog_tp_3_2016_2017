@@ -155,7 +155,7 @@ public class Teste {
         re.add(e3);
         re.add(e4);
 
-        testeEventoPorOrganizador(u15.getUsername());
+        //testeEventoPorOrganizador(u15.getUsername());
 
         ce.setRegistoEventos(re);
         ce.setRegistoUtilizadores(ru);
@@ -182,9 +182,9 @@ public class Teste {
         }
     }
 
-    public Fae retornarFaeTeste() {
+    public static Fae retornarFaeTeste(CentroEventos ce) {
         String anic = "anicolau";
-        for (Evento ev : re) {
+        for (Evento ev : ce.getRegistoEventos()) {
             if (ev.getListaFae().isFaeEvento(anic)) {
                 return ev.getListaFae().procurarFaePorUsername(anic);
             }
@@ -192,8 +192,8 @@ public class Teste {
         return null;
     }
 
-    public RepresentanteEmpresa retornarRepEmpTeste() {
-        for (Utilizador utilizador : ru) {
+    public static RepresentanteEmpresa retornarRepEmpTeste(CentroEventos ce) {
+        for (Utilizador utilizador : ce.getRegistoUtilizadores()) {
             if (utilizador instanceof RepresentanteEmpresa) {
                 return (RepresentanteEmpresa) utilizador;
             }

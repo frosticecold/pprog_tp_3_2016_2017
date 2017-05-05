@@ -200,8 +200,7 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
             }
         }
         if (e.getSource() == decidir_cand) {
-            Teste t = new Teste();
-            Fae f = t.retornarFaeTeste();
+            Fae f = Teste.retornarFaeTeste(ce);
             setVisible(false);
             DecidirCandidatura dc = new DecidirCandidatura(this, ce.getRegistoEventos(), f);
             setVisible(true);
@@ -222,7 +221,7 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
             }
         }
         if(e.getSource() == submeter_cand){
-            RepresentanteEmpresa reptest = new Teste().retornarRepEmpTeste();
+            RepresentanteEmpresa reptest = Teste.retornarRepEmpTeste(ce);
             new SubmeterCandidatura(this, ce.getRegistoEventos(),reptest);
         }
     }
