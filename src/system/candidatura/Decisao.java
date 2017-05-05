@@ -37,12 +37,6 @@ public class Decisao {
     public void setTextoJustificativo(String texto_justificativo) {
         this.textoJustificativo = texto_justificativo;
     }
-
-    public boolean validarTextoJustificativo() {
-        if (textoJustificativo != null && textoJustificativo.length() > 10) {
-            return true;
-        }
-        return false;
-    }
+    
 
 }

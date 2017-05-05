@@ -49,6 +49,7 @@ public class Teste {
         Utilizador u13 = new Utilizador("Tiago Silva", "tiagosilva", "tiagosilva@abc.pt", DP);
         Utilizador u14 = new Utilizador("Andreia Antunes", "andreiaa", "andreiaa@abc.pt", DP);
         Utilizador u15 = new Utilizador("Carlos Mendes", "cmendes", "cmendes@abc.pt", DP);
+        Utilizador u16 = new Utilizador("Carlos Mendes", "cmendes", "cmendes@abc.pt", DP);
 
         //Utilizadores para Serem Representantes Empresa
         RepresentanteEmpresa rep1 = new RepresentanteEmpresa("Representante 1", "rep1", "rep1@rep1.pt", DP);
@@ -86,9 +87,12 @@ public class Teste {
         c1.getListaFae().adicionarFae(u12);
         c1.getListaOrganizador().add(u14);
         c1.getListaOrganizador().add(u15);
-        
+
         Candidatura cand1 = new Candidatura("OK", rep1);
         Candidatura cand2 = new Candidatura("ASD", rep2);
+        Candidatura cand3 = new Candidatura("BCD", rep3);
+        Candidatura cand4 = new Candidatura("ZXC", rep4);
+
         c1.getListaCandidatura().addCandidatura(cand1);
         c1.getListaCandidatura().addCandidatura(cand2);
 //        System.out.println(c1.getListaOrganizador().isOrganizadorEvento(u14.getUsername()));
@@ -101,6 +105,8 @@ public class Teste {
         c2.getListaFae().adicionarFae(u4);
         c2.getListaFae().adicionarFae(u5);
         c2.getListaFae().adicionarFae(u6);
+        c2.getListaCandidatura().addCandidatura(cand3);
+        c2.getListaCandidatura().addCandidatura(cand4);
         Congresso c3 = new Congresso("Congresso 3", "O congresso 3", "Local 3", new Data(2007, 2, 22), new Data(2007, 4, 25));
         c3.getListaOrganizador().add(u2);
         c3.getListaOrganizador().add(u3);
@@ -162,9 +168,12 @@ public class Teste {
         re.add(e4);
 
         //testeEventoPorOrganizador(u15.getUsername());
-
         ce.setRegistoEventos(re);
         ce.setRegistoUtilizadores(ru);
+
+        compararSeDoisUtilizadoresIguais(u1, u2);
+        compararSeDoisUtilizadoresIguais(u1, u1);
+        compararSeDoisUtilizadoresIguais(u15, u16);
     }
 
     public RegistoUtilizador getRu() {
@@ -205,5 +214,9 @@ public class Teste {
             }
         }
         return null;
+    }
+
+    private void compararSeDoisUtilizadoresIguais(Utilizador u1, Utilizador u2) {
+        System.out.println(String.format("O Utilizador %s é igual ao %s ? \n %b", u1.getNome(), u2.getNome(), u1.equals(u2)));
     }
 }

@@ -118,12 +118,4 @@ public class RegistoEvento implements Iterable<Evento> {
 
         return le;
     }
-        public List<Fae> obterFaesPorCandidatura(Evento e , Candidatura c) {
-        List<Fae> listaFae = new ArrayList<>();
-            for ( Candidatura cd : e.getListaCandidatura()) {
-                if(c.getDescricao().equals(cd.getDescricao())){
-                //e.getListaAtribuicao().
-                }
-            }
-    }
 }

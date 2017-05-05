@@ -39,11 +39,13 @@ public class ListaCandidatura implements Iterable<Candidatura> {
         }
         return false;
     }
-    
-    public int size(){
+
+    public int size() {
         return lista.size();
     }
-    
 
+    public Candidatura get(int i) {
+        return lista.get(i);
+    }
 
 }

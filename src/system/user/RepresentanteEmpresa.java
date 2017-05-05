@@ -14,4 +14,8 @@ public class RepresentanteEmpresa extends Utilizador {
         super(nome, username, email, password);
     }
 
+    public RepresentanteEmpresa(Utilizador u) {
+        super(u);
+    }
+
 }

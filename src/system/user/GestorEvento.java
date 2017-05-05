@@ -14,4 +14,7 @@ public class GestorEvento extends Utilizador {
         super(nome, username, email, password);
     }
 
+    public GestorEvento(Utilizador u) {
+        super(u);
+    }
 }

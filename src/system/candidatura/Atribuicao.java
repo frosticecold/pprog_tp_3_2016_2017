@@ -9,16 +9,19 @@ import system.user.Fae;
 public class Atribuicao {
 
     private Fae fae;
+    private Candidatura cd;
     private Decisao decisao;
 
     public Atribuicao() {
         fae = new Fae();
+        cd = new Candidatura();
         decisao = new Decisao();
     }
 
-    public Atribuicao(Fae fae, Decisao decisao) {
+    public Atribuicao(Fae fae, Candidatura cd) {
         this.fae = fae;
-        this.decisao = decisao;
+        this.cd = cd;
+        this.decisao = new Decisao();
     }
 
     /**
@@ -33,6 +36,14 @@ public class Atribuicao {
      */
     public Decisao getDecisao() {
         return decisao;
+    }
+
+    public Candidatura getCandidatura() {
+        return cd;
+    }
+
+    public void setCandidatura(Candidatura cd) {
+        this.cd = cd;
     }
 
     /**
@@ -52,4 +63,5 @@ public class Atribuicao {
     public String toString() {
         return fae.getNome() + " " + decisao.isDecisao();
     }
+
 }
