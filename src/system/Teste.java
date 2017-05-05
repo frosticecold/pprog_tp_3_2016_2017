@@ -1,6 +1,7 @@
 package system;
 
 import java.util.List;
+import system.candidatura.Candidatura;
 import system.evento.Congresso;
 import system.evento.Evento;
 import system.evento.Exposicao;
@@ -85,6 +86,11 @@ public class Teste {
         c1.getListaFae().adicionarFae(u12);
         c1.getListaOrganizador().add(u14);
         c1.getListaOrganizador().add(u15);
+        
+        Candidatura cand1 = new Candidatura("OK", rep1);
+        Candidatura cand2 = new Candidatura("ASD", rep2);
+        c1.getListaCandidatura().addCandidatura(cand1);
+        c1.getListaCandidatura().addCandidatura(cand2);
 //        System.out.println(c1.getListaOrganizador().isOrganizadorEvento(u14.getUsername()));
 //        System.out.println(c1.getListaOrganizador().isOrganizadorEvento(u15.getUsername()));
 
