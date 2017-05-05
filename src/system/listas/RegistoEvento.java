@@ -105,4 +105,15 @@ public class RegistoEvento implements Iterable<Evento> {
 
         return le;
     }
+    public List<Evento> getListaEventoPorFae(String username) {
+        List<Evento> le = new ArrayList<>();
+
+        for (Evento ev : lista) {
+            if (ev.getListaFae().isFaeEvento(username)) {
+                le.add(ev);
+            }
+        }
+
+        return le;
+    }
 }

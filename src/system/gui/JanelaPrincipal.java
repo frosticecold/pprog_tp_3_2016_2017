@@ -17,6 +17,7 @@ import javax.swing.KeyStroke;
 import system.CentroEventos;
 import system.Teste;
 import system.user.Fae;
+import system.user.RepresentanteEmpresa;
 
 /**
  *
@@ -48,13 +49,13 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(450, 300));
         setLocationRelativeTo(null);
-
-        JanelaLogin jlg = new JanelaLogin(this, ce.getRegistoUtilizadores());
-        if (jlg.getUsername() == null) {
-            System.exit(0);
-        } else {
+//
+//        JanelaLogin jlg = new JanelaLogin(this, ce.getRegistoUtilizadores());
+//        if (jlg.getUsername() == null) {
+//            System.exit(0);
+//        } else {
             setVisible(true);
-        }
+//        }
     }
 
     public void initComponentes() {
@@ -219,6 +220,10 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
             if (jl.getUsername() != null) {
                 username = jl.getUsername();
             }
+        }
+        if(e.getSource() == submeter_cand){
+            RepresentanteEmpresa reptest = new Teste().retornarRepEmpTeste();
+            new SubmeterCandidatura(this, ce.getRegistoEventos(),reptest);
         }
     }
 

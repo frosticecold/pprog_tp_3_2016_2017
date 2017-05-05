@@ -8,6 +8,8 @@ import system.listas.RegistoEvento;
 import system.user.Utilizador;
 import system.listas.RegistoUtilizador;
 import system.user.Fae;
+import system.user.GestorEvento;
+import system.user.RepresentanteEmpresa;
 import utils.Data;
 
 /**
@@ -24,6 +26,13 @@ public class Teste {
 
         ru = new RegistoUtilizador();
         re = new RegistoEvento();
+
+        //Gestores de Evento
+        GestorEvento raul = new GestorEvento("Raul", "raul", "raul@raul.pt", DP);
+        GestorEvento salvador = new GestorEvento("Salvador", "salvador", "salvador@salvador.pt", DP);
+        ru.add(raul);
+        ru.add(salvador);
+        //Utilizadores
         Utilizador u1 = new Utilizador("Ana Maria", "ana.maria", "anamaria@abc.pt", DP);
         Utilizador u2 = new Utilizador("Bernardo Noé", "b.noe", "bnoe@abc.pt", DP);
         Utilizador u3 = new Utilizador("Carlos Costa", "ccosta", "ccosta@abc.pt", DP);
@@ -39,7 +48,17 @@ public class Teste {
         Utilizador u13 = new Utilizador("Tiago Silva", "tiagosilva", "tiagosilva@abc.pt", DP);
         Utilizador u14 = new Utilizador("Andreia Antunes", "andreiaa", "andreiaa@abc.pt", DP);
         Utilizador u15 = new Utilizador("Carlos Mendes", "cmendes", "cmendes@abc.pt", DP);
-        Utilizador u16 = new Utilizador("Raul","raul","raul@raul.pt",DP);
+
+        //Utilizadores para Serem Representantes Empresa
+        RepresentanteEmpresa rep1 = new RepresentanteEmpresa("Representante 1", "rep1", "rep1@rep1.pt", DP);
+        RepresentanteEmpresa rep2 = new RepresentanteEmpresa("Representante 2", "rep2", "rep2@rep2.pt", DP);
+        RepresentanteEmpresa rep3 = new RepresentanteEmpresa("Representante 3", "rep3", "rep3@rep3.pt", DP);
+        RepresentanteEmpresa rep4 = new RepresentanteEmpresa("Representante 4", "rep4", "rep4@rep4.pt", DP);
+
+        ru.add(rep1);
+        ru.add(rep2);
+        ru.add(rep3);
+        ru.add(rep4);
 
         ru.add(u1);
         ru.add(u2);
@@ -164,7 +183,21 @@ public class Teste {
     }
 
     public Fae retornarFaeTeste() {
-        Utilizador u9 = new Utilizador("André Nicolau", "anicolau", "anicolau@abc.pt", DP);
-        return new Fae(u9);
+        String anic = "anicolau";
+        for (Evento ev : re) {
+            if (ev.getListaFae().isFaeEvento(anic)) {
+                return ev.getListaFae().procurarFaePorUsername(anic);
+            }
+        }
+        return null;
+    }
+
+    public RepresentanteEmpresa retornarRepEmpTeste() {
+        for (Utilizador utilizador : ru) {
+            if (utilizador instanceof RepresentanteEmpresa) {
+                return (RepresentanteEmpresa) utilizador;
+            }
+        }
+        return null;
     }
 }

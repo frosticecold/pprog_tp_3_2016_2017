@@ -61,4 +61,13 @@ public class ListaFae implements Iterable<Fae> {
         return false;
     }
 
+    public Fae procurarFaePorUsername(String username) {
+        for (Fae f : lista) {
+            if (f.getUsername().equals(username)) {
+                return f;
+            }
+        }
+
+        return null;
+    }
 }
