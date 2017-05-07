@@ -1,6 +1,7 @@
 package system;
 
 import java.util.List;
+import system.candidatura.Atribuicao;
 import system.candidatura.Candidatura;
 import system.evento.Congresso;
 import system.evento.Evento;
@@ -49,13 +50,12 @@ public class Teste {
         Utilizador u13 = new Utilizador("Tiago Silva", "tiagosilva", "tiagosilva@abc.pt", DP);
         Utilizador u14 = new Utilizador("Andreia Antunes", "andreiaa", "andreiaa@abc.pt", DP);
         Utilizador u15 = new Utilizador("Carlos Mendes", "cmendes", "cmendes@abc.pt", DP);
-        //Utilizador u16 = new Utilizador("Carlos Mendes", "cmendes", "cmendes@abc.pt", DP);
 
         //Utilizadores para Serem Representantes Empresa
-        RepresentanteEmpresa rep1 = new RepresentanteEmpresa("Representante 1", "rep1", "rep1@rep1.pt", DP);
-        RepresentanteEmpresa rep2 = new RepresentanteEmpresa("Representante 2", "rep2", "rep2@rep2.pt", DP);
-        RepresentanteEmpresa rep3 = new RepresentanteEmpresa("Representante 3", "rep3", "rep3@rep3.pt", DP);
-        RepresentanteEmpresa rep4 = new RepresentanteEmpresa("Representante 4", "rep4", "rep4@rep4.pt", DP);
+        RepresentanteEmpresa rep1 = new RepresentanteEmpresa("Representante 1", "rep1", "rep1@rep1.pt","Empresa A", DP);
+        RepresentanteEmpresa rep2 = new RepresentanteEmpresa("Representante 2", "rep2", "rep2@rep2.pt","Empresa B", DP);
+        RepresentanteEmpresa rep3 = new RepresentanteEmpresa("Representante 3", "rep3", "rep3@rep3.pt","Empresa C", DP);
+        RepresentanteEmpresa rep4 = new RepresentanteEmpresa("Representante 4", "rep4", "rep4@rep4.pt","Empresa D", DP);
 
         ru.add(rep1);
         ru.add(rep2);
@@ -152,6 +152,9 @@ public class Teste {
         e3.getListaFae().adicionarFae(u9);
         e3.getListaFae().adicionarFae(u7);
         e3.getListaFae().adicionarFae(u8);
+        e3.getListaCandidatura().addCandidatura(cand4);
+        Atribuicao a = new Atribuicao(new Fae(u9), cand4);
+        e3.getListaAtribuicao().add(a);
         Exposicao e4 = new Exposicao("Exposicao 4", "A exposicao 4", "Expo 4", new Data(2015, 5, 5), new Data(2018, 6, 01));
         e4.getListaOrganizador().add(u6);
         e4.getListaOrganizador().add(u7);

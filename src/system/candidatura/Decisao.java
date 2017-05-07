@@ -6,37 +6,43 @@ package system.candidatura;
  */
 public class Decisao {
 
-    private boolean decisao;
+    private int aprovacao;
     private String textoJustificativo;
 
-    public static boolean APROVADO = true, NAO_APROVADO = false;
-    public static String SEM_TEXTO = "Sem texto";
+    public final static int SEM_DECISAO = -1, NAO_APROVADO = 0, APROVADO = 1;
+    public final static String SEM_TEXTO = "Sem texto";
 
     public Decisao() {
-        decisao = NAO_APROVADO;
+        aprovacao = SEM_DECISAO;
         textoJustificativo = SEM_TEXTO;
     }
 
-    public Decisao(boolean decisao, String texto_justificativo) {
-        this.decisao = decisao;
+    public Decisao(int decisao, String texto_justificativo) {
+        this.aprovacao = decisao;
         this.textoJustificativo = texto_justificativo;
     }
 
-    public boolean isDecisao() {
-        return decisao;
+    public int getAprovacao() {
+        return aprovacao;
     }
 
     public String getTextoJustificativo() {
         return textoJustificativo;
     }
 
-    public void setDecisao(boolean decisao) {
-        this.decisao = decisao;
+    public void setAprovacao(int aprovacao) {
+        this.aprovacao = aprovacao;
     }
 
     public void setTextoJustificativo(String texto_justificativo) {
         this.textoJustificativo = texto_justificativo;
     }
+
+    @Override
+    public String toString() {
+        return "Decisao{" + "decisao=" + aprovacao + ", textoJustificativo=" + textoJustificativo + '}';
+    }
+    
     
 
 }

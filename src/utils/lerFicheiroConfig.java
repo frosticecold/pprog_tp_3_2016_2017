@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import system.listas.listaTipoEvento;
+import system.listas.ListaTipoEvento;
 import system.listas.InterfaceListaLerConfig;
 
 /**
@@ -49,9 +49,9 @@ public class lerFicheiroConfig {
             br.close();
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(listaTipoEvento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListaTipoEvento.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(listaTipoEvento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListaTipoEvento.class.getName()).log(Level.SEVERE, null, ex);
         }
         return CLASSPATH;
     }

@@ -66,7 +66,7 @@ public class Atribuicao implements Comparable<Atribuicao> {
     }
 
     public String toString() {
-        return fae.getNome() + " " + decisao.isDecisao();
+        return fae.getNome() + " " + decisao.getAprovacao();
     }
 
     @Override

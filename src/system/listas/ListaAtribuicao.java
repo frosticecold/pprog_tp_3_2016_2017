@@ -11,11 +11,11 @@ import system.user.Fae;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class listaAtribuicao implements Iterable<Atribuicao> {
+public class ListaAtribuicao implements Iterable<Atribuicao> {
 
     private List<Atribuicao> lista = new ArrayList<>();
 
-    public listaAtribuicao() {
+    public ListaAtribuicao() {
     }
 
     public Atribuicao novaAtribuicao() {
@@ -45,6 +45,15 @@ public class listaAtribuicao implements Iterable<Atribuicao> {
             listaFae.add(a.getFae());
         }
         return listaFae;
+    }
+
+    public Atribuicao obterAtribuicaoAssociadaAoFae(Fae f) {
+        for (Atribuicao a : lista) {
+            if (a.getFae().equals(f)) {
+                return a;
+            }
+        }
+        return null;
     }
 
     public int size() {

@@ -5,8 +5,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import system.candidatura.Atribuicao;
-import system.candidatura.Candidatura;
 import system.evento.Evento;
 import system.user.Fae;
 import system.user.Organizador;

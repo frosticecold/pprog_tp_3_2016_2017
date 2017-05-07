@@ -5,23 +5,30 @@
  */
 package system.listas;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import utils.lerFicheiroConfig;
 
 /**
  *
  * @author Raúl Correia
  */
-public class listaTipoEvento implements InterfaceListaLerConfig<String> {
+public class ListaTipoEvento implements InterfaceListaLerConfig<String>, Iterable<String> {
 
-    List<String> listaTipoEvento;
+    List<String> lista;
     public static String CLASSPATH;
     private static String START_CONFIG = "[tipoevento]";
     private static String END_CONFIG = "[/tipoevento]";
 
-    public listaTipoEvento() {
-        listaTipoEvento = new ArrayList<>();
+    public ListaTipoEvento() {
+        lista = new ArrayList<>();
         lerFicheiroConfig lf = new lerFicheiroConfig();
         CLASSPATH = lf.lerFicheiroConfig(START_CONFIG, END_CONFIG, CLASSPATH, this);
     }
@@ -43,7 +50,7 @@ public class listaTipoEvento implements InterfaceListaLerConfig<String> {
 //                    while (terminar == false) {
 //                        linha = br.readLine();
 //                        if (!linha.equals(END_CONFIG)) {
-//                            listaTipoEvento.add(linha);
+//                            lista.add(linha);
 //                        } else {
 //                            terminar = true;
 //                        }
@@ -51,14 +58,14 @@ public class listaTipoEvento implements InterfaceListaLerConfig<String> {
 //                }
 //            }
 //            br.close();
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(listaTipoEvento.class.getName()).log(Level.SEVERE, null, ex);
 //        } catch (IOException ex) {
-//            Logger.getLogger(listaTipoEvento.class.getName()).log(Level.SEVERE, null, ex);
+//            System.out.println("Erro");
 //        }
+//
 //    }
+
     public void escreverOutput() {
-        for (String string : listaTipoEvento) {
+        for (String string : lista) {
             System.out.println(string);
 
         }
@@ -66,6 +73,10 @@ public class listaTipoEvento implements InterfaceListaLerConfig<String> {
 
     @Override
     public boolean add(String s) {
-        return listaTipoEvento.add(s);
+        return lista.add(s);
+    }
+
+    public Iterator<String> iterator() {
+        return lista.iterator();
     }
 }

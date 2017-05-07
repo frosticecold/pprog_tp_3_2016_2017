@@ -1,6 +1,6 @@
 package system.evento;
 
-import system.listas.listaAtribuicao;
+import system.listas.ListaAtribuicao;
 import system.listas.ListaCandidatura;
 import system.listas.ListaFae;
 import system.listas.ListaOrganizador;
@@ -20,7 +20,7 @@ public abstract class Evento implements Comparable<Evento> {
     private ListaOrganizador listaOrganizador = new ListaOrganizador();
     private ListaCandidatura listaCandidatura = new ListaCandidatura();
     private ListaFae listaFae = new ListaFae();
-    private listaAtribuicao listaAtribuicao = new listaAtribuicao();
+    private ListaAtribuicao listaAtribuicao = new ListaAtribuicao();
 
     private String TITULO_OMISSAO = "Sem Titulo",
             DESCRICAO_OMISSAO = "Sem descrição";
@@ -88,9 +88,9 @@ public abstract class Evento implements Comparable<Evento> {
     }
 
     /**
-     * @return the listaAtribuicao
+     * @return the ListaAtribuicao
      */
-    public listaAtribuicao getListaAtribuicao() {
+    public ListaAtribuicao getListaAtribuicao() {
         return listaAtribuicao;
     }
 
@@ -145,9 +145,9 @@ public abstract class Evento implements Comparable<Evento> {
     }
 
     /**
-     * @param listaAtribuicao the listaAtribuicao to set
+     * @param listaAtribuicao the ListaAtribuicao to set
      */
-    public void setListaAtribuicao(listaAtribuicao listaAtribuicao) {
+    public void setListaAtribuicao(ListaAtribuicao listaAtribuicao) {
         this.listaAtribuicao = listaAtribuicao;
     }
 

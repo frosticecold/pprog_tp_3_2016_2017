@@ -11,6 +11,7 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import system.evento.Evento;
 import system.listas.RegistoEvento;
+import system.listas.ListaTipoEvento;
 import system.user.RepresentanteEmpresa;
 
 /**
@@ -35,10 +37,14 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
     JButton submeter = new JButton("Submeter"), sair = new JButton("Sair");
     DefaultComboBoxModel<String> cbmTipoEvento = new DefaultComboBoxModel<>();
     DefaultComboBoxModel<Evento> cbmEvento = new DefaultComboBoxModel<>();
-    JComboBox<String> cmbboxTipoEvento = new JComboBox<>();
-    JComboBox<Evento> cmbboxEvento = new JComboBox<>();
+    JComboBox<String> tipoEventocmbox = new JComboBox<>();
+    JComboBox<Evento> eventoCombox = new JComboBox<>();
     JTextArea txtArea = new JTextArea();
     //Vars de instância
+
+    RepresentanteEmpresa representante;
+    RegistoEvento registoEvento;
+    ListaTipoEvento listaTipoEvento = new ListaTipoEvento();
     //Vars de classe
     private static boolean MODAL = true;
     private static String TITULO_JANELA = "Submeter Candidatura";
@@ -51,6 +57,10 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
         setMinimumSize(TAMANHO_JANELA);
         setLocationRelativeTo(owner);
         setVisible(true);
+
+        //Teste
+        representante = repEmpresa;
+        registoEvento = regEvent;
     }
 
     private void initComponentes() {
@@ -59,16 +69,21 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
         initPainelCentro();
         initPainelSul();
         adicionarComponentes();
+        copiarTiposEventoParaCombobox();
     }
 
     public void initBotoes() {
+
+        sair.setMnemonic(KeyEvent.VK_S);
+        submeter.setMnemonic(KeyEvent.VK_B);
+
         submeter.addActionListener(this);
         sair.addActionListener(this);
     }
 
     public void initPainelNorte() {
-        pnorte.add(cmbboxTipoEvento, BorderLayout.WEST);
-        pnorte.add(cmbboxEvento, BorderLayout.EAST);
+        pnorte.add(tipoEventocmbox, BorderLayout.WEST);
+        pnorte.add(eventoCombox, BorderLayout.EAST);
 
     }
 
@@ -97,10 +112,21 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
         add(painel);
     }
 
+    public void copiarTiposEventoParaCombobox() {
+        cbmTipoEvento.removeAllElements();
+        for (String s : listaTipoEvento) {
+            cbmTipoEvento.addElement(s);
+        }
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submeter) {
             System.out.println(String.format("Width: %d Height: %d", this.getWidth(), this.getHeight()));
+        }
+        if(e.getSource() == sair){
+        dispose();
         }
     }
 
