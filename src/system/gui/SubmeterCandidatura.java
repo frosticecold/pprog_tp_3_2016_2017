@@ -112,6 +112,10 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
         add(painel);
     }
 
+    /**
+     * Este método limpa a default model lista associada ao TipoEventoCombobox e adiciona
+     * os tipos de Evento
+     */
     public void copiarTiposEventoParaCombobox() {
         cbmTipoEvento.removeAllElements();
         for (String s : listaTipoEvento) {
