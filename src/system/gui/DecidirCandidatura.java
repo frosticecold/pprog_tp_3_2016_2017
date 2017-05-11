@@ -192,7 +192,7 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
     private void copiarListaEventosParaListaComboBox() {
         listaModeloEventos.removeAllElements();
         for (Evento e : registoEvento) {
-            if (e.getListaFae().isFaeEvento(f_user.getUsername())) {
+            if (e.getListaFae().isFaeEvento(f_user) && e.getListaAtribuicao().verificarSeFaeTemAtribuicoes(f_user)) {
                 listaModeloEventos.addElement(e);
             }
         }
@@ -217,19 +217,21 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
     private void obterInformacaoJaGuardada() {
         Evento ev = (Evento) eventoComboBox.getSelectedItem();
         Atribuicao atrib = ev.getListaAtribuicao().obterAtribuicaoAssociadaAoFae(f_user);
-        if (atrib.getDecisao().getAprovacao() == Decisao.APROVADO) {
-            aprovado.setSelected(true);
-            reprovado.setSelected(false);
-        } else if (atrib.getDecisao().getAprovacao() == Decisao.NAO_APROVADO) {
-            aprovado.setSelected(false);
-            reprovado.setSelected(true);
-        } else {
-            aprovado.setSelected(false);
-            reprovado.setSelected(false);
+        if (atrib != null) {
+            if (atrib.getDecisao().getAprovacao() == Decisao.APROVADO) {
+                aprovado.setSelected(true);
+                reprovado.setSelected(false);
+            } else if (atrib.getDecisao().getAprovacao() == Decisao.NAO_APROVADO) {
+                aprovado.setSelected(false);
+                reprovado.setSelected(true);
+            } else {
+                aprovado.setSelected(false);
+                reprovado.setSelected(false);
+            }
+            lbEmpresa.setText(atrib.getCandidatura().getRepresentanteEmpresa().getNomeEmpresa());
+            txtDescricao.setText(atrib.getCandidatura().getDescricao());
+            txtJustificativo.setText(atrib.getDecisao().getTextoJustificativo());
         }
-        lbEmpresa.setText(atrib.getCandidatura().getRepresentanteEmpresa().getNomeEmpresa());
-        txtDescricao.setText(atrib.getCandidatura().getDescricao());
-        txtJustificativo.setText(atrib.getDecisao().getTextoJustificativo());
     }
 
     @Override
@@ -266,7 +268,9 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
             limparComponentes();
             obterInformacaoJaGuardada();
             atrib = ((Evento) eventoComboBox.getSelectedItem()).getListaAtribuicao().obterAtribuicaoAssociadaAoFae(f_user);
-            decisao_utilizador = atrib.getDecisao().getAprovacao();
+            if (atrib != null) {
+                decisao_utilizador = atrib.getDecisao().getAprovacao();
+            }
             //}
         }
     }

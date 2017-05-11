@@ -12,44 +12,53 @@ import system.user.Utilizador;
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
 public class ListaFae implements Iterable<Fae> {
-
+    
     List<Fae> lista = new ArrayList<>();
-
+    
     ;
 
     public ListaFae() {
     }
-
-    public boolean add(Fae f) {
+    
+    private boolean add(Fae f) {
         if (!lista.contains(f)) {
             return lista.add(f);
         }
         return false;
     }
-
+    
     public boolean adicionarFae(Utilizador u) {
         Fae f = new Fae(u);
-        return lista.add(f);
-
+        return add(f);
+        
     }
-
+    
     @Override
     public Iterator<Fae> iterator() {
         return lista.iterator();
     }
-
+    
     public void copiarListaFae(List<Fae> listaFaeCopiar) {
         for (Fae fae : listaFaeCopiar) {
             lista.add(fae);
         }
     }
-
+    
     public int size() {
         return lista.size();
     }
-
+    
     public Fae get(int i) {
         return lista.get(i);
+    }
+    
+    public boolean isFaeEvento(Fae f) {
+        for (Fae flist : lista) {
+            if (flist.equals(f)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isFaeEvento(String username) {
@@ -60,14 +69,14 @@ public class ListaFae implements Iterable<Fae> {
         }
         return false;
     }
-
+    
     public Fae procurarFaePorUsername(String username) {
         for (Fae f : lista) {
             if (f.getUsername().equals(username)) {
                 return f;
             }
         }
-
+        
         return null;
     }
 }

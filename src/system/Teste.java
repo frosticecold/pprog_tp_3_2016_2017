@@ -49,18 +49,35 @@ public class Teste {
         Utilizador u12 = new Utilizador("Luis Sousa", "luiss", "luiss@abc.pt", DP);
         Utilizador u13 = new Utilizador("Tiago Silva", "tiagosilva", "tiagosilva@abc.pt", DP);
         Utilizador u14 = new Utilizador("Andreia Antunes", "andreiaa", "andreiaa@abc.pt", DP);
-        Utilizador u15 = new Utilizador("Carlos Mendes", "cmendes", "cmendes@abc.pt", DP);
-
+        Utilizador u15 = new Utilizador("Utilizador a", "usera", "usera@user.pt", DP);
+        Utilizador u16 = new Utilizador("Utilizador b", "userb", "userb@user.pt", DP);
+        Utilizador u17 = new Utilizador("Utilizador c", "userc", "userc@user.pt", DP);
+        Utilizador u18 = new Utilizador("Utilizador d", "userd", "userd@user.pt", DP);
+        Utilizador u19 = new Utilizador("Utilizador e", "usere", "usere@user.pt", DP);
+        Utilizador u20 = new Utilizador("Utilizador f", "userf", "userf@user.pt", DP);
+        Utilizador u21 = new Utilizador("Utilizador g", "userg", "userg@user.pt", DP);
+        Utilizador u22 = new Utilizador("Utilizador h", "userh", "userh@user.pt", DP);
+        Utilizador u23 = new Utilizador("Utilizador i", "useri", "useri@user.pt", DP);
+        Utilizador u24 = new Utilizador("Utilizador j", "userj", "userj@user.pt", DP);
+        Utilizador u25 = new Utilizador("Utilizador k", "userk", "userk@user.pt", DP);
         //Utilizadores para Serem Representantes Empresa
-        RepresentanteEmpresa rep1 = new RepresentanteEmpresa("Representante 1", "rep1", "rep1@rep1.pt","Empresa A", DP);
-        RepresentanteEmpresa rep2 = new RepresentanteEmpresa("Representante 2", "rep2", "rep2@rep2.pt","Empresa B", DP);
-        RepresentanteEmpresa rep3 = new RepresentanteEmpresa("Representante 3", "rep3", "rep3@rep3.pt","Empresa C", DP);
-        RepresentanteEmpresa rep4 = new RepresentanteEmpresa("Representante 4", "rep4", "rep4@rep4.pt","Empresa D", DP);
+        RepresentanteEmpresa rep1 = new RepresentanteEmpresa("Representante 1", "rep1", "rep1@rep1.pt", "Empresa A", DP);
+        RepresentanteEmpresa rep2 = new RepresentanteEmpresa("Representante 2", "rep2", "rep2@rep2.pt", "Empresa B", DP);
+        RepresentanteEmpresa rep3 = new RepresentanteEmpresa("Representante 3", "rep3", "rep3@rep3.pt", "Empresa C", DP);
+        RepresentanteEmpresa rep4 = new RepresentanteEmpresa("Representante 4", "rep4", "rep4@rep4.pt", "Empresa D", DP);
+        RepresentanteEmpresa rep5 = new RepresentanteEmpresa("Representante 5", "rep5", "rep5@rep5.pt", "Empresa E", DP);
+        RepresentanteEmpresa rep6 = new RepresentanteEmpresa("Representante 6", "rep6", "rep6@rep6.pt", "Empresa F", DP);
+        RepresentanteEmpresa rep7 = new RepresentanteEmpresa("Representante 7", "rep7", "rep7@rep7.pt", "Empresa G", DP);
+        RepresentanteEmpresa rep8 = new RepresentanteEmpresa("Representante 8", "rep8", "rep8@rep8.pt", "Empresa H", DP);
 
         ru.add(rep1);
         ru.add(rep2);
         ru.add(rep3);
         ru.add(rep4);
+        ru.add(rep5);
+        ru.add(rep6);
+        ru.add(rep7);
+        ru.add(rep8);
 
         ru.add(u1);
         ru.add(u2);
@@ -77,6 +94,22 @@ public class Teste {
         ru.add(u13);
         ru.add(u14);
         ru.add(u15);
+        ru.add(u16);
+        ru.add(u17);
+        ru.add(u18);
+        ru.add(u19);
+        ru.add(u20);
+        ru.add(u21);
+        ru.add(u22);
+        ru.add(u23);
+        ru.add(u24);
+        ru.add(u25);
+        
+        
+        Candidatura cand1 = new Candidatura("Candidatura da Empresa X", rep1);
+        Candidatura cand2 = new Candidatura("Candidatura da Empresa Y", rep2);
+        Candidatura cand3 = new Candidatura("Candidatura da Empresa W", rep3);
+        Candidatura cand4 = new Candidatura("Candidatura da Empresa Z", rep4);
 
         Congresso c1 = new Congresso("Congresso 1", "O congresso 1", "Local 1", new Data(2016, 8, 11), new Data(2018, 9, 24));
         c1.getListaOrganizador().add(u1);
@@ -88,18 +121,12 @@ public class Teste {
         c1.getListaFae().adicionarFae(u11);
         c1.getListaFae().adicionarFae(u12);
         c1.getListaFae().adicionarFae(u13);
+        c1.getListaFae().adicionarFae(u18);
         c1.getListaOrganizador().add(u14);
         c1.getListaOrganizador().add(u15);
 
-        Candidatura cand1 = new Candidatura("Candidatura da Empresa X", rep1);
-        Candidatura cand2 = new Candidatura("Candidatura da Empresa Y", rep2);
-        Candidatura cand3 = new Candidatura("Candidatura da Empresa W", rep3);
-        Candidatura cand4 = new Candidatura("Candidatura da Empresa Z", rep4);
-
         c1.getListaCandidatura().addCandidatura(cand1);
         c1.getListaCandidatura().addCandidatura(cand2);
-//        System.out.println(c1.getListaOrganizador().isOrganizadorEvento(u14.getUsername()));
-//        System.out.println(c1.getListaOrganizador().isOrganizadorEvento(u15.getUsername()));
 
         Congresso c2 = new Congresso("Congresso 2", "O congresso 2", "Local 2", new Data(2015, 12, 25), new Data(2016, 1, 10));
         c2.getListaOrganizador().add(u1);

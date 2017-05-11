@@ -56,6 +56,15 @@ public class ListaAtribuicao implements Iterable<Atribuicao> {
         return null;
     }
 
+    public boolean verificarSeFaeTemAtribuicoes(Fae f) {
+        for (Atribuicao a : lista) {
+            if (a.getFae().equals(f)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int size() {
 
         return lista.size();
