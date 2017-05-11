@@ -16,10 +16,12 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import system.candidatura.Candidatura;
 import system.evento.Evento;
 import system.listas.RegistoEvento;
 import system.listas.ListaTipoEvento;
@@ -30,28 +32,37 @@ import system.user.RepresentanteEmpresa;
  * @author salva
  */
 public class SubmeterCandidatura extends JDialog implements ActionListener {
-
+    
     JPanel pnorte = new JPanel(new BorderLayout()), pcentro = new JPanel(new BorderLayout()), psul = new JPanel(new BorderLayout()),
             psuldir = new JPanel(new FlowLayout()),
-            painel = new JPanel(new BorderLayout(10, 10));
+            painel = new JPanel(new BorderLayout(GAP, GAP));
+    
     JButton submeter = new JButton("Submeter"), sair = new JButton("Sair");
-    DefaultComboBoxModel<String> cbmTipoEvento = new DefaultComboBoxModel<>();
-    DefaultComboBoxModel<Evento> cbmEvento = new DefaultComboBoxModel<>();
-    JComboBox<String> tipoEventocmbox = new JComboBox<>();
-    JComboBox<Evento> eventoCombox = new JComboBox<>();
+    DefaultComboBoxModel<String> dcbmTipoEvento = new DefaultComboBoxModel<>();
+    DefaultComboBoxModel<Evento> dcbmEvento = new DefaultComboBoxModel<>();
+    JComboBox<String> tipoEventocmbox = new JComboBox<>(dcbmTipoEvento);
+    JComboBox<Evento> eventoCombox = new JComboBox<>(dcbmEvento);
     JTextArea txtArea = new JTextArea();
     //Vars de instância
-
-    RepresentanteEmpresa representante;
-    RegistoEvento registoEvento;
-    ListaTipoEvento listaTipoEvento = new ListaTipoEvento();
+    private ListaTipoEvento listaTipoEvento;
+    private RepresentanteEmpresa representante;
+    private RegistoEvento registoEvento;
     //Vars de classe
-    private static boolean MODAL = true;
-    private static String TITULO_JANELA = "Submeter Candidatura";
-    private static Dimension TAMANHO_JANELA = new Dimension(327, 266);
-
+    private final static int GAP = 10;
+    private final static boolean MODAL = true;
+    private final static String TITULO_JANELA = "Submeter Candidatura";
+    private final static Dimension TAMANHO_JANELA = new Dimension(327, 266);
+    private final static String MENSAGEM_ERRO = "Erro, texto inválido";
+    private final static String TITULO_ERRO = "Erro";
+    private final static String SEM_TEXTO = "";
+    
     public SubmeterCandidatura(Frame owner, RegistoEvento regEvent, RepresentanteEmpresa repEmpresa) {
         super(owner, TITULO_JANELA, MODAL);
+        
+        listaTipoEvento = new ListaTipoEvento();
+        representante = repEmpresa;
+        registoEvento = regEvent;
+        
         initComponentes();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setMinimumSize(TAMANHO_JANELA);
@@ -59,52 +70,58 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
         setVisible(true);
 
         //Teste
-        representante = repEmpresa;
-        registoEvento = regEvent;
     }
-
+    
     private void initComponentes() {
+        initCombobox();
         initBotoes();
         initPainelNorte();
         initPainelCentro();
         initPainelSul();
         adicionarComponentes();
         copiarTiposEventoParaCombobox();
+        copiarEventoPorTipoParaCombobox();
+    }
+    
+    private void initCombobox() {
+        
+        tipoEventocmbox.addActionListener(this);
+        eventoCombox.addActionListener(this);
     }
 
-    public void initBotoes() {
-
+    private void initBotoes() {
+        
         sair.setMnemonic(KeyEvent.VK_S);
         submeter.setMnemonic(KeyEvent.VK_B);
-
+        
         submeter.addActionListener(this);
         sair.addActionListener(this);
     }
-
-    public void initPainelNorte() {
+    
+    private void initPainelNorte() {
         pnorte.add(tipoEventocmbox, BorderLayout.WEST);
         pnorte.add(eventoCombox, BorderLayout.EAST);
-
+        
     }
-
-    public void initPainelCentro() {
+    
+    private void initPainelCentro() {
         pcentro.setBorder(new EtchedBorder());
         pcentro.add(txtArea);
-
+        
     }
-
-    public void initPainelSul() {
+    
+    private void initPainelSul() {
         initPainelSulDir();
         psul.add(psuldir, BorderLayout.EAST);
-
+        
     }
-
-    public void initPainelSulDir() {
+    
+    private void initPainelSulDir() {
         psuldir.add(sair);
         psuldir.add(submeter);
     }
-
-    public void adicionarComponentes() {
+    
+    private void adicionarComponentes() {
         painel.setBorder(new EmptyBorder(10, 10, 10, 10));
         painel.add(pnorte, BorderLayout.NORTH);
         painel.add(pcentro, BorderLayout.CENTER);
@@ -113,25 +130,59 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
     }
 
     /**
-     * Este método limpa a default model lista associada ao TipoEventoCombobox e adiciona
-     * os tipos de Evento
+     * Este método limpa a default model lista associada ao TipoEventoCombobox e
+     * adiciona os tipos de Evento
      */
-    public void copiarTiposEventoParaCombobox() {
-        cbmTipoEvento.removeAllElements();
+    private void copiarTiposEventoParaCombobox() {
+        dcbmTipoEvento.removeAllElements();
         for (String s : listaTipoEvento) {
-            cbmTipoEvento.addElement(s);
+            dcbmTipoEvento.addElement(s);
         }
-
+        
     }
 
+    /**
+     * Este método limpa a default model lista associada ao EventoCombobox e
+     * adiciona os Eventos associados
+     */
+    private void copiarEventoPorTipoParaCombobox() {
+        dcbmEvento.removeAllElements();
+        for (Evento ev : registoEvento) {
+            if (ev.getClass().getSimpleName().equalsIgnoreCase(dcbmTipoEvento.getSelectedItem().toString())) {
+                dcbmEvento.addElement(ev);
+            }
+            
+        }
+    }
+    
+    private void limparTxtArea() {
+        txtArea.setText(SEM_TEXTO);
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == submeter) {
-            System.out.println(String.format("Width: %d Height: %d", this.getWidth(), this.getHeight()));
+        if (e.getSource() == tipoEventocmbox) {
+            copiarEventoPorTipoParaCombobox();
+            limparTxtArea();
         }
-        if(e.getSource() == sair){
-        dispose();
+        if (e.getSource() == eventoCombox) {
+            limparTxtArea();
+        }
+        if (e.getSource() == submeter) {
+            if (!txtArea.getText().isEmpty()) {
+                Evento ev = (Evento) dcbmEvento.getSelectedItem();
+                if (ev != null) {
+                    Candidatura c = ev.getListaCandidatura().novaCandidatura();
+                    c.setDados(txtArea.getText(), representante);
+                    System.out.println(c);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, MENSAGEM_ERRO, TITULO_ERRO, JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        if (e.getSource() == sair) {
+            dispose();
         }
     }
-
+    
 }

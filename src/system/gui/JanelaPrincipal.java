@@ -54,7 +54,7 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
 //        if (jlg.getUsername() == null) {
 //            System.exit(0);
 //        } else {
-            setVisible(true);
+        setVisible(true);
 //        }
     }
 
@@ -206,6 +206,10 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
             setVisible(true);
 
         }
+        if (e.getSource() == submeter_cand) {
+            RepresentanteEmpresa reptest = Teste.retornarRepEmpTeste(ce);
+            new SubmeterCandidatura(this, ce.getRegistoEventos(), reptest);
+        }
         if (e.getSource() == debug_item) {
             Teste t = new Teste();
             t.init(ce);
@@ -221,10 +225,5 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
                 username = jl.getUsername();
             }
         }
-        if(e.getSource() == submeter_cand){
-            RepresentanteEmpresa reptest = Teste.retornarRepEmpTeste(ce);
-            new SubmeterCandidatura(this, ce.getRegistoEventos(),reptest);
-        }
     }
-
 }

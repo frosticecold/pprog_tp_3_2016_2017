@@ -23,6 +23,7 @@ import javax.swing.border.TitledBorder;
 import system.candidatura.Atribuicao;
 import system.candidatura.Decisao;
 import system.evento.Evento;
+import system.listas.ListaTipoEvento;
 import system.listas.RegistoEvento;
 import system.user.Fae;
 
@@ -97,7 +98,6 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         initPainelTxtArea();
         initPainelSul();
         adicionarPaineis();
-
         //Teste
         copiarListaEventosParaListaComboBox();
         TXT_EVENTO_SELECIONADO = eventoComboBox.getSelectedItem().toString();
