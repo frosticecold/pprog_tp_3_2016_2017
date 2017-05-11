@@ -76,6 +76,7 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
     private static final String TXT_APROVADO = "Aprovado", TXT_REPROVADO = "Reprovado";
     private static final String TXT_GUARDAR = "Guardar", TXT_SAIR = "Sair";
     private static final String ERRO_GUARDAR = "Texto Inválido", ERRO_TITULO = "Erro";
+    private static final String ERRO_SELECIONAR = "Sem seleção";
 
     public DecidirCandidatura(JFrame frame, RegistoEvento re, Fae f) {
         super(frame, TITULO_JANELA, true);
@@ -245,10 +246,11 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
                 Evento ev = (Evento) eventoComboBox.getSelectedItem();
                 if (validarTexto()) {
                     atrib.setDecisao(new Decisao(decisao_utilizador, txtJustificativo.getText()));
-                    System.out.println("Decisao: " + atrib.getDecisao());
                 } else {
                     JOptionPane.showMessageDialog(this, ERRO_GUARDAR, ERRO_TITULO, JOptionPane.ERROR_MESSAGE);
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, ERRO_SELECIONAR, ERRO_TITULO, JOptionPane.ERROR_MESSAGE);
             }
         }
         if (e.getSource() == aprovado) {
