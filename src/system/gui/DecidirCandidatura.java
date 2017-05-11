@@ -48,7 +48,7 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
             painelTopo = new JPanel(new GridLayout(NUM_LINHAS, NUM_COL, EMPTY_BORDER_GAP, EMPTY_BORDER_GAP)),
             painelCheckbox = new JPanel(new FlowLayout(FlowLayout.CENTER, GAP_FLOWLAYOUT_WIDTH, GAP_FLOWLAYOUT_HEIGHT)),
             painelInfo = new JPanel(new FlowLayout(FlowLayout.LEFT)),
-            painelTextArea = new JPanel(new GridLayout(2, 1, 5, 5)),
+            painelTextArea = new JPanel(new GridLayout(NUM_LINHAS, NUM_COL, GAP, GAP)),
             painelTextAreaNorte = new JPanel(new BorderLayout()),
             painelTextAreaSul = new JPanel(new BorderLayout()),
             painelSul = new JPanel(new BorderLayout()),
@@ -66,6 +66,7 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
     private static final int GAP_FLOWLAYOUT_WIDTH = 100, GAP_FLOWLAYOUT_HEIGHT = 0;
     private static final int NUM_COL = 1, NUM_LINHAS = 2;
     private static final int EMPTY_BORDER_GAP = 10;
+    private static final int GAP = 5;
     private static final Dimension TAMANHO_JANELA_MINIMO = new Dimension(450, 350);
     private static final String TITULO_JANELA = "Decidir Candidatura", TITULO_BORDER = "Decisão";
     private static final String ICON_FOLDER = "icons/";
@@ -263,15 +264,12 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
             decisao_utilizador = Decisao.NAO_APROVADO;
         }
         if (e.getSource() == eventoComboBox) {
-            //String temp = eventoComboBox.getSelectedItem().toString();
-            //if (!temp.equals(TXT_EVENTO_SELECIONADO)) {
             limparComponentes();
             obterInformacaoJaGuardada();
             atrib = ((Evento) eventoComboBox.getSelectedItem()).getListaAtribuicao().obterAtribuicaoAssociadaAoFae(f_user);
             if (atrib != null) {
                 decisao_utilizador = atrib.getDecisao().getAprovacao();
             }
-            //}
         }
     }
 
