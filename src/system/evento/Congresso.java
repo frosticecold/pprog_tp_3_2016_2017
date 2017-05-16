@@ -2,7 +2,6 @@ package system.evento;
 
 import java.io.Serializable;
 import java.util.Objects;
-import system.listas.ListaWorkshop;
 import utils.Data;
 
 /**
@@ -11,7 +10,7 @@ import utils.Data;
  */
 public class Congresso extends Evento implements Serializable{
 
-    private ListaWorkshop listaWorkshop = new ListaWorkshop();
+
 
     public Congresso() {
         super();
@@ -19,10 +18,6 @@ public class Congresso extends Evento implements Serializable{
 
     public Congresso(String titulo, String descricao,String nomeLocal, Data dataInicio, Data dataFim) {
         super(titulo, descricao,nomeLocal, dataInicio, dataFim);
-    }
-
-    public ListaWorkshop getListaWorkshop() {
-        return listaWorkshop;
     }
 
     @Override
@@ -37,11 +32,6 @@ public class Congresso extends Evento implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Congresso other = (Congresso) obj;
-        if (!Objects.equals(this.listaWorkshop, other.listaWorkshop)) {
-            return false;
-        }
-
         return true;
     }
 
