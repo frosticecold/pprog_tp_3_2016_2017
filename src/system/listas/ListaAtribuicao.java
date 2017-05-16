@@ -1,5 +1,6 @@
 package system.listas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -11,34 +12,34 @@ import system.user.Fae;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class ListaAtribuicao implements Iterable<Atribuicao> {
-
+public class ListaAtribuicao implements Iterable<Atribuicao>, Serializable {
+    
     private List<Atribuicao> lista = new ArrayList<>();
-
+    
     public ListaAtribuicao() {
     }
-
+    
     public Atribuicao novaAtribuicao() {
-
+        
         return new Atribuicao();
     }
-
+    
     public boolean add(Atribuicao a) {
         return lista.add(a);
     }
-
+    
     public void guardarAtribuicoes(List<Atribuicao> listaAtrib) {
         for (Atribuicao atribuicao : listaAtrib) {
             add(atribuicao);
         }
-
+        
     }
-
+    
     @Override
     public Iterator<Atribuicao> iterator() {
         return lista.iterator();
     }
-
+    
     public List<Fae> obterTodosFaesAtribuidos() {
         List<Fae> listaFae = new ArrayList<>();
         for (Atribuicao a : lista) {
@@ -46,32 +47,33 @@ public class ListaAtribuicao implements Iterable<Atribuicao> {
         }
         return listaFae;
     }
-
-    public Atribuicao obterAtribuicaoAssociadaAoFae(Fae f) {
+    
+    public List<Atribuicao> obterAtribuicoesAssociadaAoFae(String username) {
+        List<Atribuicao> listaAtrib = new ArrayList<>();
         for (Atribuicao a : lista) {
-            if (a.getFae().equals(f)) {
-                return a;
+            if (a.getFae().getUsername().equals(username)) {
+                listaAtrib.add(a);
             }
         }
-        return null;
+        return listaAtrib;
     }
-
-    public boolean verificarSeFaeTemAtribuicoes(Fae f) {
+    
+    public boolean verificarSeFaeTemAtribuicoes(String username) {
         for (Atribuicao a : lista) {
-            if (a.getFae().equals(f)) {
+            if (a.getFae().getUsername().equals(username)) {
                 return true;
             }
         }
         return false;
     }
-
+    
     public int size() {
-
+        
         return lista.size();
     }
-
+    
     public void clear() {
         lista.clear();
     }
-
+    
 }

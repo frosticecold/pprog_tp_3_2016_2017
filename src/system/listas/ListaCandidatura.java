@@ -1,5 +1,6 @@
 package system.listas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,7 +13,7 @@ import system.user.Fae;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class ListaCandidatura implements Iterable<Candidatura> {
+public class ListaCandidatura implements Iterable<Candidatura>,Serializable {
 
     List<Candidatura> lista = new ArrayList<>();
 

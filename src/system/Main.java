@@ -5,7 +5,7 @@
  */
 package system;
 
-import system.gui.JanelaPrincipal;
+import ui.JanelaPrincipal;
 
 /**
  *
@@ -17,9 +17,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//        listaTipoEvento lte = new listaTipoEvento();
-//        lte.lerFicheiroConfig();
-//        lte.escreverOutput();
+
         CentroEventos ce = new CentroEventos();
         
         Teste t = new Teste();

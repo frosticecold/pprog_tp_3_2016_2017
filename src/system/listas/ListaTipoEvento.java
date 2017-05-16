@@ -5,6 +5,7 @@
  */
 package system.listas;
 
+import java.io.Serializable;
 import utils.InterfaceListaLerConfig;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,7 +16,7 @@ import utils.lerFicheiroConfig;
  *
  * @author Raúl Correia
  */
-public class ListaTipoEvento implements InterfaceListaLerConfig<String>, Iterable<String> {
+public class ListaTipoEvento implements InterfaceListaLerConfig<String>, Iterable<String>,Serializable {
 
     List<String> lista;
     public static String CLASSPATH;

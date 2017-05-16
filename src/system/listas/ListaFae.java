@@ -1,17 +1,17 @@
 package system.listas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import system.user.Fae;
-import system.user.Organizador;
 import system.user.Utilizador;
 
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class ListaFae implements Iterable<Fae> {
+public class ListaFae implements Iterable<Fae>,Serializable {
     
     List<Fae> lista = new ArrayList<>();
     

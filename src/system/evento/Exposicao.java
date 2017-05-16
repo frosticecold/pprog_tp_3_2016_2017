@@ -1,12 +1,13 @@
 package system.evento;
 
+import java.io.Serializable;
 import utils.Data;
 
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class Exposicao extends Evento {
+public class Exposicao extends Evento implements Serializable{
 
     public Exposicao() {
         super();

@@ -1,7 +1,6 @@
 package system;
 
-import java.util.Iterator;
-import system.evento.Evento;
+import java.io.Serializable;
 import system.listas.RegistoAlgoritmosAtribuicao;
 import system.listas.RegistoEvento;
 import system.listas.RegistoUtilizador;
@@ -10,7 +9,7 @@ import system.listas.RegistoUtilizador;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class CentroEventos {
+public class CentroEventos implements Serializable{
 
     private RegistoEvento registoEventos;
     private RegistoUtilizador registoUtilizadores;

@@ -1,5 +1,6 @@
 package system.evento;
 
+import java.io.Serializable;
 import java.util.Objects;
 import system.listas.ListaWorkshop;
 import utils.Data;
@@ -8,7 +9,7 @@ import utils.Data;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class Congresso extends Evento {
+public class Congresso extends Evento implements Serializable{
 
     private ListaWorkshop listaWorkshop = new ListaWorkshop();
 

@@ -1,5 +1,6 @@
 package utils;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
@@ -7,33 +8,33 @@ import java.util.Calendar;
  *
  * @author ISEP-DEI-PPROG
  */
-public class Data implements Comparable<Data> {
+public class Data implements Comparable<Data>, Serializable {
 
     /**
      * O ano da data.
      */
     private int ano;
-    
+
     /**
      * O mês da data.
      */
     private int mes;
-    
+
     /**
      * O dia da data.
      */
     private int dia;
-    
+
     /**
      * O ano por omissão.
      */
     private static final int ANO_POR_OMISSAO = 1;
-    
+
     /**
      * O mês por omissão.
      */
     private static final int MES_POR_OMISSAO = 1;
-    
+
     /**
      * O dia por omissão.
      */
@@ -152,13 +153,13 @@ public class Data implements Comparable<Data> {
     public String toAnoMesDiaString() {
         return String.format("%04d/%02d/%02d", ano, mes, dia);
     }
-    
+
     /**
      * Compara a data com o objeto recebido.
      *
      * @param outroObjeto o objeto a comparar com a data.
      * @return true se o objeto recebido representar uma data equivalente à
-     *         data. Caso contrário, retorna false.
+     * data. Caso contrário, retorna false.
      */
     @Override
     public boolean equals(Object outroObjeto) {
@@ -177,9 +178,9 @@ public class Data implements Comparable<Data> {
      * Compara a data com a outra data recebida por parâmetro.
      *
      * @param outraData a data a ser comparada.
-     * @return o valor 0 se a outraData recebida é igual à data; o valor -1 se
-     *         a outraData for posterior à data; o valor 1 se a outraData for 
-     *         anterior à data.
+     * @return o valor 0 se a outraData recebida é igual à data; o valor -1 se a
+     * outraData for posterior à data; o valor 1 se a outraData for anterior à
+     * data.
      */
     @Override
     public int compareTo(Data outraData) {
@@ -198,14 +199,13 @@ public class Data implements Comparable<Data> {
         return nomeDiaDaSemana[totalDias];
     }
 
-
     /**
      * Devolve true se a data for maior do que a data recebida por parâmetro. Se
      * a data for menor ou igual à data recebida por parâmetro, devolve false.
      *
      * @param outraData a outra data com a qual se compara a data.
      * @return true se a data for maior do que a data recebida por parâmetro,
-     *         caso contrário devolve false.
+     * caso contrário devolve false.
      */
     public boolean isMaior(Data outraData) {
         int totalDias = contaDias();
@@ -219,9 +219,9 @@ public class Data implements Comparable<Data> {
      * parâmetro.
      *
      * @param outraData a outra data com a qual se compara a data para calcular
-     *                  a diferença do número de dias.
+     * a diferença do número de dias.
      * @return diferença em número de dias entre a data e a data recebida por
-     *         parâmetro.
+     * parâmetro.
      */
     public int diferenca(Data outraData) {
         int totalDias = contaDias();
@@ -235,13 +235,13 @@ public class Data implements Comparable<Data> {
      * parâmetro com ano, mês e dia.
      *
      * @param ano o ano da data com a qual se compara a data para calcular a
-     *            diferença do número de dias.
+     * diferença do número de dias.
      * @param mes o mês da data com a qual se compara a data para calcular a
-     *            diferença do número de dias.
+     * diferença do número de dias.
      * @param dia o dia da data com a qual se compara a data para calcular a
-     *            diferença do número de dias.
+     * diferença do número de dias.
      * @return diferença em número de dias entre a data e a data recebida por
-     *         parâmetro com ano, mês e dia.
+     * parâmetro com ano, mês e dia.
      */
     public int diferenca(int ano, int mes, int dia) {
         int totalDias = contaDias();
@@ -257,7 +257,7 @@ public class Data implements Comparable<Data> {
      *
      * @param ano o ano a validar.
      * @return true se o ano passado por parâmetro for bissexto, caso contrário
-     *         devolve false.
+     * devolve false.
      */
     public static boolean isAnoBissexto(int ano) {
         return ano % 4 == 0 && ano % 100 != 0 || ano % 400 == 0;

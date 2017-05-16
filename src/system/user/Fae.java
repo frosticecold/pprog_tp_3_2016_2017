@@ -1,10 +1,12 @@
 package system.user;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class Fae extends Utilizador {
+public class Fae extends Utilizador implements Serializable {
 
     public Fae() {
         super();

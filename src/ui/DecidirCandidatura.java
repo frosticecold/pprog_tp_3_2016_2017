@@ -1,13 +1,16 @@
-package system.gui;
+package ui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -21,11 +24,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import system.candidatura.Atribuicao;
+import system.candidatura.Candidatura;
 import system.candidatura.Decisao;
 import system.evento.Evento;
-import system.listas.ListaTipoEvento;
 import system.listas.RegistoEvento;
-import system.user.Fae;
+import utils.Constantes;
 
 /**
  *
@@ -34,57 +37,58 @@ import system.user.Fae;
 public class DecidirCandidatura extends JDialog implements ActionListener {
 
     //Checkboxes
-    private JCheckBox aprovado = new JCheckBox(TXT_APROVADO), reprovado = new JCheckBox(TXT_REPROVADO);
+    private JCheckBox aprovado = new JCheckBox(Constantes.TXT_APROVADO), reprovado = new JCheckBox(Constantes.TXT_REPROVADO);
     //TextArea
     private JTextArea txtJustificativo = new JTextArea(), txtDescricao = new JTextArea();
     //ComboBox Eventos
     private DefaultComboBoxModel<Evento> listaModeloEventos = new DefaultComboBoxModel<>();
     private JComboBox<Evento> eventoComboBox = new JComboBox(listaModeloEventos);
-    //Botoes
-    private JButton guardar = new JButton(TXT_GUARDAR),
-            sair = new JButton(TXT_SAIR);
 
-    private JLabel lbEmpresa = new JLabel(TXT_LBL_EMPRESA);
+    private DefaultComboBoxModel<Candidatura> listaModeloCandidaturas = new DefaultComboBoxModel<Candidatura>();
+    private JComboBox<Candidatura> cmboxCandidatura = new JComboBox<Candidatura>(listaModeloCandidaturas);
+    //Botoes
+    private JButton guardar = new JButton(Constantes.TXT_GUARDAR),
+            sair = new JButton(Constantes.TXT_SAIR);
+    private JButton seguinte = new JButton();
+    private JButton anterior = new JButton();
+
+    private JLabel lbEmpresa = new JLabel(Constantes.TXT_LBL_EMPRESA);
     private JPanel principal = new JPanel(new BorderLayout()),
-            painelTopo = new JPanel(new GridLayout(NUM_LINHAS, NUM_COL, EMPTY_BORDER_GAP, EMPTY_BORDER_GAP)),
+            painelTopo = new JPanel(new GridLayout(NUM_LINHAS, NUM_COL, Constantes.EMPTY_BORDER_GAP_DEZ, Constantes.EMPTY_BORDER_GAP_DEZ)),
             painelCheckbox = new JPanel(new FlowLayout(FlowLayout.CENTER, GAP_FLOWLAYOUT_WIDTH, GAP_FLOWLAYOUT_HEIGHT)),
             painelInfo = new JPanel(new FlowLayout(FlowLayout.LEFT)),
-            painelTextArea = new JPanel(new GridLayout(NUM_LINHAS, NUM_COL, GAP, GAP)),
+            painelTextArea = new JPanel(new GridLayout(NUM_LINHAS, NUM_COL, Constantes.GAP_CINCO, Constantes.GAP_CINCO)),
             painelTextAreaNorte = new JPanel(new BorderLayout()),
             painelTextAreaSul = new JPanel(new BorderLayout()),
-            painelSul = new JPanel(new BorderLayout()),
-            painelComboBox = new JPanel(new FlowLayout()),
-            painelBotoes = new JPanel(new FlowLayout());
+            painelSul = new JPanel(new GridLayout(1, 3)),
+            painelSulEsq = new JPanel(new FlowLayout()),
+            painelSulCentro = new JPanel(new FlowLayout()),
+            painelSulDir = new JPanel(new FlowLayout());
 
     //vars instância
     private RegistoEvento registoEvento;
-    private Fae f_user;
-    private int decisao_utilizador = Decisao.SEM_DECISAO;
+    private String username;
+
     private Atribuicao atrib;
+    private List<Atribuicao> listaAtrib;
+
+    private int decisao_utilizador = Decisao.SEM_DECISAO;
+    private int indice = 0;
 
     //vars classe    
-    private static String TXT_EVENTO_SELECIONADO = "";
     private static final int GAP_FLOWLAYOUT_WIDTH = 100, GAP_FLOWLAYOUT_HEIGHT = 0;
     private static final int NUM_COL = 1, NUM_LINHAS = 2;
-    private static final int EMPTY_BORDER_GAP = 10;
-    private static final int GAP = 5;
-    private static final Dimension TAMANHO_JANELA_MINIMO = new Dimension(450, 350);
-    private static final String TITULO_JANELA = "Decidir Candidatura", TITULO_BORDER = "Decisão";
-    private static final String ICON_FOLDER = "icons/";
-    private static final String ICON_APROVADO = "correct.gif", ICON_REPROVADO = "incorrect.gif";
-    private static final String TXT_LBL_EMPRESA = "Empresa: ", TXT_LBL_REPRESENTANTE = "Representante: ";
-    private static final String TXT_VAZIO = "";
-    private static final String TXT_APROVADO = "Aprovado", TXT_REPROVADO = "Reprovado";
-    private static final String TXT_GUARDAR = "Guardar", TXT_SAIR = "Sair";
-    private static final String ERRO_GUARDAR = "Texto Inválido", ERRO_TITULO = "Erro";
-    private static final String ERRO_SELECIONAR = "Sem seleção";
+    private static final int PRIMEIRO_ELEMENTO = 0;
 
-    public DecidirCandidatura(JFrame frame, RegistoEvento re, Fae f) {
-        super(frame, TITULO_JANELA, true);
+    public DecidirCandidatura(JFrame frame, RegistoEvento re, String username) {
+        super(frame, Constantes.TITULO_JANELA, true);
+
         registoEvento = re;
-        f_user = f;
+        this.username = username;
+
         initComponentes();
-        setMinimumSize(TAMANHO_JANELA_MINIMO);
+
+        setMinimumSize(Constantes.TAMANHO_DECIDIR_CANDIDATURA_MINIMO);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -98,11 +102,9 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         initPainelTxtArea();
         initPainelSul();
         adicionarPaineis();
-        //Teste
+
         copiarListaEventosParaListaComboBox();
-        TXT_EVENTO_SELECIONADO = eventoComboBox.getSelectedItem().toString();
-        atrib = ((Evento) eventoComboBox.getSelectedItem()).getListaAtribuicao().obterAtribuicaoAssociadaAoFae(f_user);
-        //txt.setText(atrib.getCandidatura().getDescricao());
+        listaAtrib = ((Evento) eventoComboBox.getSelectedItem()).getListaAtribuicao().obterAtribuicoesAssociadaAoFae(username);
     }
 
     private void initCheckboxes() {
@@ -121,6 +123,13 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
     }
 
     private void initBotoes() {
+
+        definirIcon(anterior, Constantes.ICON_ANTERIOR);
+        anterior.addActionListener(this);
+
+        definirIcon(seguinte, Constantes.ICON_SEGUINTE);
+        seguinte.addActionListener(this);
+
         sair.addActionListener(this);
         sair.setMnemonic(KeyEvent.VK_S);
 
@@ -131,19 +140,19 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
     private void initPainelTopo() {
 
         initPainelInfo();
-        initPainelCheckbox();
+        initPainelAprovacao();
         painelTopo.add(painelInfo);
         painelTopo.add(painelCheckbox);
-        painelTopo.setBorder(new TitledBorder(new EtchedBorder(), TITULO_JANELA));
+        painelTopo.setBorder(new TitledBorder(new EtchedBorder(), Constantes.TITULO_JANELA));
     }
 
     private void initPainelTxtArea() {
         txtDescricao.setEditable(false);
         txtDescricao.setOpaque(false);
-        painelTextAreaNorte.setBorder(new TitledBorder("Descrição da Empresa"));
+        painelTextAreaNorte.setBorder(new TitledBorder(new EtchedBorder(),"Descrição da Empresa"));
         painelTextAreaNorte.add(txtDescricao);
 
-        painelTextAreaSul.setBorder(new TitledBorder("Texto Justificativo"));
+        painelTextAreaSul.setBorder(new TitledBorder(new EtchedBorder(),"Texto Justificativo"));
         painelTextAreaSul.add(txtJustificativo);
 
         painelTextArea.add(painelTextAreaNorte);
@@ -152,20 +161,13 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         //painelTextArea.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
     }
 
-    private void initPainelSul() {
-        initPainelComboBox();
-        initPainelBotoes();
-        painelSul.add(painelComboBox, BorderLayout.WEST);
-        painelSul.add(painelBotoes, BorderLayout.EAST);
-    }
-
     private void initPainelInfo() {
         //painelInfo.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
         painelInfo.add(lbEmpresa);
 
     }
 
-    private void initPainelCheckbox() {
+    private void initPainelAprovacao() {
         //Add components
         painelCheckbox.add(aprovado);
         painelCheckbox.add(reprovado);
@@ -174,34 +176,48 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         //painelCheckbox.setBorder(new TitledBorder(new EtchedBorder(), TITULO_JANELA));
     }
 
-    private void initPainelComboBox() {
-        painelComboBox.add(eventoComboBox);
+    private void initPainelSul() {
+        initPainelSulEsq();
+        initPainelSulCentro();
+        initPainelSulDir();
+        painelSul.add(painelSulEsq);
+        painelSul.add(painelSulCentro);
+        painelSul.add(painelSulDir);
     }
 
-    private void initPainelBotoes() {
-        painelBotoes.add(sair);
-        painelBotoes.add(guardar);
+    private void initPainelSulEsq() {
+        painelSulEsq.add(eventoComboBox);
+    }
+
+    private void initPainelSulDir() {
+        painelSulDir.add(sair);
+        painelSulDir.add(guardar);
+    }
+
+    private void initPainelSulCentro() {
+        painelSulCentro.add(anterior);
+        painelSulCentro.add(seguinte);
     }
 
     private void adicionarPaineis() {
         principal.add(painelTopo, BorderLayout.NORTH);
         principal.add(painelTextArea, BorderLayout.CENTER);
         principal.add(painelSul, BorderLayout.SOUTH);
-        principal.setBorder(new EmptyBorder(EMPTY_BORDER_GAP, EMPTY_BORDER_GAP, EMPTY_BORDER_GAP, EMPTY_BORDER_GAP));
+        principal.setBorder(new EmptyBorder(Constantes.EMPTY_BORDER_GAP_DEZ, Constantes.EMPTY_BORDER_GAP_DEZ, Constantes.EMPTY_BORDER_GAP_DEZ, Constantes.EMPTY_BORDER_GAP_DEZ));
         add(principal);
     }
 
     private void copiarListaEventosParaListaComboBox() {
         listaModeloEventos.removeAllElements();
         for (Evento e : registoEvento) {
-            if (e.getListaFae().isFaeEvento(f_user) && e.getListaAtribuicao().verificarSeFaeTemAtribuicoes(f_user)) {
+            if (e.getListaFae().isFaeEvento(username) && e.getListaAtribuicao().verificarSeFaeTemAtribuicoes(username)) {
                 listaModeloEventos.addElement(e);
             }
         }
     }
 
     private boolean validarTexto() {
-        if (txtJustificativo.getText().length() > 5 && !txtJustificativo.getText().equals(Decisao.SEM_TEXTO)) {
+        if (txtJustificativo.getText().length() > 5) {
             return true;
         }
 
@@ -212,28 +228,41 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         decisao_utilizador = Decisao.SEM_DECISAO;
         aprovado.setSelected(false);
         reprovado.setSelected(false);
-        txtJustificativo.setText(TXT_VAZIO);
-        txtDescricao.setText(TXT_VAZIO);
+        txtJustificativo.setText(Constantes.TXT_VAZIO);
+        txtDescricao.setText(Constantes.TXT_VAZIO);
     }
 
     private void obterInformacaoJaGuardada() {
         Evento ev = (Evento) eventoComboBox.getSelectedItem();
-        Atribuicao atrib = ev.getListaAtribuicao().obterAtribuicaoAssociadaAoFae(f_user);
-        if (atrib != null) {
-            if (atrib.getDecisao().getAprovacao() == Decisao.APROVADO) {
+        listaAtrib = ev.getListaAtribuicao().obterAtribuicoesAssociadaAoFae(username);
+        if (!listaAtrib.isEmpty()) {
+            atrib = listaAtrib.get(PRIMEIRO_ELEMENTO);
+            if (atrib != null) {
+                carregarInfoAtribuicao();
+            }
+        }
+    }
+
+    private void carregarInfoAtribuicao() {
+        decisao_utilizador = atrib.getDecisao().getAprovacao();
+        switch (decisao_utilizador) {
+            case Decisao.APROVADO:
                 aprovado.setSelected(true);
                 reprovado.setSelected(false);
-            } else if (atrib.getDecisao().getAprovacao() == Decisao.NAO_APROVADO) {
+                break;
+            case Decisao.NAO_APROVADO:
                 aprovado.setSelected(false);
                 reprovado.setSelected(true);
-            } else {
+                break;
+            default:
                 aprovado.setSelected(false);
                 reprovado.setSelected(false);
-            }
-            lbEmpresa.setText(atrib.getCandidatura().getRepresentanteEmpresa().getNomeEmpresa());
-            txtDescricao.setText(atrib.getCandidatura().getDescricao());
-            txtJustificativo.setText(atrib.getDecisao().getTextoJustificativo());
+                break;
         }
+        lbEmpresa.setText(atrib.getCandidatura().getRepresentanteEmpresa().getNomeEmpresa());
+        txtDescricao.setText(atrib.getCandidatura().getDescricao());
+        txtJustificativo.setText(atrib.getDecisao().getTextoJustificativo());
+
     }
 
     @Override
@@ -247,10 +276,10 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
                 if (validarTexto()) {
                     atrib.setDecisao(new Decisao(decisao_utilizador, txtJustificativo.getText()));
                 } else {
-                    JOptionPane.showMessageDialog(this, ERRO_GUARDAR, ERRO_TITULO, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, Constantes.ERRO_GUARDAR, Constantes.ERRO_TITULO, JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, ERRO_SELECIONAR, ERRO_TITULO, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Constantes.ERRO_SELECIONAR, Constantes.ERRO_TITULO, JOptionPane.ERROR_MESSAGE);
             }
         }
         if (e.getSource() == aprovado) {
@@ -268,11 +297,27 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         if (e.getSource() == eventoComboBox) {
             limparComponentes();
             obterInformacaoJaGuardada();
-            atrib = ((Evento) eventoComboBox.getSelectedItem()).getListaAtribuicao().obterAtribuicaoAssociadaAoFae(f_user);
-            if (atrib != null) {
-                decisao_utilizador = atrib.getDecisao().getAprovacao();
+
+        }
+        if (e.getSource() == anterior) {
+            if (indice > 0) {
+                indice--;
+                atrib = listaAtrib.get(indice);
+                limparComponentes();
+                carregarInfoAtribuicao();
+            }
+        }
+        if (e.getSource() == seguinte) {
+            if (indice < listaAtrib.size() - 1) {
+                indice++;
+                atrib = listaAtrib.get(indice);
+                limparComponentes();
+                carregarInfoAtribuicao();
             }
         }
     }
 
+    public void definirIcon(JButton cmp, String nomeficheiro) {
+        cmp.setIcon(new ImageIcon(this.getClass().getClassLoader().getResource(Constantes.ICON_FOLDER + nomeficheiro)));
+    }
 }

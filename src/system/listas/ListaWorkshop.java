@@ -1,5 +1,6 @@
 package system.listas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import system.evento.Workshop;
@@ -8,7 +9,7 @@ import system.evento.Workshop;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class ListaWorkshop {
+public class ListaWorkshop implements Serializable{
 
     List<Workshop> lwp;
 

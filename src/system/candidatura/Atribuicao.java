@@ -1,12 +1,13 @@
 package system.candidatura;
 
+import java.io.Serializable;
 import system.user.Fae;
 
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class Atribuicao implements Comparable<Atribuicao> {
+public class Atribuicao implements Comparable<Atribuicao>, Serializable {
 
     private Fae fae;
     private Candidatura cd;

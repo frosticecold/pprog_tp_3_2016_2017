@@ -1,16 +1,18 @@
 package system.candidatura;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class Decisao {
+public class Decisao implements Serializable {
 
     private int aprovacao;
     private String textoJustificativo;
 
     public final static int SEM_DECISAO = -1, NAO_APROVADO = 0, APROVADO = 1;
-    public final static String SEM_TEXTO = "Sem texto";
+    public final static String SEM_TEXTO = "";
 
     public Decisao() {
         aprovacao = SEM_DECISAO;
@@ -42,7 +44,5 @@ public class Decisao {
     public String toString() {
         return "Decisao{" + "decisao=" + aprovacao + ", textoJustificativo=" + textoJustificativo + '}';
     }
-    
-    
 
 }

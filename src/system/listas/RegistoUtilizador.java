@@ -1,5 +1,6 @@
 package system.listas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -10,7 +11,7 @@ import system.user.Utilizador;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class RegistoUtilizador implements Iterable<Utilizador> {
+public class RegistoUtilizador implements Iterable<Utilizador>, Serializable {
 
     List<Utilizador> lista = new ArrayList<>();
 

@@ -1,4 +1,4 @@
-package system.gui;
+package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -6,6 +6,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -18,6 +27,7 @@ import system.CentroEventos;
 import system.Teste;
 import system.user.Fae;
 import system.user.RepresentanteEmpresa;
+import utils.Constantes;
 
 /**
  *
@@ -30,24 +40,19 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
     private JMenuItem login, sair, acerca, debug_item;
     private JMenuItem atribuir_cand, decidir_cand, submeter_cand;
     private JMenuItem carregar_ficheiro, gravar_ficheiro;
-
+    private JMenuItem debug_limpar;
     //Vars instância
     private CentroEventos ce;
     private String username;
     //Vars classe
-    private static String ICON_FOLDER = "icons/";
-    private static String ICON_EXIT = "exit.png", ICON_ABOUT = "about.gif",
-            ICON_SAVE = "save.gif", ICON_LOAD_FILE = "plus.gif",
-            ICON_SUBMETER_CANDIDATURA = "mala.gif", ICON_DECIDIR_CANDIDATURA = "martelo.gif", ICON_ATRIBUIR_CANDIDATURA = "raio.gif";
-    private static String TITULO_JANELA = "Aplicação PPROG TP3";
 
     public JanelaPrincipal(CentroEventos ce) {
-        super(TITULO_JANELA);
+        super(Constantes.TITULO_JANELA_PRINCIPAL);
         this.ce = ce;
         initComponentes();
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(450, 300));
+        setMinimumSize(Constantes.TAMANHO_JANELA_PRINCIPAL_MINIMO);
         setLocationRelativeTo(null);
 //
 //        JanelaLogin jlg = new JanelaLogin(this, ce.getRegistoUtilizadores());
@@ -79,7 +84,6 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         menu.addSeparator();
         menu.add(sair);
         menubar.add(menu);
-        //menubar.add(Box.createHorizontalGlue());
         menubar.add(debug_menu);
         menubar.add(acerca_menu);
         setJMenuBar(menubar);
@@ -89,7 +93,7 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
     public void initMenu() {
         menu = new JMenu("Menu");
         sair = new JMenuItem("Sair");
-        login = new JMenuItem("Login");
+        login = new JMenuItem("Mudar Login");
         login.setMnemonic(KeyEvent.VK_L);
         login.addActionListener(this);
         login.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0, InputEvent.ALT_MASK));
@@ -97,29 +101,25 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         initSubmenuFicheiro();
 
         //Icon 
-        definirIcon(sair, ICON_EXIT);
+        definirIcon(sair, Constantes.ICON_EXIT);
         //Mnemonic
         menu.setMnemonic(KeyEvent.VK_M);
         //ActionListener
         sair.addActionListener(this);
     }
 
-    public void definirIcon(JMenuItem cmp, String nomeficheiro) {
-        cmp.setIcon(new ImageIcon(this.getClass().getClassLoader().getResource(ICON_FOLDER + nomeficheiro)));
-    }
-
     public void initSubmenuIniciar() {
-        iniciar = new JMenu("Iniciar");
+        iniciar = new JMenu(Constantes.JP_MENU_INICIAR);
         iniciar.setMnemonic(KeyEvent.VK_I);
 
-        atribuir_cand = new JMenuItem("Atribuir Candidatura");
-        decidir_cand = new JMenuItem("Decidir Candidatura");
-        submeter_cand = new JMenuItem("Submeter Candidatura");
+        atribuir_cand = new JMenuItem(Constantes.JP_SUBMENU_ATRIB_CAND);
+        decidir_cand = new JMenuItem(Constantes.JP_SUBMENU_DECID_CAND);
+        submeter_cand = new JMenuItem(Constantes.JP_SUBMENU_SUB_CAND);
 
         //Definir Icons
-        definirIcon(atribuir_cand, ICON_ATRIBUIR_CANDIDATURA);
-        definirIcon(decidir_cand, ICON_DECIDIR_CANDIDATURA);
-        definirIcon(submeter_cand, ICON_SUBMETER_CANDIDATURA);
+        definirIcon(atribuir_cand, Constantes.ICON_ATRIBUIR_CANDIDATURA);
+        definirIcon(decidir_cand, Constantes.ICON_DECIDIR_CANDIDATURA);
+        definirIcon(submeter_cand, Constantes.ICON_SUBMETER_CANDIDATURA);
         //Mnemonic
         atribuir_cand.setMnemonic(KeyEvent.VK_A);
         decidir_cand.setMnemonic(KeyEvent.VK_D);
@@ -141,16 +141,16 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
     }
 
     public void initSubmenuFicheiro() {
-        ficheiro = new JMenu("Ficheiro");
-
-        carregar_ficheiro = new JMenuItem("Carregar ficheiro");
-        gravar_ficheiro = new JMenuItem("Gravar Ficheiro");
+        ficheiro = new JMenu(Constantes.MENU_INICIAR);
+        carregar_ficheiro = new JMenuItem(Constantes.MENU_ITEM_CARREGAR_FICHEIRO);
+        gravar_ficheiro = new JMenuItem(Constantes.MENU_ITEM_GRAVAR_FICHEIRO);
 
         //Icon 
-        definirIcon(carregar_ficheiro, ICON_LOAD_FILE);
-        definirIcon(gravar_ficheiro, ICON_SAVE);
+        definirIcon(carregar_ficheiro, Constantes.ICON_LOAD_FILE);
+        definirIcon(gravar_ficheiro, Constantes.ICON_SAVE);
         //ActionListeners
         carregar_ficheiro.addActionListener(this);
+        gravar_ficheiro.addActionListener(this);
         //Mnemonic
         ficheiro.setMnemonic(KeyEvent.VK_F);
         carregar_ficheiro.setMnemonic(KeyEvent.VK_C);
@@ -163,7 +163,7 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
     public void initMenuAcerca() {
         acerca_menu = new JMenu("?");
         acerca = new JMenuItem("Acerca");
-        definirIcon(acerca, ICON_ABOUT);
+        definirIcon(acerca, Constantes.ICON_ABOUT);
         acerca.addActionListener(this);
         acerca_menu.add(acerca);
     }
@@ -171,21 +171,23 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
     public void initMenuDebug() {
         debug_menu = new JMenu("Debug");
         debug_item = new JMenuItem("Carregador valores Debug");
+        debug_limpar = new JMenuItem("Limpar Centro Eventos");
 
         debug_menu.add(debug_item);
-        debug_menu.add(debug_item);
+        debug_menu.add(debug_limpar);
 
         //Mnemonic
         debug_menu.setMnemonic(KeyEvent.VK_D);
         //ActionListeners
         debug_item.addActionListener(this);
+        debug_limpar.addActionListener(this);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == acerca) {
-            JOptionPane.showMessageDialog(null, "Raúl Correia - 1090657@isep.ipp.pt\nSalvador Gouveia 1151238@isep.ipp.pt", "Acerca", JOptionPane.QUESTION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Constantes.ACERCA, Constantes.TITULO_ACERCA, JOptionPane.QUESTION_MESSAGE);
         }
         if (e.getSource() == sair) {
             System.exit(0);
@@ -196,28 +198,75 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
                 AtribuirCandidatura ac = new AtribuirCandidatura(this, ce);
                 setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(rootPane, "Erro, não existem Eventos.", "Erro!", JOptionPane.ERROR_MESSAGE);
+                mensagemErro(Constantes.ERRO_N_EXISTE_EVENTOS);
             }
         }
         if (e.getSource() == decidir_cand) {
-            Fae f = Teste.retornarFaeTeste(ce);
-            setVisible(false);
-            DecidirCandidatura dc = new DecidirCandidatura(this, ce.getRegistoEventos(), f);
-            setVisible(true);
+            if (ce.getRegistoUtilizadores().size() > 0) {
+                Fae f = Teste.retornarFaeTeste(ce);
+                setVisible(false);
+                new DecidirCandidatura(this, ce.getRegistoEventos(), f.getUsername());
+                setVisible(true);
+            }
 
         }
         if (e.getSource() == submeter_cand) {
-            RepresentanteEmpresa reptest = Teste.retornarRepEmpTeste(ce);
-            new SubmeterCandidatura(this, ce.getRegistoEventos(), reptest);
+            if (ce.getRegistoUtilizadores().size() > 0) {
+                RepresentanteEmpresa reptest = Teste.retornarRepEmpTeste(ce);
+                new SubmeterCandidatura(this, ce.getRegistoEventos(), reptest);
+            }
         }
         if (e.getSource() == debug_item) {
             Teste t = new Teste();
             t.init(ce);
         }
         if (e.getSource() == carregar_ficheiro) {
-            JFileChooser jfc = new JFileChooser();
-            jfc.showOpenDialog(this);
-            jfc = null;
+            JFileChooser jfc = new JFileChooser(diretorioAtual());
+            int returnval = jfc.showOpenDialog(this);
+            if (returnval == JFileChooser.APPROVE_OPTION) {
+                FileInputStream fInput = null;
+                try {
+                    File ficheiro = jfc.getSelectedFile();
+                    fInput = new FileInputStream(ficheiro);
+                    ObjectInputStream in = new ObjectInputStream(fInput);
+                    ce = (CentroEventos) in.readObject();
+                    in.close();
+                    fInput.close();
+
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    try {
+                        fInput.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+            }
+        }
+        if (e.getSource() == gravar_ficheiro) {
+            try {
+                JFileChooser jfc = new JFileChooser(diretorioAtual());
+
+                int returnval = jfc.showSaveDialog(this);
+                if (returnval == JFileChooser.APPROVE_OPTION) {
+                    FileOutputStream fileOut = new FileOutputStream(jfc.getSelectedFile());
+                    ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                    out.writeObject(ce);
+                    fileOut.close();
+                    out.close();
+                }
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
         if (e.getSource() == login) {
             JanelaLogin jl = new JanelaLogin(this, ce.getRegistoUtilizadores());
@@ -225,5 +274,21 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
                 username = jl.getUsername();
             }
         }
+        if (e.getSource() == debug_limpar) {
+            ce = new CentroEventos();
+            System.out.println("O centro de eventos foi reinicializado");
+        }
+    }
+
+    private static File diretorioAtual() {
+        return new File(System.getProperty("user.dir"));
+    }
+
+    private static void mensagemErro(String msg) {
+        JOptionPane.showMessageDialog(null, msg, Constantes.ERRO_TITULO, JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void definirIcon(JMenuItem cmp, String nomeficheiro) {
+        cmp.setIcon(new ImageIcon(this.getClass().getClassLoader().getResource(Constantes.ICON_FOLDER + nomeficheiro)));
     }
 }

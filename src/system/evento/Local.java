@@ -1,10 +1,12 @@
 package system.evento;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class Local {
+public class Local implements Serializable{
 
     private String nomeDoLocal;
     private String NOME_LOCAL_OMISSAO = "Sem nome";

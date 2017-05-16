@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package system.gui;
+package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -32,11 +32,11 @@ import system.user.RepresentanteEmpresa;
  * @author salva
  */
 public class SubmeterCandidatura extends JDialog implements ActionListener {
-    
+
     JPanel pnorte = new JPanel(new BorderLayout()), pcentro = new JPanel(new BorderLayout()), psul = new JPanel(new BorderLayout()),
             psuldir = new JPanel(new FlowLayout()),
             painel = new JPanel(new BorderLayout(GAP, GAP));
-    
+
     JButton submeter = new JButton("Submeter"), sair = new JButton("Sair");
     DefaultComboBoxModel<String> dcbmTipoEvento = new DefaultComboBoxModel<>();
     DefaultComboBoxModel<Evento> dcbmEvento = new DefaultComboBoxModel<>();
@@ -50,19 +50,24 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
     //Vars de classe
     private final static int GAP = 10;
     private final static boolean MODAL = true;
-    private final static String TITULO_JANELA = "Submeter Candidatura";
     private final static Dimension TAMANHO_JANELA = new Dimension(327, 266);
+    private final static String SEM_TEXTO = "";
+    private final static String TITULO_JANELA = "Submeter Candidatura";
     private final static String MENSAGEM_ERRO = "Erro, texto inválido";
     private final static String TITULO_ERRO = "Erro";
-    private final static String SEM_TEXTO = "";
-    
+    private final static String TOOLTIP_EVENTO = "Selecione o Evento";
+    private final static String TOOLTIP_TIPO_EVENTO = "Selecione o Tipo de Evento";
+    private final static String TOOLTIP_TXT_AREA = "Texto justificativo da candidatura";
+    private final static String TOOLTIP_SAIR = "Cancelar a submissão da candidatura";
+    private final static String TOOLTIP_SUBMETER = "Guardar a submissão da candidatura";
+
     public SubmeterCandidatura(Frame owner, RegistoEvento regEvent, RepresentanteEmpresa repEmpresa) {
         super(owner, TITULO_JANELA, MODAL);
-        
+
         listaTipoEvento = new ListaTipoEvento();
         representante = repEmpresa;
         registoEvento = regEvent;
-        
+
         initComponentes();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setMinimumSize(TAMANHO_JANELA);
@@ -71,10 +76,11 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
 
         //Teste
     }
-    
+
     private void initComponentes() {
         initCombobox();
         initBotoes();
+        initTxtArea();
         initPainelNorte();
         initPainelCentro();
         initPainelSul();
@@ -82,47 +88,55 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
         copiarTiposEventoParaCombobox();
         copiarEventoPorTipoParaCombobox();
     }
-    
+
     private void initCombobox() {
-        
+        tipoEventocmbox.setToolTipText(TOOLTIP_TIPO_EVENTO);
+        eventoCombox.setToolTipText(TOOLTIP_EVENTO);
+
         tipoEventocmbox.addActionListener(this);
         eventoCombox.addActionListener(this);
     }
 
     private void initBotoes() {
-        
+        sair.setToolTipText(TOOLTIP_SAIR);
+        submeter.setToolTipText(TOOLTIP_SUBMETER);
+
         sair.setMnemonic(KeyEvent.VK_S);
         submeter.setMnemonic(KeyEvent.VK_B);
-        
+
         submeter.addActionListener(this);
         sair.addActionListener(this);
     }
-    
+
+    private void initTxtArea() {
+        txtArea.setToolTipText(TOOLTIP_TXT_AREA);
+    }
+
     private void initPainelNorte() {
         pnorte.add(tipoEventocmbox, BorderLayout.WEST);
         pnorte.add(eventoCombox, BorderLayout.EAST);
-        
+
     }
-    
+
     private void initPainelCentro() {
         pcentro.setBorder(new EtchedBorder());
         pcentro.add(txtArea);
-        
+
     }
-    
+
     private void initPainelSul() {
         initPainelSulDir();
         psul.add(psuldir, BorderLayout.EAST);
-        
+
     }
-    
+
     private void initPainelSulDir() {
         psuldir.add(sair);
         psuldir.add(submeter);
     }
-    
+
     private void adicionarComponentes() {
-        painel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        painel.setBorder(new EmptyBorder(GAP, GAP, GAP, GAP));
         painel.add(pnorte, BorderLayout.NORTH);
         painel.add(pcentro, BorderLayout.CENTER);
         painel.add(psul, BorderLayout.SOUTH);
@@ -138,7 +152,7 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
         for (String s : listaTipoEvento) {
             dcbmTipoEvento.addElement(s);
         }
-        
+
     }
 
     /**
@@ -151,14 +165,14 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
             if (ev.getClass().getSimpleName().equalsIgnoreCase(dcbmTipoEvento.getSelectedItem().toString())) {
                 dcbmEvento.addElement(ev);
             }
-            
+
         }
     }
-    
+
     private void limparTxtArea() {
         txtArea.setText(SEM_TEXTO);
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == tipoEventocmbox) {
@@ -174,7 +188,8 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
                 if (ev != null) {
                     Candidatura c = ev.getListaCandidatura().novaCandidatura();
                     c.setDados(txtArea.getText(), representante);
-                    System.out.println(c);
+                    ev.getListaCandidatura().addCandidatura(c);
+                    System.out.println("Evento: " + ev + "Candidatura: " + c);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, MENSAGEM_ERRO, TITULO_ERRO, JOptionPane.ERROR_MESSAGE);
@@ -184,5 +199,5 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
             dispose();
         }
     }
-    
+
 }

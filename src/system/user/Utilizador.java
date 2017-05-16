@@ -1,20 +1,21 @@
 package system.user;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class Utilizador implements Comparable<Utilizador> {
+public class Utilizador implements Comparable<Utilizador>, Serializable {
 
     private String nome, username, email;
     private char[] password;
-    
-    //Vars de Classe
-    private String DEFAULT_PASSWORD  = "123";
 
-    private static  String NOME_OMISSAO = "Sem nome", USERNAME_OMISSAO = "Sem username",
+    //Vars de Classe
+    private String DEFAULT_PASSWORD = "123";
+
+    private static String NOME_OMISSAO = "Sem nome", USERNAME_OMISSAO = "Sem username",
             EMAIL_OMISSAO = "Sem email";
 
     public Utilizador() {

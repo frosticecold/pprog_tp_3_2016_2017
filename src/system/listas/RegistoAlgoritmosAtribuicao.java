@@ -1,17 +1,17 @@
 package system.listas;
 
+import java.io.Serializable;
 import utils.InterfaceListaLerConfig;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import utils.lerFicheiroConfig;
-import system.algoritmo.AlgoritmoAtribuicao;
 
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class RegistoAlgoritmosAtribuicao implements Iterable<String>, InterfaceListaLerConfig<String> {
+public class RegistoAlgoritmosAtribuicao implements Iterable<String>, InterfaceListaLerConfig<String>, Serializable {
 
     private List<String> la = new ArrayList<>();
     public static String CLASSPATH = "";

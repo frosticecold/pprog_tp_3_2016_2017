@@ -1,10 +1,12 @@
 package system.user;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class GestorEvento extends Utilizador {
+public class GestorEvento extends Utilizador implements Serializable{
 
     public GestorEvento() {
         super();

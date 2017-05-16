@@ -1,10 +1,12 @@
 package system.user;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class RepresentanteEmpresa extends Utilizador {
+public class RepresentanteEmpresa extends Utilizador implements Serializable{
 
     private String nomeEmpresa;
 

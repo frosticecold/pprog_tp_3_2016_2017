@@ -1,5 +1,6 @@
 package system.listas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import system.user.Organizador;
@@ -9,7 +10,7 @@ import system.user.Utilizador;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class ListaOrganizador {
+public class ListaOrganizador implements Serializable{
 
     List<Organizador> lista;
 

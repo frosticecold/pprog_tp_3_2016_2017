@@ -1,5 +1,6 @@
 package system.listas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -14,7 +15,7 @@ import utils.Data;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class RegistoEvento implements Iterable<Evento> {
+public class RegistoEvento implements Iterable<Evento>, Serializable {
 
     List<Evento> lista = new ArrayList<>();
 
@@ -105,6 +106,7 @@ public class RegistoEvento implements Iterable<Evento> {
 
         return le;
     }
+
     public List<Evento> getListaEventoPorFae(String username) {
         List<Evento> le = new ArrayList<>();
 

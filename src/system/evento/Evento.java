@@ -1,5 +1,6 @@
 package system.evento;
 
+import java.io.Serializable;
 import system.listas.ListaAtribuicao;
 import system.listas.ListaCandidatura;
 import system.listas.ListaFae;
@@ -10,7 +11,7 @@ import utils.Data;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public abstract class Evento implements Comparable<Evento> {
+public abstract class Evento implements Comparable<Evento>,Serializable {
 
     private String titulo, descricao;
     private Data dataInicio, dataFim;
