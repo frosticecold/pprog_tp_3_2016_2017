@@ -1,34 +1,34 @@
 #Organizador
-organizador,admin a,admina,admina@admin.pt,123
-organizador,admin b,adminb,adminb@admin.pt,123
+organizador,admin a,admina,admina@admin.pt
+organizador,admin b,adminb,adminb@admin.pt
 #Utilizadores
-utilizador,Utilizador a,usera,usera@user.pt,123
-utilizador,Utilizador b,userb,userb@user.pt,123
-utilizador,Utilizador c,userc,userc@user.pt,123
-utilizador,Utilizador d,userd,userd@user.pt,123
-utilizador,Utilizador e,usere,usere@user.pt,123
-utilizador,Utilizador f,userf,userf@user.pt,123
-utilizador,Utilizador g,userg,userg@user.pt,123
-utilizador,Utilizador h,userh,userh@user.pt,123
-utilizador,Utilizador i,useri,useri@user.pt,123
-utilizador,Utilizador j,userj,userj@user.pt,123
-utilizador,Utilizador k,userk,userk@user.pt,123
-utilizador,Utilizador l,userl,userl@user.pt,123
-utilizador,Utilizador m,userm,userm@user.pt,123
-utilizador,Utilizador n,usern,usern@user.pt,123
-utilizador,Utilizador o,usero,usero@user.pt,123
-utilizador,Utilizador p,userp,userp@user.pt,123
-utilizador,Utilizador q,userq,userq@user.pt,123
-utilizador,Utilizador r,userr,userr@user.pt,123
-utilizador,Utilizador s,users,users@user.pt,123
-utilizador,Utilizador t,usert,usert@user.pt,123
-utilizador,Utilizador u,useru,useru@user.pt,123
-utilizador,Utilizador v,userv,userv@user.pt,123
-utilizador,Utilizador w,userw,userw@user.pt,123
-utilizador,Utilizador x,userx,userx@user.pt,123
-utilizador,Utilizador y,usery,usery@user.pt,123
-utilizador,Utilizador z,userz,userz@user.pt,123
-utilizador,Ana Maria,ana.maria,anamaria@abc.pt,123
+utilizador,Utilizador a,usera,usera@user.pt
+utilizador,Utilizador b,userb,userb@user.pt
+utilizador,Utilizador c,userc,userc@user.pt
+utilizador,Utilizador d,userd,userd@user.pt
+utilizador,Utilizador e,usere,usere@user.pt
+utilizador,Utilizador f,userf,userf@user.pt
+utilizador,Utilizador g,userg,userg@user.pt
+utilizador,Utilizador h,userh,userh@user.pt
+utilizador,Utilizador i,useri,useri@user.pt
+utilizador,Utilizador j,userj,userj@user.pt
+utilizador,Utilizador k,userk,userk@user.pt
+utilizador,Utilizador l,userl,userl@user.pt
+utilizador,Utilizador m,userm,userm@user.pt
+utilizador,Utilizador n,usern,usern@user.pt
+utilizador,Utilizador o,usero,usero@user.pt
+utilizador,Utilizador p,userp,userp@user.pt
+utilizador,Utilizador q,userq,userq@user.pt
+utilizador,Utilizador r,userr,userr@user.pt
+utilizador,Utilizador s,users,users@user.pt
+utilizador,Utilizador t,usert,usert@user.pt
+utilizador,Utilizador u,useru,useru@user.pt
+utilizador,Utilizador v,userv,userv@user.pt
+utilizador,Utilizador w,userw,userw@user.pt
+utilizador,Utilizador x,userx,userx@user.pt
+utilizador,Utilizador y,usery,usery@user.pt
+utilizador,Utilizador z,userz,userz@user.pt
+utilizador,Ana Maria,ana.maria,anamaria@abc.pt
 utilizador,Bernardo Noé,b.noe,bnoe@abc.pt,DP);
 utilizador,Carlos Costa,ccosta,ccosta@abc.pt,DP);
 utilizador,Domingos Neves,domingos,domingos@abc.pt,DP);
@@ -43,22 +43,29 @@ utilizador,Luis Sousa,luiss,luiss@abc.pt,DP);
 utilizador,Tiago Silva,tiagosilva,tiagosilva@abc.pt,DP);
 utilizador,Andreia Antunes,andreiaa,andreiaa@abc.pt,DP);
 #Representante
-representante,representante a,repa,rea@repa.pt,Empresa a,123
-representante,representante b,repb,reb@repb.pt,Empresa b,123
-representante,representante c,repc,rec@repc.pt,Empresa c,123
-representante,representante d,repd,red@repd.pt,Empresa d,123
-representante,representante e,repe,ree@repe.pt,Empresa e,123
-representante,representante f,repf,ref@repf.pt,Empresa f,123
-representante,representante g,repg,reg@repg.pt,Empresa g,123
-representante,representante h,reph,reh@reph.pt,Empresa h,123
-representante,representante i,repi,rei@repi.pt,Empresa i,123
-representante,representante j,repj,rej@repj.pt,Empresa j,123
-representante,representante k,repk,rek@repk.pt,Empresa k,123
-representante,representante l,repl,rel@repl.pt,Empresa l,123
-representante,representante m,repm,rem@repm.pt,Empresa m,123
+representante,representante a,repa,rea@repa.pt,Empresa a
+representante,representante b,repb,reb@repb.pt,Empresa b
+representante,representante c,repc,rec@repc.pt,Empresa c
+representante,representante d,repd,red@repd.pt,Empresa d
+representante,representante e,repe,ree@repe.pt,Empresa e
+representante,representante f,repf,ref@repf.pt,Empresa f
+representante,representante g,repg,reg@repg.pt,Empresa g
+representante,representante h,reph,reh@reph.pt,Empresa h
+representante,representante i,repi,rei@repi.pt,Empresa i
+representante,representante j,repj,rej@repj.pt,Empresa j
+representante,representante k,repk,rek@repk.pt,Empresa k
+representante,representante l,repl,rel@repl.pt,Empresa l
+representante,representante m,repm,rem@repm.pt,Empresa m
 #Congresso 1
-congresso,Congresso 1,O congresso 1,Local 1
-datainicio,2016,8,11
-datafim,2018,9,24
-fae,Utilizador a,usera,usera@user.pt,123
-fae,Utilizador b,userb,userb@user.pt,123
+congresso,Congresso 1,O congresso 1,Local 1,2016,8,11,2018,9,24
+fae,Utilizador a,usera,usera@user.pt
+fae,Utilizador b,userb,userb@user.pt
+fae,Utilizador c,userc,userc@user.pt
+fae,Utilizador d,userd,userd@user.pt
+fae,Utilizador e,usere,usere@user.pt
+fae,Utilizador f,userf,userf@user.pt
+fae,Utilizador g,userg,userg@user.pt
+fae,Utilizador h,userh,userh@user.pt
+fae,Utilizador i,useri,useri@user.pt
+fae,Utilizador j,userj,userj@user.pt
+fae,Utilizador k,userk,userk@user.pt
