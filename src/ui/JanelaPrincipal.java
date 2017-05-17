@@ -1,7 +1,6 @@
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -231,7 +230,6 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
                     ObjectInputStream in = new ObjectInputStream(fInput);
                     ce = (CentroEventos) in.readObject();
                     in.close();
-                    fInput.close();
 
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
@@ -258,7 +256,6 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
                     FileOutputStream fileOut = new FileOutputStream(jfc.getSelectedFile());
                     ObjectOutputStream out = new ObjectOutputStream(fileOut);
                     out.writeObject(ce);
-                    fileOut.close();
                     out.close();
                 }
             } catch (FileNotFoundException ex) {

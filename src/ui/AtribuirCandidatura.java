@@ -32,6 +32,7 @@ import system.candidatura.Atribuicao;
 import system.candidatura.Candidatura;
 import system.listas.ListaCandidatura;
 import system.listas.ListaAtribuicao;
+import utils.Constantes;
 
 /**
  *
@@ -39,47 +40,47 @@ import system.listas.ListaAtribuicao;
  */
 public class AtribuirCandidatura extends JDialog implements ActionListener, ListSelectionListener {
 
-    private JPanel principal = new JPanel(new BorderLayout()),
+    private final JPanel principal = new JPanel(new BorderLayout()),
             pcentro = new JPanel(new GridLayout(NR_LINHAS, NR_COLUNAS, LIST_GAP, LIST_GAP)),
             psul = new JPanel(new BorderLayout()),
             psulesq = new JPanel(new FlowLayout(FlowLayout.LEFT)),
             psuldir = new JPanel(new FlowLayout());
-    private JButton guardar = new JButton("Guardar"),
+    private final JButton guardar = new JButton("Guardar"),
             sair = new JButton("Sair"), atribui = new JButton("Atribui");
 
-    private DefaultListModel<Fae> lmFaeDisponiveis = new DefaultListModel<>();
-    private DefaultListModel<Candidatura> lmCandidatura = new DefaultListModel<>();
-    private DefaultListModel<Fae> lmFaeAtribuidos = new DefaultListModel<>();
+    private final DefaultListModel<Fae> lmFaeDisponiveis = new DefaultListModel<>();
+    private final DefaultListModel<Candidatura> lmCandidatura = new DefaultListModel<>();
+    private final DefaultListModel<Fae> lmFaeAtribuidos = new DefaultListModel<>();
 
-    private DefaultComboBoxModel<Evento> lmEvento = new DefaultComboBoxModel<>();
-    private DefaultComboBoxModel<String> lmAlg = new DefaultComboBoxModel<>();
-    private JList jlistFaeDisponiveis = new JList<>(lmFaeDisponiveis);
-    private JList jlistaCandidaturas = new JList<>(lmCandidatura);
-    private JList jlistFaeAtribuidos = new JList<>(lmFaeAtribuidos);
-    private JScrollPane spFaeDeEvento = new JScrollPane(), spCandDeEvento = new JScrollPane(), spFaeDeCandidatura = new JScrollPane();
+    private final DefaultComboBoxModel<Evento> lmEvento = new DefaultComboBoxModel<>();
+    private final DefaultComboBoxModel<String> lmAlg = new DefaultComboBoxModel<>();
+    private final JList jlistFaeDisponiveis = new JList<>(lmFaeDisponiveis);
+    private final JList jlistaCandidaturas = new JList<>(lmCandidatura);
+    private final JList jlistFaeAtribuidos = new JList<>(lmFaeAtribuidos);
+    private final JScrollPane spFaeDeEvento = new JScrollPane(), spCandDeEvento = new JScrollPane(), spFaeDeCandidatura = new JScrollPane();
 
-    private JComboBox<String> algoritmoComboBox = new JComboBox<>();
-    private JComboBox<Evento> eventoComboBox = new JComboBox<>();
+    private final JComboBox<String> algoritmoComboBox = new JComboBox<>();
+    private final JComboBox<Evento> eventoComboBox = new JComboBox<>();
 
     //Instancia
-    private CentroEventos ce;
-    private List<Fae> ListaFaeAtribuida = new ArrayList<>();
+    private final CentroEventos ce;
+    private final List<Fae> ListaFaeAtribuida = new ArrayList<>();
     private List<Atribuicao> ListaAtribuicoes = new ArrayList<>();
 
     //Estáticos
-    private static int PRIMEIRO_ITEM = 0;
-    private static int NR_LINHAS = 1, NR_COLUNAS = 3;
-    private static int LIST_GAP = 10;
-    private static Dimension BUTTON_DIMENSION = new Dimension(95, 30);
-    private static Dimension COMBOBOX_DIMENSION = new Dimension(150, 30);
-    private static Dimension TAMANHO_JANELA_MINIMO = new Dimension(650, 350);
-    private static String MENSAGEM_EVENTO = "Seleciona o Evento";
-    private static String MENSAGEM_ALGORITMO = "Seleciona o Algoritmo de Atribuição";
-    private static String MENSAGEM_ERRO_SEM_CANDIDATURAS = "Erro, sem candidaturas...";
-    private static String TITULO_ERRO = "Erro";
-    private static String TOOLTIP_JLIST_FAEDISPONIVEIS = "Lista de Faes disponíveis";
-    private static String TOOLTIP_JLIST_LISTA_CANDIDATURAS = "Lista de Candidaturas disponíveis";
-    private static String TOOLTIP_JLIST_FAE_ATRIB_POR_CAND = "Lista de Faes Atribuidos à candidatura";
+    private static final int PRIMEIRO_ITEM = 0;
+    private static final int NR_LINHAS = 1, NR_COLUNAS = 3;
+    private static final int LIST_GAP = 10;
+    private static final Dimension BUTTON_DIMENSION = new Dimension(95, 30);
+    private static final Dimension COMBOBOX_DIMENSION = new Dimension(150, 30);
+    private static final Dimension TAMANHO_JANELA_MINIMO = new Dimension(650, 350);
+    private static final String MENSAGEM_EVENTO = "Seleciona o Evento";
+    private static final String MENSAGEM_ALGORITMO = "Seleciona o Algoritmo de Atribuição";
+    private static final String MENSAGEM_ERRO_SEM_CANDIDATURAS = "Erro, sem candidaturas...";
+    private static final String TITULO_ERRO = "Erro";
+    private static final String TOOLTIP_JLIST_FAEDISPONIVEIS = "Lista de Faes disponíveis";
+    private static final String TOOLTIP_JLIST_LISTA_CANDIDATURAS = "Lista de Candidaturas disponíveis";
+    private static final String TOOLTIP_JLIST_FAE_ATRIB_POR_CAND = "Lista de Faes Atribuidos à candidatura";
 
     public AtribuirCandidatura(JFrame frame, CentroEventos ce) {
         //super("Atribuir Candidatura");
@@ -93,7 +94,7 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         setVisible(true);
     }
 
-    public void initComponents() {
+    public final void initComponents() {
         initLists();
         initComboBox();
         initButtons();
@@ -119,7 +120,9 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
     }
 
     public void initPainelPrincipal() {
-        principal.setBorder(new EmptyBorder(10, 10, 0, 10));
+        final int GAP_DEZ = 10;
+        final int GAP_ZERO = 0;
+        principal.setBorder(new EmptyBorder(GAP_DEZ, GAP_DEZ, GAP_ZERO, GAP_DEZ));
         principal.add(pcentro, BorderLayout.CENTER);
         principal.add(psul, BorderLayout.SOUTH);
         add(principal);
@@ -168,7 +171,7 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         atribui.setPreferredSize(BUTTON_DIMENSION);
         sair.setPreferredSize(BUTTON_DIMENSION);
         guardar.setPreferredSize(BUTTON_DIMENSION);
-        
+
         atribui.setMnemonic(KeyEvent.VK_A);
         sair.setMnemonic(KeyEvent.VK_S);
         guardar.setMnemonic(KeyEvent.VK_G);
@@ -229,6 +232,7 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
     }
 
     private void copiarListaAlgoritmosParaComboBox(RegistoAlgoritmosAtribuicao ra) {
+        lmAlg.removeAllElements();
         for (String s : ra) {
             lmAlg.addElement(s);
         }
