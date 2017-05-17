@@ -10,8 +10,11 @@ import system.evento.Evento;
  */
 public interface AlgoritmoAtribuicao {
 
+    /**
+     * Interface para atribuir um evento que devolve uma lista de atribuições
+     *
+     * @param e Evento a atribuir
+     * @return Devolve uma lista com as atribuições
+     */
     public List<Atribuicao> atribui(Evento e);
-
-//    public abstract List<Fae> atribui(CentroEventos ce, String tituloEvento, List<Fae> listaFae);
-
 }
