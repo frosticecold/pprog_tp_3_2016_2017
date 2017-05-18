@@ -1,7 +1,10 @@
 package utils;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,18 +65,27 @@ public class LerBaseDados {
 
     public LerBaseDados(CentroEventos ce) {
         final int primeiroCaractere = 0;
+        BufferedReader br = null;
         try {
-            Scanner input = new Scanner(new File(FILE_NAME));
-            while (input.hasNext()) {
-                String linha = input.nextLine();
+            br = new BufferedReader(new FileReader(FILE_NAME));
+            String linha = br.readLine();
+            while (linha != null) {
                 if (linha.length() > 0 && linha.charAt(primeiroCaractere) != SYMBOL_IGNORAR) {
-                    System.out.println(linha);
                     decidirString(ce, linha);
                 }
+                linha = br.readLine();
             }
-            input.close();
-        } catch (FileNotFoundException ex) {
+
+        } catch (IOException ex) {
             Logger.getLogger(LerBaseDados.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(LerBaseDados.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
 
     }

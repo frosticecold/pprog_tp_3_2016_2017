@@ -31,32 +31,6 @@ public class RegistoEvento implements Iterable<Evento>, Serializable {
         return lista.remove(e);
     }
 
-    public List<Evento> getListaEventoPorOrganizador(String username) {
-        List<Evento> le = new ArrayList<>();
-        for (Evento e : lista) {
-            if (e.getListaOrganizador().isOrganizadorEvento(username)) {
-                le.add(e);
-            }
-        }
-
-        return le;
-    }
-
-    public List<Evento> getListaEventoAtivoPorOrganizador(String username) {
-        Calendar cal = Calendar.getInstance();
-        Data dataHoje = new Data(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
-        List<Evento> listaEventosAtivos = new ArrayList<>();
-
-        for (Evento e : lista) {
-            if (e.getListaOrganizador().isOrganizadorEvento(username)) {
-                if (dataHoje.diferenca(e.getDataInicio()) >= 0 && dataHoje.diferenca(e.getDataFim()) <= 0) {
-                    listaEventosAtivos.add(e);
-                }
-            }
-        }
-        return listaEventosAtivos;
-    }
-
     public Evento procurarEvento(String tituloEvento) {
         for (Evento e : lista) {
             if (tituloEvento.equals(e.getTitulo())) {
@@ -117,5 +91,40 @@ public class RegistoEvento implements Iterable<Evento>, Serializable {
         }
 
         return le;
+    }
+
+    public List<Evento> getListaEventoPorOrganizador(String username) {
+        List<Evento> le = new ArrayList<>();
+        for (Evento e : lista) {
+            if (e.getListaOrganizador().isOrganizadorEvento(username)) {
+                le.add(e);
+            }
+        }
+
+        return le;
+    }
+
+    public List<Evento> getListaEventoAtivoPorOrganizador(String username) {
+        Calendar cal = Calendar.getInstance();
+        Data dataHoje = new Data(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
+        List<Evento> listaEventosAtivos = new ArrayList<>();
+
+        for (Evento e : lista) {
+            if (e.getListaOrganizador().isOrganizadorEvento(username)) {
+                if (dataHoje.diferenca(e.getDataInicio()) >= 0 && dataHoje.diferenca(e.getDataFim()) <= 0) {
+                    listaEventosAtivos.add(e);
+                }
+            }
+        }
+        return listaEventosAtivos;
+    }
+
+    public boolean verificarSeFaeTemAtribuicoes(String username) {
+        for (Evento ev : lista) {
+            if (ev.getListaAtribuicao().verificarSeFaeTemAtribuicoes(username)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -6,9 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,11 +21,12 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import model.CentroEventos;
 import model.candidatura.Atribuicao;
 import model.candidatura.Candidatura;
 import model.candidatura.Decisao;
 import model.evento.Evento;
-import model.listas.RegistoEvento;
+import ui.misc.EventoCellRenderer;
 import utils.Constantes;
 
 /**
@@ -66,7 +65,7 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
             painelSulDir = new JPanel(new FlowLayout());
 
     //vars instância
-    private RegistoEvento registoEvento;
+    private CentroEventos centroEventos;
     private String username;
 
     private Atribuicao atrib;
@@ -80,10 +79,10 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
     private static final int NUM_COL = 1, NUM_LINHAS = 2;
     private static final int PRIMEIRO_ELEMENTO = 0;
 
-    public DecidirCandidatura(JFrame frame, RegistoEvento re, String username) {
+    public DecidirCandidatura(JFrame frame, CentroEventos ce, String username) {
         super(frame, Constantes.TITULO_JANELA, true);
 
-        registoEvento = re;
+        centroEventos = ce;
         this.username = username;
 
         initComponentes();
@@ -122,6 +121,7 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
 
     private void initComboBox() {
         eventoComboBox.addActionListener(this);
+        eventoComboBox.setRenderer(new EventoCellRenderer());
     }
 
     private void initBotoes() {
@@ -211,7 +211,7 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
 
     private void copiarListaEventosParaListaComboBox() {
         listaModeloEventos.removeAllElements();
-        for (Evento e : registoEvento) {
+        for (Evento e : centroEventos.getRegistoEventos()) {
             if (e.getListaFae().isFaeEvento(username) && e.getListaAtribuicao().verificarSeFaeTemAtribuicoes(username)) {
                 listaModeloEventos.addElement(e);
             }

@@ -13,12 +13,18 @@ import model.user.Fae;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class AlgoritmoNumeroPessoasPorCandidatura implements AlgoritmoAtribuicao {
+public class AlgoritmoNumeroPessoasPorCandidatura extends AlgoritmoAtribuicao {
 
-    private static String MSG_INPUT = "Quantas pessoas por candidatura?";
-    private static String MSG_ERRO = "Erro, input inválido.";
-    private static String TITULO_INPUT = "Algoritmo Quantas Pessoas";
-    private static String TITULO_ERRO = "Erro";
+    private static final String MSG_INPUT = "Quantas pessoas por candidatura?";
+    private static final String MSG_ERRO = "Erro, input inválido.";
+    private static final String TITULO_INPUT = "Algoritmo Quantas Pessoas";
+    private static final String TITULO_ERRO = "Erro";
+
+    private static final String NOME_ALGORITMO_OMISSAO = "Numero Pessoas por Candidatura";
+
+    public AlgoritmoNumeroPessoasPorCandidatura() {
+        super(NOME_ALGORITMO_OMISSAO);
+    }
 
     @Override
     public List<Atribuicao> atribui(Evento e) {
@@ -70,29 +76,10 @@ public class AlgoritmoNumeroPessoasPorCandidatura implements AlgoritmoAtribuicao
         Fae f = e.getListaFae().get(numRandom);
         return f;
     }
-    /*
-                int indiceCandidaturas = 0;
-            int indiceFae = 0;
-            boolean terminar = false;
-            do {
-                Atribuicao a = new Atribuicao();
-                Candidatura c = e.getListaCandidatura().get(indiceCandidaturas);
-                Fae f = e.getListaFae().get(indiceFae);
-                a.setFae(f);
-                a.setCandidatura(c);
-                listaAtrib.add(a);
 
-                indiceFae++;
-                if (indiceFae % qtdPessoas == 0) {
-                    indiceCandidaturas++;
-                }
-                if (indiceFae == e.getListaFae().size()) {
-                    indiceFae = 0;
-                }
+    @Override
+    public String toString() {
+        return getNomeAlgoritmo();
+    }
 
-                if (indiceCandidaturas >= e.getListaCandidatura().size()) {
-                    terminar = true;
-                }
-            } while (terminar == false);
-     */
 }

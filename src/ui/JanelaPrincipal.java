@@ -186,35 +186,10 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == acerca) {
-            JOptionPane.showMessageDialog(this, Constantes.ACERCA, Constantes.TITULO_ACERCA, JOptionPane.QUESTION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Constantes.ACERCA_MENSAGEM, Constantes.TITULO_ACERCA, JOptionPane.QUESTION_MESSAGE);
         }
         if (e.getSource() == sair) {
             System.exit(0);
-        }
-        if (e.getSource() == atribuir_cand) {
-            if (ce.getRegistoEventos().size() > 0) {
-                setVisible(false);
-                AtribuirCandidatura ac = new AtribuirCandidatura(this, ce);
-                setVisible(true);
-            } else {
-                mensagemErro(Constantes.ERRO_N_EXISTE_EVENTOS);
-            }
-        }
-        if (e.getSource() == decidir_cand) {
-            if (ce.getRegistoUtilizadores().size() > 0) {
-                //Fae f = Teste.retornarFaeTeste(ce);
-                Fae f = new Fae("Utilizador c", "userc", "userc@user.pt", "123".toCharArray());
-                setVisible(false);
-                new DecidirCandidatura(this, ce.getRegistoEventos(), f.getUsername());
-                setVisible(true);
-            }
-
-        }
-        if (e.getSource() == submeter_cand) {
-            if (ce.getRegistoUtilizadores().size() > 0) {
-                RepresentanteEmpresa reptest = Teste.retornarRepEmpTeste(ce);
-                new SubmeterCandidatura(this, ce.getRegistoEventos(), reptest);
-            }
         }
         if (e.getSource() == debug_item) {
             Teste t = new Teste();
@@ -272,18 +247,50 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
                 username = jl.getUsername();
             }
         }
+
         if (e.getSource() == debug_limpar) {
             ce = new CentroEventos();
             System.out.println("O centro de eventos foi reinicializado");
+        }
+        //                      Casos de Uso
+        // Caso de uso atribuir candidatura
+        if (e.getSource() == atribuir_cand) {
+            if (ce.getRegistoEventos().size() > 0) {
+                setVisible(false);
+                AtribuirCandidatura ac = new AtribuirCandidatura(this, ce);
+                setVisible(true);
+            } else {
+                Constantes.mensagemErro(Constantes.ERRO_N_EXISTE_EVENTOS);
+            }
+        }
+        // Caso de uso decidir candidatura
+        if (e.getSource() == decidir_cand) {
+            if (ce.getRegistoUtilizadores().size() > 0) {
+                //Fae f = Teste.retornarFaeTeste(ce);
+                Fae f = new Fae("Utilizador c", "userc", "userc@user.pt", "123".toCharArray());
+
+                if (ce.getRegistoEventos()
+                        .verificarSeFaeTemAtribuicoes(f.getUsername())) {
+                    setVisible(false);
+                    new DecidirCandidatura(this, ce, f.getUsername());
+                    setVisible(true);
+                } else {
+                    Constantes.mensagemErro(Constantes.ERRO_NAO_TEM_ATRIBUICOES);
+                }
+            }
+
+        }
+        // Caso de uso submeter candidatura
+        if (e.getSource() == submeter_cand) {
+            if (ce.getRegistoUtilizadores().size() > 0) {
+                RepresentanteEmpresa reptest = Teste.retornarRepEmpTeste(ce);
+                new SubmeterCandidatura(this, ce, reptest);
+            }
         }
     }
 
     private static File diretorioAtual() {
         return new File(System.getProperty("user.dir"));
-    }
-
-    private static void mensagemErro(String msg) {
-        JOptionPane.showMessageDialog(null, msg, Constantes.ERRO_TITULO, JOptionPane.ERROR_MESSAGE);
     }
 
     public void definirIcon(JMenuItem cmp, String nomeficheiro) {

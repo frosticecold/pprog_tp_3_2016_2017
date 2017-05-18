@@ -10,7 +10,7 @@ import utils.InterfaceListaLerConfig;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import utils.lerFicheiroConfig;
+import utils.LerFicheiroConfig;
 
 /**
  *
@@ -25,7 +25,7 @@ public class ListaTipoEvento implements InterfaceListaLerConfig<String>, Iterabl
 
     public ListaTipoEvento() {
         lista = new ArrayList<>();
-        lerFicheiroConfig lf = new lerFicheiroConfig();
+        LerFicheiroConfig lf = new LerFicheiroConfig();
         CLASSPATH = lf.lerFicheiroConfig(START_CONFIG, END_CONFIG, CLASSPATH, this);
     }
     public void escreverOutput() {

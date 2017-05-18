@@ -21,11 +21,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import model.CentroEventos;
 import model.candidatura.Candidatura;
 import model.evento.Evento;
-import model.listas.RegistoEvento;
 import model.listas.ListaTipoEvento;
 import model.user.RepresentanteEmpresa;
+import ui.misc.EventoCellRenderer;
 
 /**
  *
@@ -46,7 +47,7 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
     //Vars de instância
     private ListaTipoEvento listaTipoEvento;
     private RepresentanteEmpresa representante;
-    private RegistoEvento registoEvento;
+    private CentroEventos centroEventos;
     //Vars de classe
     private final static int GAP = 10;
     private final static boolean MODAL = true;
@@ -61,12 +62,12 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
     private final static String TOOLTIP_SAIR = "Cancelar a submissão da candidatura";
     private final static String TOOLTIP_SUBMETER = "Guardar a submissão da candidatura";
 
-    public SubmeterCandidatura(Frame owner, RegistoEvento regEvent, RepresentanteEmpresa repEmpresa) {
+    public SubmeterCandidatura(Frame owner, CentroEventos ce, RepresentanteEmpresa repEmpresa) {
         super(owner, TITULO_JANELA, MODAL);
 
         listaTipoEvento = new ListaTipoEvento();
         representante = repEmpresa;
-        registoEvento = regEvent;
+        centroEventos = ce;
 
         initComponentes();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -95,6 +96,8 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
 
         tipoEventocmbox.addActionListener(this);
         eventoCombox.addActionListener(this);
+
+        eventoCombox.setRenderer(new EventoCellRenderer());
     }
 
     private void initBotoes() {
@@ -161,7 +164,7 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
      */
     private void copiarEventoPorTipoParaCombobox() {
         dcbmEvento.removeAllElements();
-        for (Evento ev : registoEvento) {
+        for (Evento ev : centroEventos.getRegistoEventos()) {
             if (ev.getClass().getSimpleName().equalsIgnoreCase(dcbmTipoEvento.getSelectedItem().toString())) {
                 dcbmEvento.addElement(ev);
             }

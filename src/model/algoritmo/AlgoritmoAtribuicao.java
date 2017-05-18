@@ -8,7 +8,17 @@ import model.evento.Evento;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public interface AlgoritmoAtribuicao {
+public abstract class AlgoritmoAtribuicao {
+
+    private String nomeAlgoritmo;
+
+    public AlgoritmoAtribuicao(String nomeAlgoritmo) {
+        this.nomeAlgoritmo = nomeAlgoritmo;
+    }
+
+    public String getNomeAlgoritmo() {
+        return nomeAlgoritmo;
+    }
 
     /**
      * Interface para atribuir um evento que devolve uma lista de atribuições
@@ -16,5 +26,8 @@ public interface AlgoritmoAtribuicao {
      * @param e Evento a atribuir
      * @return Devolve uma lista com as atribuições
      */
-    public List<Atribuicao> atribui(Evento e);
+    public abstract List<Atribuicao> atribui(Evento e);
+
+    @Override
+    public abstract String toString();
 }

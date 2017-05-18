@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import model.listas.RegistoUtilizador;
 import model.user.Utilizador;
+import utils.Constantes;
 
 /**
  *
@@ -23,29 +24,28 @@ import model.user.Utilizador;
  */
 public class JanelaLogin extends JDialog implements ActionListener {
 
-    private JPanel pCentro = new JPanel(new BorderLayout(GAP, GAP)),
+    private final JPanel pCentro = new JPanel(new BorderLayout(GAP, GAP)),
             pLabel = new JPanel(new GridLayout(N_LINHAS_A, N_COL_A)),
             pInput = new JPanel(new GridLayout(N_LINHAS_A, N_COL_A)),
             pSul = new JPanel(new BorderLayout());
-    private JButton login = new JButton("Login");
-    private JLabel lb_username = new JLabel("Username"), lb_password = new JLabel("Password");
-    private JTextField txtField = new JTextField(TAMANHO_TXTFIELD);
-    private JPasswordField passwordfield = new JPasswordField(TAMANHO_TXTFIELD);
+    private final JButton login = new JButton("Login");
+    private final JLabel lb_username = new JLabel("Username"), lb_password = new JLabel("Password");
+    private final JTextField txtField = new JTextField(TAMANHO_TXTFIELD);
+    private final JPasswordField passwordfield = new JPasswordField(TAMANHO_TXTFIELD);
 
     //Vars de Instancia
-    private RegistoUtilizador registoUtilizador;
+    private final RegistoUtilizador registoUtilizador;
     private String username;
     //Vars de Classe
-    private static String TITULO_JANELA = "Janela Login";
-    private static String TITULO_ERROR_MESSAGE = "Erro";
-    private static String ERROR_MESSAGE = "Utilizador inválido";
-    private static boolean MODAL = true, ISRESIZEABLE = false;
-    private static int N_LINHAS_A = 2, N_COL_A = 1;
-    private static int TAMANHO_TXTFIELD = 15;
-    private static int GAP = 5;
+    private static final String TITULO_ERROR_MESSAGE = "Erro";
+    private static final String ERROR_MESSAGE = "Utilizador inválido";
+    private static final boolean MODAL = true, ISRESIZEABLE = false;
+    private static final int N_LINHAS_A = 2, N_COL_A = 1;
+    private static final int TAMANHO_TXTFIELD = 15;
+    private static final int GAP = 5;
 
     public JanelaLogin(Frame owner, RegistoUtilizador ru) {
-        super(owner, TITULO_JANELA, MODAL);
+        super(owner, Constantes.TITULO_JANELA_LOGIN, MODAL);
         registoUtilizador = ru;
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setResizable(ISRESIZEABLE);

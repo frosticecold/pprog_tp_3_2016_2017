@@ -52,4 +52,9 @@ public class Congresso extends Evento implements Serializable {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
 }

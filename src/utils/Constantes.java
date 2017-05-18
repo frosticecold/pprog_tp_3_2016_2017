@@ -1,6 +1,7 @@
 package utils;
 
 import java.awt.Dimension;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,7 +15,7 @@ public interface Constantes {
     public static final String JP_SUBMENU_DECID_CAND = "Decidir Candidatura";
     public static final String JP_SUBMENU_SUB_CAND = "Submeter Candidatura";
     public static final String TITULO_JANELA_PRINCIPAL = "Aplicação PPROG TP3";
-    public static final String ACERCA = "Raúl Correia - 1090657@isep.ipp.pt\nSalvador Gouveia 1151238@isep.ipp.pt";
+    public static final String ACERCA_MENSAGEM = "Raúl Correia - 1090657@isep.ipp.pt\nSalvador Gouveia 1151238@isep.ipp.pt";
     public static final String TITULO_ACERCA = "Acerca";
     public static final String MENU_INICIAR = "Ficheiro";
     public static final String MENU_ITEM_CARREGAR_FICHEIRO = "Carregar ficheiro";
@@ -27,11 +28,15 @@ public interface Constantes {
 //Titulos
     public static final String TITULO_BORDER = "Decisão";
     public static final String TITULO_JANELA = "Decidir Candidatura";
+    public static final String TITULO_JANELA_LOGIN = "Janela Login";
+    public static final String TITULO_JANELA_ATRIBUIR = "Atribuir Candidatura";
 //Erro
     public static final String ERRO_TITULO = "Erro";
     public static final String ERRO_SELECIONAR = "Sem seleção";
     public static final String ERRO_GUARDAR = "Texto Inválido";
     public static final String ERRO_N_EXISTE_EVENTOS = "Erro, não existem Eventos.";
+    public static final String ERRO_INSTANCIAR_ALGORITMO = "A instanciação do algoritmo correu mal.";
+    public static final String ERRO_NAO_TEM_ATRIBUICOES = "O fae não tem atribuições associadas.";
     //public static final String ERRO_EXCLAMACAO = "Erro!";
 
 //Texto
@@ -49,6 +54,11 @@ public interface Constantes {
     public static final String ICON_ATRIBUIR_CANDIDATURA = "raio.gif";
     public static final String ICON_ABOUT = "about.gif";
 
+    //Buttons
+    public static final String BTN_GUARDAR = "Guardar";
+    public static final String BTN_SAIR = "Sair";
+    public static final String BTN_ATRIBUI = "Atribui";
+
 //Ints
     public static final int GAP_CINCO = 5;
     public static final int EMPTY_BORDER_GAP_DEZ = 10;
@@ -57,4 +67,11 @@ public interface Constantes {
     public static final Dimension TAMANHO_DECIDIR_CANDIDATURA_MINIMO = new Dimension(650, 450);
     public static final Dimension TAMANHO_JANELA_PRINCIPAL_MINIMO = new Dimension(450, 300);
 
+    //Outras dimensões
+    public static final Dimension ATRIB_CAND_BTN_DIMENSION = new Dimension(95, 30);
+    public static final Dimension ATRIB_CAND_COMBOBOX_DIMENSION = new Dimension(150, 30);
+
+    public static void mensagemErro(String msg) {
+        JOptionPane.showMessageDialog(null, msg, Constantes.ERRO_TITULO, JOptionPane.ERROR_MESSAGE);
+    }
 }

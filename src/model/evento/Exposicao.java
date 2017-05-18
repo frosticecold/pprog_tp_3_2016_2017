@@ -31,4 +31,9 @@ public class Exposicao extends Evento implements Serializable {
         super(titulo, descricao, nomeLocal, dataInicio, dataFim);
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
 }

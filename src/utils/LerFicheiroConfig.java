@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.listas.ListaTipoEvento;
@@ -13,7 +12,7 @@ import model.listas.ListaTipoEvento;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class lerFicheiroConfig {
+public class LerFicheiroConfig {
 
     private static String CAMINHO_FICHEIRO_CONFIG_OMISSAO = "config.ini";
     private static String CLASS_PATH_OMISSAO = "classpath=";

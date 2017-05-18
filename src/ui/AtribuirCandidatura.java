@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -10,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -32,6 +34,7 @@ import model.candidatura.Atribuicao;
 import model.candidatura.Candidatura;
 import model.listas.ListaCandidatura;
 import model.listas.ListaAtribuicao;
+import ui.misc.EventoCellRenderer;
 import utils.Constantes;
 
 /**
@@ -40,39 +43,53 @@ import utils.Constantes;
  */
 public class AtribuirCandidatura extends JDialog implements ActionListener, ListSelectionListener {
 
-    private final JPanel principal = new JPanel(new BorderLayout()),
-            pcentro = new JPanel(new GridLayout(NR_LINHAS, NR_COLUNAS, LIST_GAP, LIST_GAP)),
-            psul = new JPanel(new BorderLayout()),
-            psulesq = new JPanel(new FlowLayout(FlowLayout.LEFT)),
-            psuldir = new JPanel(new FlowLayout());
-    private final JButton guardar = new JButton("Guardar"),
-            sair = new JButton("Sair"), atribui = new JButton("Atribui");
+    //===================JPanels
+    /**
+     * Painel Principal da janela
+     */
+    private JPanel principal;
 
-    private final DefaultListModel<Fae> lmFaeDisponiveis = new DefaultListModel<>();
-    private final DefaultListModel<Candidatura> lmCandidatura = new DefaultListModel<>();
-    private final DefaultListModel<Fae> lmFaeAtribuidos = new DefaultListModel<>();
+    //===================Buttons
+    /**
+     * Botão para guardar
+     */
+    private JButton guardar;
+    /**
+     * Botão para sair
+     */
+    private JButton sair;
+    /**
+     * Botão para atribuir
+     */
+    private JButton atribui;
+    //===================DefaultListModels
+    private DefaultListModel<Fae> listaModeloFaeDisponiveis, listaModeloFaeAtribuidos;
+    private DefaultListModel<Candidatura> listaModeloCandidatura;
+    //===================DefaultComboboxModel
+    private DefaultComboBoxModel<Evento> listaModeloEvento;
+    private DefaultComboBoxModel<AlgoritmoAtribuicao> listaModeloAlgoritmo;
+    //===================JLists
+    private JList jlistFaeDisponiveis;
+    private JList jlistaCandidaturas;
+    private JList jlistFaeAtribuidos;
+    //===================JScrollPane
+    private JScrollPane spFaeDeEvento;
+    private JScrollPane spCandDeEvento;
+    private JScrollPane spFaeDeCandidatura;
 
-    private final DefaultComboBoxModel<Evento> lmEvento = new DefaultComboBoxModel<>();
-    private final DefaultComboBoxModel<String> lmAlg = new DefaultComboBoxModel<>();
-    private final JList jlistFaeDisponiveis = new JList<>(lmFaeDisponiveis);
-    private final JList jlistaCandidaturas = new JList<>(lmCandidatura);
-    private final JList jlistFaeAtribuidos = new JList<>(lmFaeAtribuidos);
-    private final JScrollPane spFaeDeEvento = new JScrollPane(), spCandDeEvento = new JScrollPane(), spFaeDeCandidatura = new JScrollPane();
-
-    private final JComboBox<String> algoritmoComboBox = new JComboBox<>();
-    private final JComboBox<Evento> eventoComboBox = new JComboBox<>();
+    private JComboBox<AlgoritmoAtribuicao> algoritmoComboBox;
+    private JComboBox<Evento> eventoComboBox;
 
     //Instancia
     private final CentroEventos ce;
-    private final List<Fae> ListaFaeAtribuida = new ArrayList<>();
-    private List<Atribuicao> ListaAtribuicoes = new ArrayList<>();
+    private final List<Fae> ListaFaeAtribuida;
+    private List<Atribuicao> ListaAtribuicoes;
 
     //Estáticos
     private static final int PRIMEIRO_ITEM = 0;
     private static final int NR_LINHAS = 1, NR_COLUNAS = 3;
     private static final int LIST_GAP = 10;
-    private static final Dimension BUTTON_DIMENSION = new Dimension(95, 30);
-    private static final Dimension COMBOBOX_DIMENSION = new Dimension(150, 30);
+
     private static final Dimension TAMANHO_JANELA_MINIMO = new Dimension(650, 350);
     private static final String MENSAGEM_EVENTO = "Seleciona o Evento";
     private static final String MENSAGEM_ALGORITMO = "Seleciona o Algoritmo de Atribuição";
@@ -83,13 +100,18 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
     private static final String TOOLTIP_JLIST_FAE_ATRIB_POR_CAND = "Lista de Faes Atribuidos à candidatura";
 
     public AtribuirCandidatura(JFrame frame, CentroEventos ce) {
-        //super("Atribuir Candidatura");
-        super(frame, "Atribuir Candidatura", true);
+        super(frame, Constantes.TITULO_JANELA_ATRIBUIR, true);
+
         this.ce = ce;
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        ListaFaeAtribuida = new ArrayList<>();
+        ListaAtribuicoes = new ArrayList<>();
+
         initComponents();
+
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setMinimumSize(TAMANHO_JANELA_MINIMO);
         setLocationRelativeTo(null);
+
         pack();
         setVisible(true);
     }
@@ -102,54 +124,27 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         verificarListArranque();
     }
 
-    public void verificarListArranque() {
-        if (ce.getRegistoEventos().size() != 0) {
-            Evento ev = (Evento) eventoComboBox.getSelectedItem();
-            if (ev != null && ev.getListaFae().size() != 0) {
-                copiarListaFaeDisponiveis(ev.getListaFae());
-                copiarListaCandidaturasParalmCandidatura(ev.getListaCandidatura());
-            }
-        }
-
-    }
-
-    public void initPanels() {
-        initPainelCentro();
-        initPainelSul();
-        initPainelPrincipal();
-    }
-
-    public void initPainelPrincipal() {
-        final int GAP_DEZ = 10;
-        final int GAP_ZERO = 0;
-        principal.setBorder(new EmptyBorder(GAP_DEZ, GAP_DEZ, GAP_ZERO, GAP_DEZ));
-        principal.add(pcentro, BorderLayout.CENTER);
-        principal.add(psul, BorderLayout.SOUTH);
-        add(principal);
-    }
-
-    public void initPainelCentro() {
-        pcentro.add(spFaeDeEvento);
-        pcentro.add(spCandDeEvento);
-        pcentro.add(spFaeDeCandidatura);
-
-    }
-
-    public void initPainelSul() {
-
-        psulesq.add(eventoComboBox);
-        psulesq.add(algoritmoComboBox);
-        psulesq.add(atribui);
-
-        psuldir.add(sair);
-        psuldir.add(guardar);
-
-        psul.add(psulesq, BorderLayout.WEST);
-        psul.add(psuldir, BorderLayout.EAST);
-    }
-
     public void initLists() {
+        //Criar lista modelos
+        listaModeloFaeDisponiveis = new DefaultListModel<>();
+        listaModeloFaeAtribuidos = new DefaultListModel<>();
+        listaModeloCandidatura = new DefaultListModel<>();
+        listaModeloEvento = new DefaultComboBoxModel<>();
+        listaModeloAlgoritmo = new DefaultComboBoxModel<>();
+        jlistaCandidaturas = new JList<>(listaModeloCandidatura);
+        jlistFaeAtribuidos = new JList<>(listaModeloFaeAtribuidos);
+
+        //Criar Scrollpanes
+        spFaeDeEvento = new JScrollPane();
+        spCandDeEvento = new JScrollPane();
+        spFaeDeCandidatura = new JScrollPane();
+
+        //Criar jlists
+        jlistFaeDisponiveis = new JList<>(listaModeloFaeDisponiveis);
+
         copiarListaFaeDisponiveis(ce.getRegistoEventos().get(0).getListaFae());
+
+        jlistaCandidaturas.setCellRenderer(new CandidaturaCellRenderer());
 
         jlistFaeDisponiveis.setLayoutOrientation(JList.VERTICAL);
         jlistaCandidaturas.setLayoutOrientation(JList.VERTICAL);
@@ -167,82 +162,154 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         jlistFaeAtribuidos.setToolTipText(TOOLTIP_JLIST_FAE_ATRIB_POR_CAND);
     }
 
-    public void initButtons() {
-        atribui.setPreferredSize(BUTTON_DIMENSION);
-        sair.setPreferredSize(BUTTON_DIMENSION);
-        guardar.setPreferredSize(BUTTON_DIMENSION);
+    public void initPanels() {
+        principal = new JPanel(new BorderLayout());
+        JPanel pcentro = new JPanel(new GridLayout(NR_LINHAS, NR_COLUNAS, LIST_GAP, LIST_GAP));
+        JPanel psul = new JPanel(new BorderLayout());
+        JPanel psulesq = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel psuldir = new JPanel(new FlowLayout());
+        initPainelCentro(pcentro);
+        initPainelSul(psul, psulesq, psuldir);
+        initPainelPrincipal(pcentro, psul);
+    }
 
+    public void initPainelPrincipal(JPanel pcentro, JPanel psul) {
+        final int GAP_DEZ = 10;
+        final int GAP_ZERO = 0;
+        principal.setBorder(new EmptyBorder(GAP_DEZ, GAP_DEZ, GAP_ZERO, GAP_DEZ));
+        principal.add(pcentro, BorderLayout.CENTER);
+        principal.add(psul, BorderLayout.SOUTH);
+        add(principal);
+    }
+
+    public void initPainelCentro(JPanel pcentro) {
+        pcentro.add(spFaeDeEvento);
+        pcentro.add(spCandDeEvento);
+        pcentro.add(spFaeDeCandidatura);
+
+    }
+
+    public void initPainelSul(JPanel psul, JPanel psulesq, JPanel psuldir) {
+
+        psulesq.add(eventoComboBox);
+        psulesq.add(algoritmoComboBox);
+        psulesq.add(atribui);
+
+        psuldir.add(sair);
+        psuldir.add(guardar);
+
+        psul.add(psulesq, BorderLayout.WEST);
+        psul.add(psuldir, BorderLayout.EAST);
+    }
+
+    public void initButtons() {
+
+        //Criar os botões
+        guardar = new JButton(Constantes.BTN_GUARDAR);
+        sair = new JButton(Constantes.BTN_SAIR);
+        atribui = new JButton(Constantes.BTN_ATRIBUI);
+
+        //Definir tamanho predefinido
+        atribui.setPreferredSize(Constantes.ATRIB_CAND_BTN_DIMENSION);
+        sair.setPreferredSize(Constantes.ATRIB_CAND_BTN_DIMENSION);
+        guardar.setPreferredSize(Constantes.ATRIB_CAND_BTN_DIMENSION);
+
+        //Definir as memónicas
         atribui.setMnemonic(KeyEvent.VK_A);
         sair.setMnemonic(KeyEvent.VK_S);
         guardar.setMnemonic(KeyEvent.VK_G);
+
+        //Adicionar os actionlisteners
         atribui.addActionListener(this);
         sair.addActionListener(this);
         guardar.addActionListener(this);
     }
 
     public void initComboBox() {
+        //Criar combobox
+        algoritmoComboBox = new JComboBox<>();
+        eventoComboBox = new JComboBox<>();
+
         for (Evento e : ce.getRegistoEventos()) {
-            lmEvento.addElement(e);
+            listaModeloEvento.addElement(e);
         }
-        eventoComboBox.setModel(lmEvento);
-        eventoComboBox.setPreferredSize(COMBOBOX_DIMENSION);
-        algoritmoComboBox.setPreferredSize(COMBOBOX_DIMENSION);
+        eventoComboBox.setModel(listaModeloEvento);
+        eventoComboBox.setPreferredSize(Constantes.ATRIB_CAND_COMBOBOX_DIMENSION);
+        algoritmoComboBox.setPreferredSize(Constantes.ATRIB_CAND_COMBOBOX_DIMENSION);
 
         copiarListaAlgoritmosParaComboBox(ce.getRegistoAlgoritmosAtribuicao());
-        algoritmoComboBox.setModel(lmAlg);
+        algoritmoComboBox.setModel(listaModeloAlgoritmo);
 
         eventoComboBox.addActionListener(this);
         eventoComboBox.setToolTipText(MENSAGEM_EVENTO);
+        eventoComboBox.setRenderer(new EventoCellRenderer());
         algoritmoComboBox.setToolTipText(MENSAGEM_ALGORITMO);
 
     }
 
+    public void verificarListArranque() {
+        if (ce.getRegistoEventos().size() != 0) {
+            Evento ev = (Evento) eventoComboBox.getSelectedItem();
+            if (ev != null && ev.getListaFae().size() != 0) {
+                copiarListaFaeDisponiveis(ev.getListaFae());
+                copiarListaCandidaturasParalmCandidatura(ev.getListaCandidatura());
+            }
+        }
+
+    }
+
     private void copiarListaCandidaturasParalmCandidatura(ListaCandidatura lc) {
-        lmCandidatura.clear();
+        listaModeloCandidatura.clear();
         for (Candidatura c : lc) {
-            lmCandidatura.addElement(c);
+            listaModeloCandidatura.addElement(c);
 
         }
 
     }
 
     private void copiarListaFaeDisponiveis(ListaFae listaFae) {
-        lmFaeDisponiveis.clear();
+        listaModeloFaeDisponiveis.clear();
         for (Fae f : listaFae) {
-            lmFaeDisponiveis.addElement(f);
+            listaModeloFaeDisponiveis.addElement(f);
         }
     }
 
     private void copiarListaFaePorCandidatura(List<Atribuicao> la, Candidatura c) {
-        lmFaeAtribuidos.clear();
+        listaModeloFaeAtribuidos.clear();
         for (Atribuicao a : la) {
             if (a.getCandidatura().equals(c)) {
-                lmFaeAtribuidos.addElement(a.getFae());
+                listaModeloFaeAtribuidos.addElement(a.getFae());
             }
         }
     }
 
     private void copiarListaFaePorCandidaturaJaGuardada(ListaAtribuicao la, Candidatura c) {
-        lmFaeAtribuidos.clear();
+        listaModeloFaeAtribuidos.clear();
         for (Atribuicao a : la) {
             if (a.getCandidatura().equals(c)) {
-                lmFaeAtribuidos.addElement(a.getFae());
+                listaModeloFaeAtribuidos.addElement(a.getFae());
             }
         }
     }
 
     private void copiarListaAlgoritmosParaComboBox(RegistoAlgoritmosAtribuicao ra) {
-        lmAlg.removeAllElements();
+        listaModeloAlgoritmo.removeAllElements();
         for (String s : ra) {
-            lmAlg.addElement(s);
+            try {
+                String nomeClasse = RegistoAlgoritmosAtribuicao.CLASSPATH + s;
+                AlgoritmoAtribuicao a = (AlgoritmoAtribuicao) Class.forName(nomeClasse).newInstance();
+                listaModeloAlgoritmo.addElement(a);
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+                JOptionPane.showMessageDialog(this, Constantes.ERRO_INSTANCIAR_ALGORITMO, Constantes.ERRO_TITULO, JOptionPane.ERROR_MESSAGE);
+            }
         }
 
     }
 
     private void limparListas() {
-        lmFaeDisponiveis.clear();
-        lmCandidatura.clear();
-        lmFaeAtribuidos.clear();
+        listaModeloFaeDisponiveis.clear();
+        listaModeloCandidatura.clear();
+        listaModeloFaeAtribuidos.clear();
         ListaAtribuicoes.clear();
         ListaFaeAtribuida.clear();
     }
@@ -257,20 +324,16 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
             if (ev.getListaCandidatura().size() == 0) {
                 JOptionPane.showMessageDialog(this, MENSAGEM_ERRO_SEM_CANDIDATURAS, TITULO_ERRO, JOptionPane.ERROR_MESSAGE);
             } else {
-                try {
-                    String nomeClasse = RegistoAlgoritmosAtribuicao.CLASSPATH + algoritmoComboBox.getSelectedItem();
-                    AlgoritmoAtribuicao a = (AlgoritmoAtribuicao) Class.forName(nomeClasse).newInstance();
-                    ListaAtribuicoes = a.atribui(ev);
-                    if (jlistaCandidaturas.getSelectedIndex() != -1) {
-                        int num = jlistaCandidaturas.getSelectedIndex();
-                        jlistaCandidaturas.clearSelection();
-                        jlistaCandidaturas.setSelectedIndex(num);
-                    } else {
-                        jlistaCandidaturas.setSelectedIndex(PRIMEIRO_ITEM);
-                    }
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-                    JOptionPane.showMessageDialog(this, "A instanciação do algoritmo correu mal", "Erro!", JOptionPane.ERROR_MESSAGE);
+
+                ListaAtribuicoes = ((AlgoritmoAtribuicao) algoritmoComboBox.getSelectedItem()).atribui(ev);
+                if (jlistaCandidaturas.getSelectedIndex() != -1) {
+                    int num = jlistaCandidaturas.getSelectedIndex();
+                    jlistaCandidaturas.clearSelection();
+                    jlistaCandidaturas.setSelectedIndex(num);
+                } else {
+                    jlistaCandidaturas.setSelectedIndex(PRIMEIRO_ITEM);
                 }
+
             }
         }
         if (e.getSource() == guardar) {
@@ -301,5 +364,15 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
                 copiarListaFaePorCandidatura(ListaAtribuicoes, c);
             }
         }
+    }
+}
+
+class CandidaturaCellRenderer extends DefaultListCellRenderer {
+
+    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+        Candidatura cd = (Candidatura) value;
+        setText(cd.getDescricao()); // where getValue is some method you implement that gets the text you want to render for the component
+        return c;
     }
 }

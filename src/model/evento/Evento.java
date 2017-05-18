@@ -252,7 +252,7 @@ public abstract class Evento implements Comparable<Evento>, Serializable {
      */
     @Override
     public String toString() {
-        return titulo;
+        return String.format("Título:%s Descrição:%s Local:%s Data Inicio:%s Data Fim:%s", titulo, descricao, local, dataInicio, dataFim);
     }
 
     /**

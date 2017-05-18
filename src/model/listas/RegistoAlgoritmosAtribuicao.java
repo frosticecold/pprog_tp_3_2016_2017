@@ -5,7 +5,7 @@ import utils.InterfaceListaLerConfig;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import utils.lerFicheiroConfig;
+import utils.LerFicheiroConfig;
 
 /**
  *
@@ -19,7 +19,7 @@ public class RegistoAlgoritmosAtribuicao implements Iterable<String>, InterfaceL
     private static String END_CONFIG = "[/algoritmo]";
 
     public RegistoAlgoritmosAtribuicao() {
-        lerFicheiroConfig lf = new lerFicheiroConfig();
+        LerFicheiroConfig lf = new LerFicheiroConfig();
         CLASSPATH = lf.lerFicheiroConfig(START_CONFIG, END_CONFIG,CLASSPATH,this);
     }
 
