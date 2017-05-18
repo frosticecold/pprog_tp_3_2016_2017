@@ -26,7 +26,7 @@ import model.candidatura.Candidatura;
 import model.evento.Evento;
 import model.listas.ListaTipoEvento;
 import model.user.RepresentanteEmpresa;
-import ui.misc.EventoCellRenderer;
+import ui.misc.CustomCellRenderer;
 
 /**
  *
@@ -97,7 +97,7 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
         tipoEventocmbox.addActionListener(this);
         eventoCombox.addActionListener(this);
 
-        eventoCombox.setRenderer(new EventoCellRenderer());
+        eventoCombox.setRenderer(new CustomCellRenderer());
     }
 
     private void initBotoes() {

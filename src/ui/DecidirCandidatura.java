@@ -26,7 +26,7 @@ import model.candidatura.Atribuicao;
 import model.candidatura.Candidatura;
 import model.candidatura.Decisao;
 import model.evento.Evento;
-import ui.misc.EventoCellRenderer;
+import ui.misc.CustomCellRenderer;
 import utils.Constantes;
 
 /**
@@ -121,7 +121,7 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
 
     private void initComboBox() {
         eventoComboBox.addActionListener(this);
-        eventoComboBox.setRenderer(new EventoCellRenderer());
+        eventoComboBox.setRenderer(new CustomCellRenderer());
     }
 
     private void initBotoes() {

@@ -51,7 +51,7 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         initComponentes();
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setMinimumSize(Constantes.TAMANHO_JANELA_PRINCIPAL_MINIMO);
+        setMinimumSize(Constantes.TAMANHO_JANELA_MINIMO_PRINCIPAL);
         setLocationRelativeTo(null);
 //
 //        JanelaLogin jlg = new JanelaLogin(this, ce.getRegistoUtilizadores());

@@ -1,7 +1,6 @@
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -11,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -34,7 +32,8 @@ import model.candidatura.Atribuicao;
 import model.candidatura.Candidatura;
 import model.listas.ListaCandidatura;
 import model.listas.ListaAtribuicao;
-import ui.misc.EventoCellRenderer;
+import model.listas.RegistoEvento;
+import ui.misc.CustomCellRenderer;
 import utils.Constantes;
 
 /**
@@ -62,54 +61,93 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
      * Botão para atribuir
      */
     private JButton atribui;
-    //===================DefaultListModels
-    private DefaultListModel<Fae> listaModeloFaeDisponiveis, listaModeloFaeAtribuidos;
-    private DefaultListModel<Candidatura> listaModeloCandidatura;
-    //===================DefaultComboboxModel
-    private DefaultComboBoxModel<Evento> listaModeloEvento;
-    private DefaultComboBoxModel<AlgoritmoAtribuicao> listaModeloAlgoritmo;
-    //===================JLists
-    private JList jlistFaeDisponiveis;
-    private JList jlistaCandidaturas;
-    private JList jlistFaeAtribuidos;
-    //===================JScrollPane
-    private JScrollPane spFaeDeEvento;
-    private JScrollPane spCandDeEvento;
-    private JScrollPane spFaeDeCandidatura;
 
+    //===================DefaultListModels
+    /**
+     * Lista modelo com faes disponíveis
+     */
+    private DefaultListModel<Fae> listaModeloFaeDisponiveis;
+    /**
+     * Lista modelo com faes atribuidos
+     */
+    private DefaultListModel<Fae> listaModeloFaeAtribuidos;
+    /**
+     * Lista modelo com as candidaturas
+     */
+    private DefaultListModel<Candidatura> listaModeloCandidatura;
+
+    //===================DefaultComboboxModel
+    /**
+     * Lista modelo com eventos
+     */
+    private DefaultComboBoxModel<Evento> listaModeloEvento;
+    /**
+     * Lista modelo com algoritmos
+     */
+    private DefaultComboBoxModel<AlgoritmoAtribuicao> listaModeloAlgoritmo;
+
+    //===================JLists
+    /**
+     * Jlist de faes disponiveis
+     */
+    private JList jlistFaeDisponiveis;
+    /**
+     * Jlist de candidaturas
+     */
+    private JList jlistCandidaturas;
+    /**
+     * Jlist de faes atribuidos
+     */
+    private JList jlistFaeAtribuidos;
+
+    //===================JScrollPane
+    /**
+     * Scrollpane associado à jlist de faes disponiveis
+     */
+    private JScrollPane spFaeDisponiveis;
+
+    /**
+     * Scrollpane associado à jlist de candidaturas
+     */
+    private JScrollPane spCandidaturas;
+    /**
+     * Scrollpane associado à jlist de fae atribuidos
+     */
+    private JScrollPane spFaeAtribuidos;
+
+    //===================JCombobox
+    /**
+     * JCombobox de algoritmos de atribuição
+     */
     private JComboBox<AlgoritmoAtribuicao> algoritmoComboBox;
+    /**
+     * JCombobox de eventos disponíveis
+     */
     private JComboBox<Evento> eventoComboBox;
 
-    //Instancia
+    //Vars de Instancia
+    /**
+     * Referência ao centro de eventos
+     */
     private final CentroEventos ce;
-    private final List<Fae> ListaFaeAtribuida;
+    
+    /**
+     * 
+     */
     private List<Atribuicao> ListaAtribuicoes;
 
-    //Estáticos
-    private static final int PRIMEIRO_ITEM = 0;
+    //Vars Estáticos
     private static final int NR_LINHAS = 1, NR_COLUNAS = 3;
-    private static final int LIST_GAP = 10;
-
-    private static final Dimension TAMANHO_JANELA_MINIMO = new Dimension(650, 350);
-    private static final String MENSAGEM_EVENTO = "Seleciona o Evento";
-    private static final String MENSAGEM_ALGORITMO = "Seleciona o Algoritmo de Atribuição";
-    private static final String MENSAGEM_ERRO_SEM_CANDIDATURAS = "Erro, sem candidaturas...";
-    private static final String TITULO_ERRO = "Erro";
-    private static final String TOOLTIP_JLIST_FAEDISPONIVEIS = "Lista de Faes disponíveis";
-    private static final String TOOLTIP_JLIST_LISTA_CANDIDATURAS = "Lista de Candidaturas disponíveis";
-    private static final String TOOLTIP_JLIST_FAE_ATRIB_POR_CAND = "Lista de Faes Atribuidos à candidatura";
 
     public AtribuirCandidatura(JFrame frame, CentroEventos ce) {
         super(frame, Constantes.TITULO_JANELA_ATRIBUIR, true);
 
         this.ce = ce;
-        ListaFaeAtribuida = new ArrayList<>();
-        ListaAtribuicoes = new ArrayList<>();
 
         initComponents();
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setMinimumSize(TAMANHO_JANELA_MINIMO);
+        setMinimumSize(Constantes.TAMANHO_JANELA_MINIMO_ATRIBUIR_CAND);
         setLocationRelativeTo(null);
 
         pack();
@@ -125,46 +163,52 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
     }
 
     public void initLists() {
+        //Iniciar ArrayLists
+        ListaAtribuicoes = new ArrayList<>();
+
         //Criar lista modelos
         listaModeloFaeDisponiveis = new DefaultListModel<>();
         listaModeloFaeAtribuidos = new DefaultListModel<>();
         listaModeloCandidatura = new DefaultListModel<>();
         listaModeloEvento = new DefaultComboBoxModel<>();
         listaModeloAlgoritmo = new DefaultComboBoxModel<>();
-        jlistaCandidaturas = new JList<>(listaModeloCandidatura);
-        jlistFaeAtribuidos = new JList<>(listaModeloFaeAtribuidos);
 
         //Criar Scrollpanes
-        spFaeDeEvento = new JScrollPane();
-        spCandDeEvento = new JScrollPane();
-        spFaeDeCandidatura = new JScrollPane();
+        spFaeDisponiveis = new JScrollPane();
+        spCandidaturas = new JScrollPane();
+        spFaeAtribuidos = new JScrollPane();
 
         //Criar jlists
         jlistFaeDisponiveis = new JList<>(listaModeloFaeDisponiveis);
+        jlistCandidaturas = new JList<>(listaModeloCandidatura);
+        jlistFaeAtribuidos = new JList<>(listaModeloFaeAtribuidos);
 
-        copiarListaFaeDisponiveis(ce.getRegistoEventos().get(0).getListaFae());
-
-        jlistaCandidaturas.setCellRenderer(new CandidaturaCellRenderer());
+        //Custom Renderers
+        jlistFaeDisponiveis.setCellRenderer(new CustomCellRenderer());
+        jlistCandidaturas.setCellRenderer(new CustomCellRenderer());
+        jlistFaeAtribuidos.setCellRenderer(new CustomCellRenderer());
 
         jlistFaeDisponiveis.setLayoutOrientation(JList.VERTICAL);
-        jlistaCandidaturas.setLayoutOrientation(JList.VERTICAL);
+        jlistCandidaturas.setLayoutOrientation(JList.VERTICAL);
         jlistFaeAtribuidos.setLayoutOrientation(JList.VERTICAL);
 
-        spFaeDeEvento.setViewportView(jlistFaeDisponiveis);
-        spCandDeEvento.setViewportView(jlistaCandidaturas);
-        spFaeDeCandidatura.setViewportView(jlistFaeAtribuidos);
+        spFaeDisponiveis.setViewportView(jlistFaeDisponiveis);
+        spCandidaturas.setViewportView(jlistCandidaturas);
+        spFaeAtribuidos.setViewportView(jlistFaeAtribuidos);
 
         //Listeners
-        jlistaCandidaturas.addListSelectionListener(this);
+        jlistCandidaturas.addListSelectionListener(this);
 
-        jlistFaeDisponiveis.setToolTipText(TOOLTIP_JLIST_FAEDISPONIVEIS);
-        jlistaCandidaturas.setToolTipText(TOOLTIP_JLIST_LISTA_CANDIDATURAS);
-        jlistFaeAtribuidos.setToolTipText(TOOLTIP_JLIST_FAE_ATRIB_POR_CAND);
+        jlistFaeDisponiveis.setToolTipText(Constantes.ATRIB_CAND_TOOLTIP_JLIST_FAEDISPONIVEIS);
+        jlistCandidaturas.setToolTipText(Constantes.ATRIB_CAND_TOOLTIP_JLIST_LISTA_CANDIDATURAS);
+        jlistFaeAtribuidos.setToolTipText(Constantes.ATRIB_CAND_TOOLTIP_JLIST_FAE_ATRIB_POR_CAND);
+
+        copiarListaFaeDisponiveis(ce.getRegistoEventos().get(Constantes.INDICE_ZERO).getListaFae());
     }
 
     public void initPanels() {
         principal = new JPanel(new BorderLayout());
-        JPanel pcentro = new JPanel(new GridLayout(NR_LINHAS, NR_COLUNAS, LIST_GAP, LIST_GAP));
+        JPanel pcentro = new JPanel(new GridLayout(NR_LINHAS, NR_COLUNAS, Constantes.GAP_DEZ, Constantes.GAP_DEZ));
         JPanel psul = new JPanel(new BorderLayout());
         JPanel psulesq = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel psuldir = new JPanel(new FlowLayout());
@@ -174,18 +218,16 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
     }
 
     public void initPainelPrincipal(JPanel pcentro, JPanel psul) {
-        final int GAP_DEZ = 10;
-        final int GAP_ZERO = 0;
-        principal.setBorder(new EmptyBorder(GAP_DEZ, GAP_DEZ, GAP_ZERO, GAP_DEZ));
+        principal.setBorder(new EmptyBorder(Constantes.GAP_DEZ, Constantes.GAP_DEZ, Constantes.GAP_ZERO, Constantes.GAP_DEZ));
         principal.add(pcentro, BorderLayout.CENTER);
         principal.add(psul, BorderLayout.SOUTH);
         add(principal);
     }
 
     public void initPainelCentro(JPanel pcentro) {
-        pcentro.add(spFaeDeEvento);
-        pcentro.add(spCandDeEvento);
-        pcentro.add(spFaeDeCandidatura);
+        pcentro.add(spFaeDisponiveis);
+        pcentro.add(spCandidaturas);
+        pcentro.add(spFaeAtribuidos);
 
     }
 
@@ -219,6 +261,11 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         sair.setMnemonic(KeyEvent.VK_S);
         guardar.setMnemonic(KeyEvent.VK_G);
 
+        //Adicionar Tooltips
+        atribui.setToolTipText(Constantes.ATRIB_CAND_TOOLTIP_ATRIBUIR);
+        sair.setToolTipText(Constantes.ATRIB_CAND_TOOLTIP_SAIR);
+        guardar.setToolTipText(Constantes.ATRIB_CAND_TOOLTIP_GUARDAR);
+
         //Adicionar os actionlisteners
         atribui.addActionListener(this);
         sair.addActionListener(this);
@@ -230,20 +277,27 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         algoritmoComboBox = new JComboBox<>();
         eventoComboBox = new JComboBox<>();
 
-        for (Evento e : ce.getRegistoEventos()) {
-            listaModeloEvento.addElement(e);
-        }
+        //Preencher listas
+        copiarListaEventosParaListaModeloEventos(ce.getRegistoEventos());
+        copiarListaAlgoritmosParaComboBox(ce.getRegistoAlgoritmosAtribuicao());
+
+        //Associar listas modelos às devidas combobox
         eventoComboBox.setModel(listaModeloEvento);
+        algoritmoComboBox.setModel(listaModeloAlgoritmo);
+
+        //Definir tamanho das combobox
         eventoComboBox.setPreferredSize(Constantes.ATRIB_CAND_COMBOBOX_DIMENSION);
         algoritmoComboBox.setPreferredSize(Constantes.ATRIB_CAND_COMBOBOX_DIMENSION);
 
-        copiarListaAlgoritmosParaComboBox(ce.getRegistoAlgoritmosAtribuicao());
-        algoritmoComboBox.setModel(listaModeloAlgoritmo);
-
+        //Definir action listeners
         eventoComboBox.addActionListener(this);
-        eventoComboBox.setToolTipText(MENSAGEM_EVENTO);
-        eventoComboBox.setRenderer(new EventoCellRenderer());
-        algoritmoComboBox.setToolTipText(MENSAGEM_ALGORITMO);
+
+        //Definir Tooltip
+        eventoComboBox.setToolTipText(Constantes.MENSAGEM_EVENTO);
+        algoritmoComboBox.setToolTipText(Constantes.MENSAGEM_ALGORITMO);
+
+        //Definir Custom Renderer
+        eventoComboBox.setRenderer(new CustomCellRenderer());
 
     }
 
@@ -306,12 +360,18 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
 
     }
 
+    private void copiarListaEventosParaListaModeloEventos(RegistoEvento registoEventos) {
+        listaModeloEvento.removeAllElements();
+        for (Evento e : ce.getRegistoEventos()) {
+            listaModeloEvento.addElement(e);
+        }
+    }
+
     private void limparListas() {
         listaModeloFaeDisponiveis.clear();
         listaModeloCandidatura.clear();
         listaModeloFaeAtribuidos.clear();
         ListaAtribuicoes.clear();
-        ListaFaeAtribuida.clear();
     }
 
     @Override
@@ -322,16 +382,16 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         if (e.getSource() == atribui) {
             Evento ev = (Evento) eventoComboBox.getSelectedItem();
             if (ev.getListaCandidatura().size() == 0) {
-                JOptionPane.showMessageDialog(this, MENSAGEM_ERRO_SEM_CANDIDATURAS, TITULO_ERRO, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Constantes.MENSAGEM_ERRO_SEM_CANDIDATURAS, Constantes.ERRO_TITULO, JOptionPane.ERROR_MESSAGE);
             } else {
 
                 ListaAtribuicoes = ((AlgoritmoAtribuicao) algoritmoComboBox.getSelectedItem()).atribui(ev);
-                if (jlistaCandidaturas.getSelectedIndex() != -1) {
-                    int num = jlistaCandidaturas.getSelectedIndex();
-                    jlistaCandidaturas.clearSelection();
-                    jlistaCandidaturas.setSelectedIndex(num);
+                if (jlistCandidaturas.getSelectedIndex() != -1) {
+                    int num = jlistCandidaturas.getSelectedIndex();
+                    jlistCandidaturas.clearSelection();
+                    jlistCandidaturas.setSelectedIndex(num);
                 } else {
-                    jlistaCandidaturas.setSelectedIndex(PRIMEIRO_ITEM);
+                    jlistCandidaturas.setSelectedIndex(Constantes.INDICE_ZERO);
                 }
 
             }
@@ -355,9 +415,9 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (e.getSource() == jlistaCandidaturas) {
+        if (e.getSource() == jlistCandidaturas) {
             Evento ev = (Evento) eventoComboBox.getSelectedItem();
-            Candidatura c = (Candidatura) jlistaCandidaturas.getSelectedValue();
+            Candidatura c = (Candidatura) jlistCandidaturas.getSelectedValue();
             if (ev.getListaAtribuicao().size() > 0 && ListaAtribuicoes.isEmpty()) {
                 copiarListaFaePorCandidaturaJaGuardada(ev.getListaAtribuicao(), c);
             } else {
@@ -365,14 +425,5 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
             }
         }
     }
-}
 
-class CandidaturaCellRenderer extends DefaultListCellRenderer {
-
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-        Candidatura cd = (Candidatura) value;
-        setText(cd.getDescricao()); // where getValue is some method you implement that gets the text you want to render for the component
-        return c;
-    }
 }

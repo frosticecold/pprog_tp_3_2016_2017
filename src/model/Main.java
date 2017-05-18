@@ -20,10 +20,9 @@ public class Main {
     public static void main(String[] args) {
 
         CentroEventos ce = new CentroEventos();
-        
+
 //        Teste t = new Teste();
 //        t.init(ce);
-
         LerBaseDados lbd = new LerBaseDados(ce);
         JanelaPrincipal p = new JanelaPrincipal(ce);
     }

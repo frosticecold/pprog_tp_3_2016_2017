@@ -38,7 +38,10 @@ public interface Constantes {
     public static final String ERRO_INSTANCIAR_ALGORITMO = "A instanciação do algoritmo correu mal.";
     public static final String ERRO_NAO_TEM_ATRIBUICOES = "O fae não tem atribuições associadas.";
     //public static final String ERRO_EXCLAMACAO = "Erro!";
-
+//Mensagens
+    public static final String MENSAGEM_EVENTO = "Seleciona o Evento";
+    public static final String MENSAGEM_ALGORITMO = "Seleciona o Algoritmo de Atribuição";
+    public static final String MENSAGEM_ERRO_SEM_CANDIDATURAS = "Erro, sem candidaturas...";
 //Texto
     public static final String TXT_APROVADO = "Aprovado";
     public static final String TXT_LBL_EMPRESA = "Empresa: ";
@@ -53,6 +56,13 @@ public interface Constantes {
     public static final String ICON_SUBMETER_CANDIDATURA = "mala.gif";
     public static final String ICON_ATRIBUIR_CANDIDATURA = "raio.gif";
     public static final String ICON_ABOUT = "about.gif";
+//Tooltips
+    public static final String ATRIB_CAND_TOOLTIP_JLIST_FAEDISPONIVEIS = "Lista de Faes disponíveis";
+    public static final String ATRIB_CAND_TOOLTIP_JLIST_LISTA_CANDIDATURAS = "Lista de Candidaturas disponíveis";
+    public static final String ATRIB_CAND_TOOLTIP_JLIST_FAE_ATRIB_POR_CAND = "Lista de Faes Atribuidos à candidatura";
+    public static final String ATRIB_CAND_TOOLTIP_ATRIBUIR = "Atribuir Faes";
+    public static final String ATRIB_CAND_TOOLTIP_SAIR = "Sair da janela";
+    public static final String ATRIB_CAND_TOOLTIP_GUARDAR = "Guardar atribuições";
 
     //Buttons
     public static final String BTN_GUARDAR = "Guardar";
@@ -60,13 +70,15 @@ public interface Constantes {
     public static final String BTN_ATRIBUI = "Atribui";
 
 //Ints
+    public static final int GAP_ZERO = 0;
     public static final int GAP_CINCO = 5;
+    public static final int GAP_DEZ = 10;
     public static final int EMPTY_BORDER_GAP_DEZ = 10;
-
+    public static final int INDICE_ZERO = 0;
 //Dimensões Janela
     public static final Dimension TAMANHO_DECIDIR_CANDIDATURA_MINIMO = new Dimension(650, 450);
-    public static final Dimension TAMANHO_JANELA_PRINCIPAL_MINIMO = new Dimension(450, 300);
-
+    public static final Dimension TAMANHO_JANELA_MINIMO_PRINCIPAL = new Dimension(450, 300);
+    public static final Dimension TAMANHO_JANELA_MINIMO_ATRIBUIR_CAND = new Dimension(650, 350);
     //Outras dimensões
     public static final Dimension ATRIB_CAND_BTN_DIMENSION = new Dimension(95, 30);
     public static final Dimension ATRIB_CAND_COMBOBOX_DIMENSION = new Dimension(150, 30);
