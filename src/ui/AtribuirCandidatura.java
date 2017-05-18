@@ -130,15 +130,25 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
      * Referência ao centro de eventos
      */
     private final CentroEventos ce;
-    
+
     /**
-     * 
+     * Lista de atribuições
      */
     private List<Atribuicao> ListaAtribuicoes;
 
     //Vars Estáticos
+    /**
+     * Número de linhas e colunas do painel central
+     */
     private static final int NR_LINHAS = 1, NR_COLUNAS = 3;
 
+    /**
+     * Construtor da jdialog atribuir candidaturas que recebe como parâmetro a
+     * referência a uma jframe e um centro de eventos
+     *
+     * @param frame referência à jframe
+     * @param ce referência ao centro de eventos
+     */
     public AtribuirCandidatura(JFrame frame, CentroEventos ce) {
         super(frame, Constantes.TITULO_JANELA_ATRIBUIR, true);
 
@@ -154,14 +164,22 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         setVisible(true);
     }
 
+    /**
+     * Inicializa todos os componentes por ordem de utilização
+     *
+     * - Listas - Combobox - Botões - Paineis - Carregar - Valores de Arranque
+     */
     public final void initComponents() {
         initLists();
         initComboBox();
         initButtons();
         initPanels();
-        verificarListArranque();
+        verificarValoresArranque();
     }
 
+    /**
+     * Inicializa todos os tipos de listas utilizadas
+     */
     public void initLists() {
         //Iniciar ArrayLists
         ListaAtribuicoes = new ArrayList<>();
@@ -203,9 +221,11 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         jlistCandidaturas.setToolTipText(Constantes.ATRIB_CAND_TOOLTIP_JLIST_LISTA_CANDIDATURAS);
         jlistFaeAtribuidos.setToolTipText(Constantes.ATRIB_CAND_TOOLTIP_JLIST_FAE_ATRIB_POR_CAND);
 
-        copiarListaFaeDisponiveis(ce.getRegistoEventos().get(Constantes.INDICE_ZERO).getListaFae());
     }
 
+    /**
+     * Inicializa/Cria todos os painéis a ser utilizados pela aplicação
+     */
     public void initPanels() {
         principal = new JPanel(new BorderLayout());
         JPanel pcentro = new JPanel(new GridLayout(NR_LINHAS, NR_COLUNAS, Constantes.GAP_DEZ, Constantes.GAP_DEZ));
@@ -217,6 +237,12 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         initPainelPrincipal(pcentro, psul);
     }
 
+    /**
+     * Adiciona os paineis centro e sul ao painel principal
+     *
+     * @param pcentro painel centro
+     * @param psul painel sul
+     */
     public void initPainelPrincipal(JPanel pcentro, JPanel psul) {
         principal.setBorder(new EmptyBorder(Constantes.GAP_DEZ, Constantes.GAP_DEZ, Constantes.GAP_ZERO, Constantes.GAP_DEZ));
         principal.add(pcentro, BorderLayout.CENTER);
@@ -224,6 +250,11 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         add(principal);
     }
 
+    /**
+     * Adiciona os scrollpanes ao painel central
+     *
+     * @param pcentro
+     */
     public void initPainelCentro(JPanel pcentro) {
         pcentro.add(spFaeDisponiveis);
         pcentro.add(spCandidaturas);
@@ -231,19 +262,42 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
 
     }
 
+    /**
+     * <ul>
+     * <li>Adiciona combobox e botões ao painel sul esquerdo</li>
+     * <li>Adiciona botões sair e guardar ao painel sul direito</li>
+     * <li>Adiciona ambos paineis anteriores ao painel sul</li>
+     * </ul>
+     *
+     * @param psul Painel sul
+     * @param psulesq Painel sul esquerdo
+     * @param psuldir Painel sul direito
+     */
     public void initPainelSul(JPanel psul, JPanel psulesq, JPanel psuldir) {
 
+        //Adiciona componentes ao painel sul esquerdo
         psulesq.add(eventoComboBox);
         psulesq.add(algoritmoComboBox);
         psulesq.add(atribui);
 
+        //Adiciona componentes ao painel sul direito
         psuldir.add(sair);
         psuldir.add(guardar);
 
+        //Adiciona os paineis anteriores ao painel sul
         psul.add(psulesq, BorderLayout.WEST);
         psul.add(psuldir, BorderLayout.EAST);
     }
 
+    /**
+     * <ul>
+     * <li>Cria/inicializa os botões da aplicação</li>
+     * <li>Adiciona tamanho preferido</li>
+     * <li>Adiciona memónicas</li>
+     * <li>Adiciona tooltips</li>
+     * <li>Adiciona actionlisteners</li>
+     * </ul>
+     */
     public void initButtons() {
 
         //Criar os botões
@@ -272,14 +326,18 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         guardar.addActionListener(this);
     }
 
+    /**
+     * <ul>
+     * <li>Inicializa/cria as combobox</li>
+     * <li>Define listasmodelo </li>
+     * <li>Define tamanho das combobox</li>
+     * <li>Adiciona actionlisteners</li>
+     * <li>Copia os dados necessários ao seu funcionamento</li></ul>
+     */
     public void initComboBox() {
         //Criar combobox
         algoritmoComboBox = new JComboBox<>();
         eventoComboBox = new JComboBox<>();
-
-        //Preencher listas
-        copiarListaEventosParaListaModeloEventos(ce.getRegistoEventos());
-        copiarListaAlgoritmosParaComboBox(ce.getRegistoAlgoritmosAtribuicao());
 
         //Associar listas modelos às devidas combobox
         eventoComboBox.setModel(listaModeloEvento);
@@ -299,9 +357,17 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         //Definir Custom Renderer
         eventoComboBox.setRenderer(new CustomCellRenderer());
 
+        //Preencher listas
+        copiarListaEventosParaListaModeloEventos(ce.getRegistoEventos());
+        copiarListaAlgoritmosParaComboBox(ce.getRegistoAlgoritmosAtribuicao());
+
     }
 
-    public void verificarListArranque() {
+    /**
+     * Verifica se ao arrancar a aplicação já existem dados anteriores, se
+     * existerem carrega a informação para os devidos componentes
+     */
+    public void verificarValoresArranque() {
         if (ce.getRegistoEventos().size() != 0) {
             Evento ev = (Evento) eventoComboBox.getSelectedItem();
             if (ev != null && ev.getListaFae().size() != 0) {
@@ -312,6 +378,12 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
 
     }
 
+    /**
+     * Copia as candidaturas de uma lista de candidatura para a lista modelo de
+     * candidaturas
+     *
+     * @param lc Lista do tipo ListaCandidatura com candidaturas
+     */
     private void copiarListaCandidaturasParalmCandidatura(ListaCandidatura lc) {
         listaModeloCandidatura.clear();
         for (Candidatura c : lc) {
@@ -321,6 +393,11 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
 
     }
 
+    /**
+     * Copia os faes de uma lista de fae para a lista modelo de faes
+     *
+     * @param listaFae Lista do tipo ListaFae com faes
+     */
     private void copiarListaFaeDisponiveis(ListaFae listaFae) {
         listaModeloFaeDisponiveis.clear();
         for (Fae f : listaFae) {
@@ -328,6 +405,13 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         }
     }
 
+    /**
+     * Encontra os faes com a associação a uma mesma candidatura e copiaos para
+     * a lista modelo de fae atribuidos
+     *
+     * @param la Lista de Atribuições
+     * @param c Candidatura a procurar
+     */
     private void copiarListaFaePorCandidatura(List<Atribuicao> la, Candidatura c) {
         listaModeloFaeAtribuidos.clear();
         for (Atribuicao a : la) {
@@ -384,7 +468,6 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
             if (ev.getListaCandidatura().size() == 0) {
                 JOptionPane.showMessageDialog(this, Constantes.MENSAGEM_ERRO_SEM_CANDIDATURAS, Constantes.ERRO_TITULO, JOptionPane.ERROR_MESSAGE);
             } else {
-
                 ListaAtribuicoes = ((AlgoritmoAtribuicao) algoritmoComboBox.getSelectedItem()).atribui(ev);
                 if (jlistCandidaturas.getSelectedIndex() != -1) {
                     int num = jlistCandidaturas.getSelectedIndex();
