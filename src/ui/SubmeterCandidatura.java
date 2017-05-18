@@ -21,11 +21,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
-import system.candidatura.Candidatura;
-import system.evento.Evento;
-import system.listas.RegistoEvento;
-import system.listas.ListaTipoEvento;
-import system.user.RepresentanteEmpresa;
+import model.candidatura.Candidatura;
+import model.evento.Evento;
+import model.listas.RegistoEvento;
+import model.listas.ListaTipoEvento;
+import model.user.RepresentanteEmpresa;
 
 /**
  *

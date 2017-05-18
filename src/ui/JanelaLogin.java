@@ -14,8 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import system.listas.RegistoUtilizador;
-import system.user.Utilizador;
+import model.listas.RegistoUtilizador;
+import model.user.Utilizador;
 
 /**
  *

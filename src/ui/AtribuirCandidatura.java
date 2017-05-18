@@ -22,16 +22,16 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import system.CentroEventos;
-import system.evento.Evento;
-import system.listas.ListaFae;
-import system.listas.RegistoAlgoritmosAtribuicao;
-import system.user.Fae;
-import system.algoritmo.AlgoritmoAtribuicao;
-import system.candidatura.Atribuicao;
-import system.candidatura.Candidatura;
-import system.listas.ListaCandidatura;
-import system.listas.ListaAtribuicao;
+import model.CentroEventos;
+import model.evento.Evento;
+import model.listas.ListaFae;
+import model.listas.RegistoAlgoritmosAtribuicao;
+import model.user.Fae;
+import model.algoritmo.AlgoritmoAtribuicao;
+import model.candidatura.Atribuicao;
+import model.candidatura.Candidatura;
+import model.listas.ListaCandidatura;
+import model.listas.ListaAtribuicao;
 import utils.Constantes;
 
 /**

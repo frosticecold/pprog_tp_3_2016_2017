@@ -22,10 +22,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-import system.CentroEventos;
-import system.Teste;
-import system.user.Fae;
-import system.user.RepresentanteEmpresa;
+import model.CentroEventos;
+import model.Teste;
+import model.user.Fae;
+import model.user.RepresentanteEmpresa;
 import utils.Constantes;
 
 /**
@@ -202,7 +202,8 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         }
         if (e.getSource() == decidir_cand) {
             if (ce.getRegistoUtilizadores().size() > 0) {
-                Fae f = Teste.retornarFaeTeste(ce);
+                //Fae f = Teste.retornarFaeTeste(ce);
+                Fae f = new Fae("Utilizador c", "userc", "userc@user.pt", "123".toCharArray());
                 setVisible(false);
                 new DecidirCandidatura(this, ce.getRegistoEventos(), f.getUsername());
                 setVisible(true);

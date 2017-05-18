@@ -23,11 +23,11 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import system.candidatura.Atribuicao;
-import system.candidatura.Candidatura;
-import system.candidatura.Decisao;
-import system.evento.Evento;
-import system.listas.RegistoEvento;
+import model.candidatura.Atribuicao;
+import model.candidatura.Candidatura;
+import model.candidatura.Decisao;
+import model.evento.Evento;
+import model.listas.RegistoEvento;
 import utils.Constantes;
 
 /**
@@ -104,7 +104,9 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         adicionarPaineis();
 
         copiarListaEventosParaListaComboBox();
-        listaAtrib = ((Evento) eventoComboBox.getSelectedItem()).getListaAtribuicao().obterAtribuicoesAssociadaAoFae(username);
+        if (listaModeloEventos.getSize() > 0) {
+            listaAtrib = ((Evento) eventoComboBox.getSelectedItem()).getListaAtribuicao().obterAtribuicoesAssociadaAoFae(username);
+        }
     }
 
     private void initCheckboxes() {
@@ -149,10 +151,10 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
     private void initPainelTxtArea() {
         txtDescricao.setEditable(false);
         txtDescricao.setOpaque(false);
-        painelTextAreaNorte.setBorder(new TitledBorder(new EtchedBorder(),"Descrição da Empresa"));
+        painelTextAreaNorte.setBorder(new TitledBorder(new EtchedBorder(), "Descrição da Empresa"));
         painelTextAreaNorte.add(txtDescricao);
 
-        painelTextAreaSul.setBorder(new TitledBorder(new EtchedBorder(),"Texto Justificativo"));
+        painelTextAreaSul.setBorder(new TitledBorder(new EtchedBorder(), "Texto Justificativo"));
         painelTextAreaSul.add(txtJustificativo);
 
         painelTextArea.add(painelTextAreaNorte);

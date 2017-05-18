@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import system.listas.ListaTipoEvento;
+import model.listas.ListaTipoEvento;
 
 /**
  *
