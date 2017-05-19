@@ -43,7 +43,8 @@ public class LerBaseDados {
     private static final int CAMPO_UTILZ_NOME = 1,
             CAMPO_UTILZ_USERNAME = 2,
             CAMPO_UTILZ_EMAIL = 3,
-            CAMPO_UTILZ_PASSWORD = 4;
+            CAMPO_UTILZ_PASSWORD = 4,
+            CAMPO_FAE_EXPERIENCIA_PROFISSIONAL = 5;
     private static final int CAMPO_REPEMP_NOME_EMPRESA = 5;
 
     private static final int CAMPO_EVENTO_NOME = 1,
@@ -164,6 +165,7 @@ public class LerBaseDados {
         final String username = array[CAMPO_UTILZ_USERNAME];
         final String email = array[CAMPO_UTILZ_EMAIL];
         final char[] password = array[CAMPO_UTILZ_PASSWORD].toCharArray();
+        final int experiencia_profissional = Integer.parseInt(array[CAMPO_FAE_EXPERIENCIA_PROFISSIONAL]);
         return new Fae(user, username, email, password);
     }
 
