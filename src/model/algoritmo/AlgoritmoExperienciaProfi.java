@@ -19,7 +19,7 @@ import model.user.Fae;
  */
 public class AlgoritmoExperienciaProfi extends AlgoritmoAtribuicao {
 
-    private static final String NOME_ALGORITMO_OMISSAO = "Algoritmo Atribuicão por experiencia proficional";
+    private static final String NOME_ALGORITMO_OMISSAO = "AlgoritmoExperienciaProfinal";
 
     public AlgoritmoExperienciaProfi() {
         super(NOME_ALGORITMO_OMISSAO);
