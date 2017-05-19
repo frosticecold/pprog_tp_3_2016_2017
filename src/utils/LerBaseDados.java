@@ -166,7 +166,7 @@ public class LerBaseDados {
         final String email = array[CAMPO_UTILZ_EMAIL];
         final char[] password = array[CAMPO_UTILZ_PASSWORD].toCharArray();
         final int experiencia_profissional = Integer.parseInt(array[CAMPO_FAE_EXPERIENCIA_PROFISSIONAL]);
-        return new Fae(user, username, email, password);
+        return new Fae(user, username, email, password, experiencia_profissional);
     }
 
     private Congresso lerCongresso(String[] array) {
