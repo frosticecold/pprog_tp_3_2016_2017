@@ -10,23 +10,41 @@ import model.user.Utilizador;
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class ListaOrganizador implements Serializable{
+public class ListaOrganizador implements Serializable {
 
-    List<Organizador> lista;
+    /**
+     * Lista de Organizadores
+     */
+    private List<Organizador> lista;
 
+    /**
+     * Construtor vazio de uma ListaOrganizador
+     */
     public ListaOrganizador() {
         lista = new ArrayList<>();
     }
 
-    public boolean add(Utilizador u) {
+    /**
+     * Método que adiciona um Utilizador como organizador à lista, caso não seja duplicado
+     *
+     * @param u Utilizador
+     * @return Verdadeiro ou Falso
+     */
+    public boolean adicionarOrganizador(Utilizador u) {
         Organizador o = new Organizador(u);
-        return lista.add(o);
+        if (!lista.contains(o)) {
+            return lista.add(o);
+        }
+        return false;
     }
 
-    public boolean remove(Organizador o) {
-        return remove(o);
-    }
-
+    /**
+     * Método que verifica se um dado username existe e é organizador de um
+     * evento
+     *
+     * @param username String username a procurar
+     * @return Verdadeiro ou Falso
+     */
     public boolean isOrganizadorEvento(String username) {
         for (Organizador o : lista) {
             if (o.getUsername().equals(username)) {
@@ -35,9 +53,4 @@ public class ListaOrganizador implements Serializable{
         }
         return false;
     }
-
-    public boolean contains(Organizador o) {
-        return lista.contains(o);
-    }
-    
 }

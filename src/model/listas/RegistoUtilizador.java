@@ -25,7 +25,12 @@ public class RegistoUtilizador implements Iterable<Utilizador>, Serializable {
     public boolean removerUtilizador(Utilizador u) {
         return lista.remove(u);
     }
-
+    /**
+     * Método iterator para que a classe RegistoUtilizador possa ser percorrida por um
+     * for enchanced loop
+     *
+     * @return iterator
+     */
     @Override
     public Iterator<Utilizador> iterator() {
         return lista.iterator();

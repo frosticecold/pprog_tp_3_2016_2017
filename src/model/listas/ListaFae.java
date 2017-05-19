@@ -26,7 +26,7 @@ public class ListaFae implements Iterable<Fae>, Serializable {
     }
 
     /**
-     * Adiciona um Fae à Lista de Fae
+     * Adiciona um Fae à Lista de Fae, caso não seja duplicado
      *
      * @param f Fae a guardar na lista
      * @return Verdadeiro ou Falso

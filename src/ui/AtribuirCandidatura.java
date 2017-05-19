@@ -367,7 +367,7 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
      * existerem carrega a informação para os devidos componentes
      */
     public void verificarValoresArranque() {
-        if (ce.getRegistoEventos().size() != 0) {
+        if (ce.getRegistoEventos().tamanho() != 0) {
             Evento ev = (Evento) eventoComboBox.getSelectedItem();
             if (ev != null && ev.getListaFae().tamanho() != 0) {
                 copiarListaFaeDisponiveis(ev.getListaFae());

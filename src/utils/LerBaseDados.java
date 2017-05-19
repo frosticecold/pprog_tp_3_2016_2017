@@ -206,7 +206,7 @@ public class LerBaseDados {
 
     private void adicionarEvento(Evento ev, CentroEventos ce) {
         if (ev != null) {
-            ce.getRegistoEventos().add(ev);
+            ce.getRegistoEventos().adicionarEvento(ev);
         }
     }
 

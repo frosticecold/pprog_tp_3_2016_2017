@@ -18,7 +18,7 @@ import utils.LerFicheiroConfig;
  */
 public class ListaTipoEvento implements InterfaceListaLerConfig<String>, Iterable<String>,Serializable {
 
-    List<String> lista;
+    private List<String> lista;
     public static String CLASSPATH;
     private static String START_CONFIG = "[tipoevento]";
     private static String END_CONFIG = "[/tipoevento]";

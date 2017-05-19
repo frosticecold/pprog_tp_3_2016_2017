@@ -25,7 +25,7 @@ public class ListaCandidatura implements Iterable<Candidatura>, Serializable {
     }
 
     /**
-     * Método que adiciona uma candidatura à lista de candidaturas
+     * Método que adiciona uma candidatura à lista de candidaturas, caso não seja duplicado
      *
      * @param c Candidatura a adicionar à lista
      * @return Verdadeiro ou Falso

@@ -255,7 +255,7 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         //                      Casos de Uso
         // Caso de uso atribuir candidatura
         if (e.getSource() == atribuir_cand) {
-            if (ce.getRegistoEventos().size() > 0) {
+            if (ce.getRegistoEventos().tamanho() > 0) {
                 setVisible(false);
                 AtribuirCandidatura ac = new AtribuirCandidatura(this, ce);
                 setVisible(true);
