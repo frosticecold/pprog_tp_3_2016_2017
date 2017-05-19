@@ -4,49 +4,66 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import model.candidatura.Atribuicao;
 import model.candidatura.Candidatura;
-import model.evento.Evento;
-import model.user.Fae;
 
 /**
  *
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
-public class ListaCandidatura implements Iterable<Candidatura>,Serializable {
+public class ListaCandidatura implements Iterable<Candidatura>, Serializable {
 
-    List<Candidatura> lista = new ArrayList<>();
+    /**
+     * Lista de candidaturas
+     */
+    private List<Candidatura> lista;
 
+    /**
+     * Construtor vazio de uma ListaCandidatura
+     */
     public ListaCandidatura() {
-
+        lista = new ArrayList<>();
     }
 
+    /**
+     * Método que adiciona uma candidatura à lista de candidaturas
+     *
+     * @param c Candidatura a adicionar à lista
+     * @return Verdadeiro ou Falso
+     */
     public boolean addCandidatura(Candidatura c) {
-        return lista.add(c);
-    }
-
-    public Candidatura novaCandidatura() {
-        return new Candidatura();
-    }
-
-    @Override
-    public Iterator<Candidatura> iterator() {
-        return lista.iterator();
-    }
-
-    public boolean validaCandidatura(Candidatura c) {
         if (!lista.contains(c)) {
-            return addCandidatura(c);
+            return lista.add(c);
         }
         return false;
     }
 
-    public int size() {
+    /**
+     * Retorna um inteiro com o tamanho da lista
+     *
+     * @return inteiro com tamanho da lista
+     */
+    public int tamanho() {
         return lista.size();
     }
 
-    public Candidatura get(int i) {
+    /**
+     * Retorna uma Candidatura guardada no indice passado por parâmetro
+     *
+     * @param i Indice da Candidatura a obter
+     * @return Candidatura
+     */
+    public Candidatura obterCandidatura(int i) {
         return lista.get(i);
     }
 
+    /**
+     * Método iterator para que a classe ListaCandidatura possa ser percorrida
+     * por um for enchanced loop
+     *
+     * @return iterator
+     */
+    @Override
+    public Iterator<Candidatura> iterator() {
+        return lista.iterator();
+    }
 }

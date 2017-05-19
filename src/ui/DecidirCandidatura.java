@@ -246,7 +246,7 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
     }
 
     private void carregarInfoAtribuicao() {
-        decisao_utilizador = atrib.getDecisao().getAprovacao();
+        decisao_utilizador = atrib.getDecisao().getDecisao();
         switch (decisao_utilizador) {
             case Decisao.APROVADO:
                 aprovado.setSelected(true);

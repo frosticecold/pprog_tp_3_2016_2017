@@ -180,7 +180,7 @@ public class Teste {
         e3.getListaFae().adicionarFae(u8);
         e3.getListaCandidatura().addCandidatura(cand4);
         Atribuicao a = new Atribuicao(new Fae(u9), cand4);
-        e3.getListaAtribuicao().add(a);
+        e3.getListaAtribuicao().adicionarAtribuicao(a);
         Exposicao e4 = new Exposicao("Exposicao 4", "A exposicao 4", "Expo 4", new Data(2015, 5, 5), new Data(2018, 6, 01));
         e4.getListaOrganizador().add(u6);
         e4.getListaOrganizador().add(u7);

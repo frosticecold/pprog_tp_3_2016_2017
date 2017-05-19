@@ -24,7 +24,13 @@ public interface Constantes {
     public static final String ICON_FOLDER = "icons/";
     public static final String ICON_ANTERIOR = "back.png";
     public static final String ICON_SEGUINTE = "foward.png";
-
+    public static final String ICON_SAVE = "save.gif";
+    public static final String ICON_EXIT = "exit.png";
+    public static final String ICON_DECIDIR_CANDIDATURA = "martelo.gif";
+    public static final String ICON_LOAD_FILE = "plus.gif";
+    public static final String ICON_SUBMETER_CANDIDATURA = "mala.gif";
+    public static final String ICON_ATRIBUIR_CANDIDATURA = "raio.gif";
+    public static final String ICON_ABOUT = "about.gif";
 //Titulos
     public static final String TITULO_BORDER = "Decisão";
     public static final String TITULO_JANELA = "Decidir Candidatura";
@@ -37,6 +43,7 @@ public interface Constantes {
     public static final String ERRO_N_EXISTE_EVENTOS = "Erro, não existem Eventos.";
     public static final String ERRO_INSTANCIAR_ALGORITMO = "A instanciação do algoritmo correu mal.";
     public static final String ERRO_NAO_TEM_ATRIBUICOES = "O fae não tem atribuições associadas.";
+    public static final String ERRO_INPUT_INVALIDO = "Erro, input inválido.";
     //public static final String ERRO_EXCLAMACAO = "Erro!";
 //Mensagens
     public static final String MENSAGEM_EVENTO = "Seleciona o Evento";
@@ -49,13 +56,6 @@ public interface Constantes {
     public static final String TXT_GUARDAR = "Guardar";
     public static final String TXT_REPROVADO = "Reprovado";
     public static final String TXT_SAIR = "Sair";
-    public static final String ICON_SAVE = "save.gif";
-    public static final String ICON_EXIT = "exit.png";
-    public static final String ICON_DECIDIR_CANDIDATURA = "martelo.gif";
-    public static final String ICON_LOAD_FILE = "plus.gif";
-    public static final String ICON_SUBMETER_CANDIDATURA = "mala.gif";
-    public static final String ICON_ATRIBUIR_CANDIDATURA = "raio.gif";
-    public static final String ICON_ABOUT = "about.gif";
 //Tooltips
     public static final String ATRIB_CAND_TOOLTIP_JLIST_FAEDISPONIVEIS = "Lista de Faes disponíveis";
     public static final String ATRIB_CAND_TOOLTIP_JLIST_LISTA_CANDIDATURAS = "Lista de Candidaturas disponíveis";

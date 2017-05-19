@@ -28,6 +28,13 @@ public abstract class AlgoritmoAtribuicao {
      */
     public abstract List<Atribuicao> atribui(Evento e);
 
+    /**
+     * Devolve o nome do algoritmo
+     *
+     * @return Nome Algoritmo
+     */
     @Override
-    public abstract String toString();
+    public String toString() {
+        return nomeAlgoritmo;
+    }
 }

@@ -115,7 +115,7 @@ public class Atribuicao implements Comparable<Atribuicao>, Serializable {
      * @return O nome do fae e a decisão do fae
      */
     public String toString() {
-        return fae.getNome() + " " + decisao.getAprovacao();
+        return fae.getNome() + " " + decisao.getDecisao();
     }
 
     /**

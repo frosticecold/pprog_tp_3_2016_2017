@@ -52,6 +52,11 @@ public class Congresso extends Evento implements Serializable {
         return true;
     }
 
+    /**
+     * Devolve a descrição de um Congresso
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return super.toString();

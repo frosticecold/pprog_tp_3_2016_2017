@@ -189,7 +189,7 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
             if (!txtArea.getText().isEmpty()) {
                 Evento ev = (Evento) dcbmEvento.getSelectedItem();
                 if (ev != null) {
-                    Candidatura c = ev.getListaCandidatura().novaCandidatura();
+                    Candidatura c = new Candidatura();
                     c.setDados(txtArea.getText(), representante);
                     ev.getListaCandidatura().addCandidatura(c);
                     System.out.println("Evento: " + ev + "Candidatura: " + c);

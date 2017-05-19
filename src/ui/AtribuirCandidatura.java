@@ -1,7 +1,6 @@
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -370,7 +369,7 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
     public void verificarValoresArranque() {
         if (ce.getRegistoEventos().size() != 0) {
             Evento ev = (Evento) eventoComboBox.getSelectedItem();
-            if (ev != null && ev.getListaFae().size() != 0) {
+            if (ev != null && ev.getListaFae().tamanho() != 0) {
                 copiarListaFaeDisponiveis(ev.getListaFae());
                 copiarListaCandidaturasParalmCandidatura(ev.getListaCandidatura());
             }
@@ -465,7 +464,7 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         }
         if (e.getSource() == atribui) {
             Evento ev = (Evento) eventoComboBox.getSelectedItem();
-            if (ev.getListaCandidatura().size() == 0) {
+            if (ev.getListaCandidatura().tamanho() == 0) {
                 JOptionPane.showMessageDialog(this, Constantes.MENSAGEM_ERRO_SEM_CANDIDATURAS, Constantes.ERRO_TITULO, JOptionPane.ERROR_MESSAGE);
             } else {
                 ListaAtribuicoes = ((AlgoritmoAtribuicao) algoritmoComboBox.getSelectedItem()).atribui(ev);
@@ -482,7 +481,7 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         if (e.getSource() == guardar) {
             if (!ListaAtribuicoes.isEmpty()) {
                 Evento ev = (Evento) eventoComboBox.getSelectedItem();
-                ev.getListaAtribuicao().clear();
+                ev.getListaAtribuicao().limparLista();
                 ev.getListaAtribuicao().guardarAtribuicoes(ListaAtribuicoes);
             }
         }
@@ -501,7 +500,7 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         if (e.getSource() == jlistCandidaturas) {
             Evento ev = (Evento) eventoComboBox.getSelectedItem();
             Candidatura c = (Candidatura) jlistCandidaturas.getSelectedValue();
-            if (ev.getListaAtribuicao().size() > 0 && ListaAtribuicoes.isEmpty()) {
+            if (ev.getListaAtribuicao().tamanho() > 0 && ListaAtribuicoes.isEmpty()) {
                 copiarListaFaePorCandidaturaJaGuardada(ev.getListaAtribuicao(), c);
             } else {
                 copiarListaFaePorCandidatura(ListaAtribuicoes, c);

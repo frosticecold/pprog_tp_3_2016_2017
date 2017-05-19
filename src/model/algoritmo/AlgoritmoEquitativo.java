@@ -16,20 +16,29 @@ import model.evento.Evento;
  */
 public class AlgoritmoEquitativo extends AlgoritmoAtribuicao {
 
+    /**
+     * Nome do algoritmo por omissão
+     */
     private static final String NOME_ALGORITMO_OMISSAO = "Algoritmo Equitativo";
 
     public AlgoritmoEquitativo() {
         super(NOME_ALGORITMO_OMISSAO);
     }
 
+    /**
+     * Atribui a um evento faes de forma igual
+     *
+     * @param e Evento a atribuir
+     * @return Lista de Atribuições
+     */
     @Override
     public List<Atribuicao> atribui(Evento e) {
         List<Atribuicao> lista = new ArrayList<>();
-        for (int i = 0; i < e.getListaFae().size(); i++) {
-            for (int j = 0; j < e.getListaCandidatura().size(); j++) {
+        for (int i = 0; i < e.getListaFae().tamanho(); i++) {
+            for (int j = 0; j < e.getListaCandidatura().tamanho(); j++) {
                 Atribuicao a = new Atribuicao();
-                a.setFae(e.getListaFae().get(i));
-                a.setCandidatura(e.getListaCandidatura().get(j));
+                a.setFae(e.getListaFae().obterFae(i));
+                a.setCandidatura(e.getListaCandidatura().obterCandidatura(j));
                 lista.add(a);
             }
 
@@ -38,6 +47,11 @@ public class AlgoritmoEquitativo extends AlgoritmoAtribuicao {
         return lista;
     }
 
+    /**
+     * Retorna o nome do algoritmo
+     *
+     * @return Nome Algoritmo
+     */
     @Override
     public String toString() {
         return getNomeAlgoritmo();

@@ -13,33 +13,50 @@ import model.user.Fae;
  */
 public class ListaAtribuicao implements Iterable<Atribuicao>, Serializable {
 
+    /**
+     * Lista que guarda as atribuições
+     */
     private List<Atribuicao> lista;
 
+    /**
+     * Construtor vazio de uma ListaAtribuição
+     */
     public ListaAtribuicao() {
         lista = new ArrayList<>();
     }
 
-    public Atribuicao novaAtribuicao() {
-
-        return new Atribuicao();
+    /**
+     * Método que adiciona uma atribuição à lista, caso este não seja duplicado
+     *
+     * @param a Atribuição a adicionar
+     * @return Verdadeiro ou Falso
+     */
+    public boolean adicionarAtribuicao(Atribuicao a) {
+        if (!lista.contains(a)) {
+            return lista.add(a);
+        }
+        return false;
     }
 
-    public boolean add(Atribuicao a) {
-        return lista.add(a);
-    }
-
+    /**
+     * Método que recebe uma lista como parâmetro e copia para a lista da classe
+     *
+     * @param listaAtrib Lista de Atribuições a copiar
+     */
     public void guardarAtribuicoes(List<Atribuicao> listaAtrib) {
+
         for (Atribuicao atribuicao : listaAtrib) {
-            add(atribuicao);
+            adicionarAtribuicao(atribuicao);
         }
 
     }
 
-    @Override
-    public Iterator<Atribuicao> iterator() {
-        return lista.iterator();
-    }
-
+    /**
+     * Método que percorre todas as atribuições e retorna uma lista com os faes
+     * atribuidos
+     *
+     * @return Lista de Fae Atribuidos
+     */
     public List<Fae> obterTodosFaesAtribuidos() {
         List<Fae> listaFae = new ArrayList<>();
         for (Atribuicao a : lista) {
@@ -48,6 +65,13 @@ public class ListaAtribuicao implements Iterable<Atribuicao>, Serializable {
         return listaFae;
     }
 
+    /**
+     * Método que procura as atribuições definidas ao fae, procurando por
+     * username
+     *
+     * @param username String de username de um utilizador/fae
+     * @return uma listra de Atribuições
+     */
     public List<Atribuicao> obterAtribuicoesAssociadaAoFae(String username) {
         List<Atribuicao> listaAtrib = new ArrayList<>();
         for (Atribuicao a : lista) {
@@ -58,6 +82,12 @@ public class ListaAtribuicao implements Iterable<Atribuicao>, Serializable {
         return listaAtrib;
     }
 
+    /**
+     * Verifica se um dado fae identificado pelo username tem atribuições
+     *
+     * @param username username de um utilizador/fae
+     * @return Verdadeiro ou Falso
+     */
     public boolean verificarSeFaeTemAtribuicoes(String username) {
         for (Atribuicao a : lista) {
             if (a.getFae().getUsername().equals(username)) {
@@ -67,13 +97,32 @@ public class ListaAtribuicao implements Iterable<Atribuicao>, Serializable {
         return false;
     }
 
-    public int size() {
+    /**
+     * Retorna um inteiro com o tamanho da lista
+     *
+     * @return inteiro com tamanho da lista
+     */
+    public int tamanho() {
 
         return lista.size();
     }
 
-    public void clear() {
+    /**
+     * Método que limpa a lista de Atribuições
+     */
+    public void limparLista() {
         lista.clear();
+    }
+
+    /**
+     * Método iterator para que a classe ListaAtribuição possa ser percorrida
+     * por um for enchanced loop
+     *
+     * @return iterator
+     */
+    @Override
+    public Iterator<Atribuicao> iterator() {
+        return lista.iterator();
     }
 
 }
