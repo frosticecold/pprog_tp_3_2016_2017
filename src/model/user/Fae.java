@@ -39,4 +39,10 @@ public class Fae extends Utilizador implements Serializable {
     public void setExperiencia_profissional(int experiencia_profissional) {
         this.experiencia_profissional = experiencia_profissional;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Exp. Profissional: " + experiencia_profissional;
+    }
+
 }

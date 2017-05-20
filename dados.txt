@@ -60,15 +60,15 @@ representante,Representante M,repm,rem@repm.pt,123,Empresa m
 congresso,Congresso 1,O congresso 1,Local 1,2016,8,11,2018,9,24
 organizador,Utilizador a,usera,usera@user.pt,123
 organizador,Utilizador b,userb,userb@user.pt,123
-fae,Utilizador c,userc,userc@user.pt,123
-fae,Utilizador d,userd,userd@user.pt,123
-fae,Utilizador e,usere,usere@user.pt,123
-fae,Utilizador f,userf,userf@user.pt,123
-fae,Utilizador g,userg,userg@user.pt,123
-fae,Utilizador h,userh,userh@user.pt,123
-fae,Utilizador i,useri,useri@user.pt,123
-fae,Utilizador j,userj,userj@user.pt,123
-fae,Utilizador k,userk,userk@user.pt,123
+fae,Utilizador c,userc,userc@user.pt,123,5
+fae,Utilizador d,userd,userd@user.pt,123,4
+fae,Utilizador e,usere,usere@user.pt,123,6
+fae,Utilizador f,userf,userf@user.pt,123,3
+fae,Utilizador g,userg,userg@user.pt,123,2
+fae,Utilizador h,userh,userh@user.pt,123,1
+fae,Utilizador i,useri,useri@user.pt,123,4
+fae,Utilizador j,userj,userj@user.pt,123,5
+fae,Utilizador k,userk,userk@user.pt,123,8
 candidatura,Candidatura A,repa
 candidatura,Candidatura B,repb
 candidatura,Candidatura C,repc
@@ -76,11 +76,11 @@ candidatura,Candidatura C,repc
 congresso,Congresso 2,O congresso 2,Local 2,2015,12,25,2017,12,25
 organizador,Utilizador a,usera,usera@user.pt,123
 organizador,Utilizador b,userb,userb@user.pt,123
-fae,Catia Ariana,catiaa,catiaa@abc.pt,123
-fae,Miguel Lopes,miguellopes,miguellopes@abc.pt,123
-fae,Luis Sousa,luiss,luiss@abc.pt,123
-fae,Tiago Silva,tiagosilva,tiagosilva@abc.pt,123
-fae,Andreia Antunes,andreiaa,andreiaa@abc.pt,123
+fae,Catia Ariana,catiaa,catiaa@abc.pt,123,3
+fae,Miguel Lopes,miguellopes,miguellopes@abc.pt,123,2
+fae,Luis Sousa,luiss,luiss@abc.pt,123,4
+fae,Tiago Silva,tiagosilva,tiagosilva@abc.pt,123,1
+fae,Andreia Antunes,andreiaa,andreiaa@abc.pt,123,4
 candidatura,Candidatura D,repa
 candidatura,Candidatura E,repb
 candidatura,Candidatura F,repc
@@ -88,15 +88,15 @@ candidatura,Candidatura F,repc
 congresso,Congresso 3,O congresso 3,Local 3,2016,2,22,2017,07,15
 organizador,Utilizador l,userl,userl@user.pt,123
 organizador,Utilizador m,userm,userm@user.pt,123
-fae,Utilizador u,useru,useru@user.pt,123
-fae,Utilizador v,userv,userv@user.pt,123
-fae,Utilizador w,userw,userw@user.pt,123
-fae,Utilizador x,userx,userx@user.pt,123
-fae,Utilizador y,usery,usery@user.pt,123
-fae,Utilizador z,userz,userz@user.pt,123
-fae,Ana Maria,ana.maria,anamaria@abc.pt,123
-fae,Bernardo Noé,b.noe,bnoe@abc.pt,123
-fae,Carlos Costa,ccosta,ccosta@abc.pt,123
+fae,Utilizador u,useru,useru@user.pt,123,2
+fae,Utilizador v,userv,userv@user.pt,123,3
+fae,Utilizador w,userw,userw@user.pt,123,4
+fae,Utilizador x,userx,userx@user.pt,123,5
+fae,Utilizador y,usery,usery@user.pt,123,6
+fae,Utilizador z,userz,userz@user.pt,123,7
+fae,Ana Maria,ana.maria,anamaria@abc.pt,123,2
+fae,Bernardo Noé,b.noe,bnoe@abc.pt,123,3
+fae,Carlos Costa,ccosta,ccosta@abc.pt,123,4
 candidatura,Candidatura G,repd
 candidatura,Candidatura H,repe
 candidatura,Candidatura I,repf
@@ -104,45 +104,47 @@ candidatura,Candidatura I,repf
 exposicao,Exposicao 1,A exposicao 1,Local 4,2017,2,11,2017,7,24
 organizador,Ana Maria,ana.maria,anamaria@abc.pt,123
 organizador,Bernardo Noé,b.noe,bnoe@abc.pt,123
-fae,Utilizador s,users,users@user.pt,123
-fae,Utilizador t,usert,usert@user.pt,123
-fae,Utilizador u,useru,useru@user.pt,123
-fae,Utilizador v,userv,userv@user.pt,123
-fae,Utilizador w,userw,userw@user.pt,123
-fae,Utilizador x,userx,userx@user.pt,123
-fae,Utilizador y,usery,usery@user.pt,123
-fae,Utilizador z,userz,userz@user.pt,123
+fae,Utilizador s,users,users@user.pt,123,2
+fae,Utilizador t,usert,usert@user.pt,123,3
+fae,Utilizador u,useru,useru@user.pt,123,4
+fae,Utilizador v,userv,userv@user.pt,123,5
+fae,Utilizador w,userw,userw@user.pt,123,6
+fae,Utilizador x,userx,userx@user.pt,123,7
+fae,Utilizador y,usery,usery@user.pt,123,8
+fae,Utilizador z,userz,userz@user.pt,123,9
 candidatura,Candidatura J,repg
 candidatura,Candidatura K,reph
 candidatura,Candidatura L,repi
+#Exposicao 2
 exposicao,Exposicao 2,A exposicao 2,Local 5,2016,1,1,2018,1,1
 organizador,Utilizador g,userg,userg@user.pt,123
 organizador,Utilizador h,userh,userh@user.pt,123
-fae,Ana Maria,ana.maria,anamaria@abc.pt,123
-fae,Bernardo Noé,b.noe,bnoe@abc.pt,123
-fae,Carlos Costa,ccosta,ccosta@abc.pt,123
-fae,Domingos Neves,domingos,domingos@abc.pt,123
-fae,Fábia Lopes,flopes,flopes@abc.pt,123
-fae,Hércules,herc,herc@abc.pt,123
+fae,Ana Maria,ana.maria,anamaria@abc.pt,123,2
+fae,Bernardo Noé,b.noe,bnoe@abc.pt,123,3
+fae,Carlos Costa,ccosta,ccosta@abc.pt,123,4
+fae,Domingos Neves,domingos,domingos@abc.pt,123,5
+fae,Fábia Lopes,flopes,flopes@abc.pt,123,6
+fae,Hércules,herc,herc@abc.pt,123,7
 candidatura,Candidatura 1,repa
 candidatura,Candidatura 2,repc
 candidatura,Candidatura 3,repd
+#Exposicao 3
 exposicao,Exposicao 3,A exposicao 3,Local 6,2017,02,02,2018,05,01
 organizador,Utilizador a,usera,usera@user.pt,123
 organizador,Utilizador b,userb,userb@user.pt,123
-fae,Bernardo Noé,b.noe,bnoe@abc.pt,123
-fae,Carlos Costa,ccosta,ccosta@abc.pt,123
-fae,Domingos Neves,domingos,domingos@abc.pt,123
-fae,Fábia Lopes,flopes,flopes@abc.pt,123
-fae,Hércules,herc,herc@abc.pt,123
-fae,Joana Silva,jsilva,jsilva@abc.pt,123
-fae,Jorge Mendes,jorgemendes,jmendes@abc.pt,123
-fae,André Nicolau,anicolau,anicolau@abc.pt,123
-fae,Catia Ariana,catiaa,catiaa@abc.pt,123
-fae,Miguel Lopes,miguellopes,miguellopes@abc.pt,123
-fae,Luis Sousa,luiss,luiss@abc.pt,123
-fae,Tiago Silva,tiagosilva,tiagosilva@abc.pt,123
-fae,Andreia Antunes,andreiaa,andreiaa@abc.pt,123
+fae,Bernardo Noé,b.noe,bnoe@abc.pt,123,2
+fae,Carlos Costa,ccosta,ccosta@abc.pt,123,3
+fae,Domingos Neves,domingos,domingos@abc.pt,123,4
+fae,Fábia Lopes,flopes,flopes@abc.pt,123,5
+fae,Hércules,herc,herc@abc.pt,123,6
+fae,Joana Silva,jsilva,jsilva@abc.pt,123,5
+fae,Jorge Mendes,jorgemendes,jmendes@abc.pt,123,4
+fae,André Nicolau,anicolau,anicolau@abc.pt,123,3
+fae,Catia Ariana,catiaa,catiaa@abc.pt,123,2
+fae,Miguel Lopes,miguellopes,miguellopes@abc.pt,123,1
+fae,Luis Sousa,luiss,luiss@abc.pt,123,2
+fae,Tiago Silva,tiagosilva,tiagosilva@abc.pt,123,3
+fae,Andreia Antunes,andreiaa,andreiaa@abc.pt,123,4
 candidatura,Candidatura 4,repi
 candidatura,Candidatura 5,repj
 candidatura,Candidatura 6,repk

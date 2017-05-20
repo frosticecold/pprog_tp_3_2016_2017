@@ -97,7 +97,7 @@ public class Utilizador implements Comparable<Utilizador>, Serializable {
 
     @Override
     public String toString() {
-        return nome;
+        return String.format("Utilizador{ nome= %s username= %s email= %s", nome,username,email);
         //+ ", username=" + username + ", email=" + email;
     }
 
