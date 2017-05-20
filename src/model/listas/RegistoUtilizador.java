@@ -13,21 +13,26 @@ import model.user.Utilizador;
  */
 public class RegistoUtilizador implements Iterable<Utilizador>, Serializable {
 
-    List<Utilizador> lista = new ArrayList<>();
+    List<Utilizador> lista;
 
     public RegistoUtilizador() {
+        lista = new ArrayList<>();
     }
 
     public boolean adicionarUtilizador(Utilizador u) {
-        return lista.add(u);
+        if (!lista.contains(u)) {
+            return lista.add(u);
+        }
+        return false;
     }
 
     public boolean removerUtilizador(Utilizador u) {
         return lista.remove(u);
     }
+
     /**
-     * Método iterator para que a classe RegistoUtilizador possa ser percorrida por um
-     * for enchanced loop
+     * Método iterator para que a classe RegistoUtilizador possa ser percorrida
+     * por um for enchanced loop
      *
      * @return iterator
      */

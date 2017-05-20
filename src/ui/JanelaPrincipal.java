@@ -242,7 +242,7 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
 
         }
         if (e.getSource() == login) {
-            JanelaLogin jl = new JanelaLogin(this, ce.getRegistoUtilizadores());
+            JanelaLogin jl = new JanelaLogin(this, ce);
             if (jl.getUsername() != null) {
                 username = jl.getUsername();
             }

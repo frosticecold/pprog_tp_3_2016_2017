@@ -1,21 +1,21 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Frame;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import model.listas.RegistoUtilizador;
+import model.CentroEventos;
 import model.user.Utilizador;
+import ui.misc.CustomCellRenderer;
 import utils.Constantes;
 
 /**
@@ -24,29 +24,25 @@ import utils.Constantes;
  */
 public class JanelaLogin extends JDialog implements ActionListener {
 
-    private final JPanel pCentro = new JPanel(new BorderLayout(GAP, GAP)),
-            pLabel = new JPanel(new GridLayout(N_LINHAS_A, N_COL_A)),
-            pInput = new JPanel(new GridLayout(N_LINHAS_A, N_COL_A)),
-            pSul = new JPanel(new BorderLayout());
-    private final JButton login = new JButton("Login");
-    private final JLabel lb_username = new JLabel("Username"), lb_password = new JLabel("Password");
-    private final JTextField txtField = new JTextField(TAMANHO_TXTFIELD);
-    private final JPasswordField passwordfield = new JPasswordField(TAMANHO_TXTFIELD);
-
+    private JPanel pCentro;
+    private JButton login;
+    private JLabel lb_username;
+    private JComboBox cmb_utilizador;
+    private DefaultComboBoxModel<Utilizador> listaModeloUtilizadores;
     //Vars de Instancia
-    private final RegistoUtilizador registoUtilizador;
+    private final CentroEventos centroEventos;
     private String username;
     //Vars de Classe
     private static final String TITULO_ERROR_MESSAGE = "Erro";
     private static final String ERROR_MESSAGE = "Utilizador inválido";
-    private static final boolean MODAL = true, ISRESIZEABLE = false;
-    private static final int N_LINHAS_A = 2, N_COL_A = 1;
+    private static final boolean MODAL = true, ISRESIZEABLE = true;
+    private static final int N_LINHAS_A = 1, N_COL_A = 1;
     private static final int TAMANHO_TXTFIELD = 15;
     private static final int GAP = 5;
 
-    public JanelaLogin(Frame owner, RegistoUtilizador ru) {
+    public JanelaLogin(Frame owner, CentroEventos ce) {
         super(owner, Constantes.TITULO_JANELA_LOGIN, MODAL);
-        registoUtilizador = ru;
+        centroEventos = ce;
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setResizable(ISRESIZEABLE);
         initComponentes();
@@ -57,37 +53,46 @@ public class JanelaLogin extends JDialog implements ActionListener {
 
     private void initComponentes() {
         initBotoes();
-        initPainelCentro();
-        initPainelSul();
+        initLabels();
+        initJCombobox();
+        initPainelPrincipal();
         adicionarPaineis();
+        copiarUtilizadoresParaListaModeloUtilizadores();
     }
 
     private void initBotoes() {
+        login = new JButton("Login");
         login.addActionListener(this);
     }
 
-    private void initPainelLabel() {
-        pLabel.add(lb_username);
-        pLabel.add(lb_password);
+    private void initLabels() {
+        lb_username = new JLabel("Username");
     }
 
-    private void initPainelInput() {
-        pInput.add(txtField);
-        pInput.add(passwordfield);
+    private void initJCombobox() {
+        listaModeloUtilizadores = new DefaultComboBoxModel<Utilizador>();
+        cmb_utilizador = new JComboBox(listaModeloUtilizadores);
+        cmb_utilizador.setRenderer(new CustomCellRenderer());
     }
 
-    private void initPainelCentro() {
-        initPainelLabel();
-        initPainelInput();
-        pCentro.add(pLabel, BorderLayout.WEST);
-        pCentro.add(pInput, BorderLayout.EAST);
-        pCentro.add(pSul, BorderLayout.SOUTH);
+    private JPanel initPainelSelecionarUtilizador() {
+        JPanel pCentroNorte = new JPanel(new FlowLayout());
+        pCentroNorte.add(lb_username);
+        pCentroNorte.add(cmb_utilizador);
+        return pCentroNorte;
+    }
+
+    private JPanel initPainelCentroSul() {
+        JPanel psul = new JPanel(new FlowLayout());
+        psul.add(login);
+        return psul;
+    }
+
+    private void initPainelPrincipal() {
+        pCentro = new JPanel(new BorderLayout(GAP, GAP));
+        pCentro.add(initPainelSelecionarUtilizador(), BorderLayout.CENTER);
+        pCentro.add(initPainelCentroSul(), BorderLayout.SOUTH);
         pCentro.setBorder(new EmptyBorder(GAP, GAP, GAP, GAP));
-    }
-
-    private void initPainelSul() {
-        //pSul.add(sair, BorderLayout.WEST);
-        pSul.add(login, BorderLayout.EAST);
     }
 
     private void adicionarPaineis() {
@@ -96,12 +101,12 @@ public class JanelaLogin extends JDialog implements ActionListener {
     }
 
     public boolean verificarCredenciais() {
-        for (Utilizador utilizador : registoUtilizador) {
-            if (txtField.getText().equals(utilizador.getUsername())) {
-                if (Arrays.equals(passwordfield.getPassword(), utilizador.getPassword())) {
-                    return true;
-                }
-            }
+        for (Utilizador utilizador : centroEventos.getRegistoUtilizadores()) {
+//            if (txtField.getText().equals(utilizador.getUsername())) {
+//                if (Arrays.equals(passwordfield.getPassword(), utilizador.getPassword())) {
+            return true;
+//                }
+//            }
         }
         return false;
     }
@@ -115,11 +120,18 @@ public class JanelaLogin extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == login) {
             if (verificarCredenciais()) {
-                username = txtField.getText();
+//                username = txtField.getText();
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(this, ERROR_MESSAGE, TITULO_ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
             }
         }
 
-    }}
+    }
+    
+    private void copiarUtilizadoresParaListaModeloUtilizadores(){
+        for (Utilizador u : centroEventos.getRegistoUtilizadores()) {
+            listaModeloUtilizadores.addElement(u);
+        }
+    }
+}

@@ -1,11 +1,8 @@
 package utils;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.CentroEventos;
@@ -96,7 +93,9 @@ public class LerBaseDados {
         switch (array[0].toLowerCase()) {
             case ORGANIZADOR:
                 Organizador o = lerOrganizador(array);
-                adicionarUser(o, ce);
+                if (ev != null) {
+                    adicionarOrganizador(o, ev);
+                }
                 break;
             case UTILIZADOR:
                 Utilizador u = lerUtilizador(array);
@@ -197,6 +196,13 @@ public class LerBaseDados {
             return new Candidatura(descricao, re);
         }
         return null;
+    }
+
+    private void adicionarOrganizador(Organizador o, Evento ev) {
+        if (o != null) {
+            ev.getListaOrganizador().adicionarOrganizador(o);
+        }
+
     }
 
     private void adicionarUser(Utilizador u, CentroEventos ce) {
