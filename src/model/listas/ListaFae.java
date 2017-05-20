@@ -31,7 +31,7 @@ public class ListaFae implements Iterable<Fae>, Serializable {
      * @param f Fae a guardar na lista
      * @return Verdadeiro ou Falso
      */
-    private boolean adicionarFae(Fae f) {
+    public boolean adicionarFae(Fae f) {
         if (!lista.contains(f)) {
             return lista.add(f);
         }
