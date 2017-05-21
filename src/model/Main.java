@@ -24,10 +24,8 @@ public class Main {
 
 //        Teste t = new Teste();
 //        t.init(ce);
+
         LerBaseDados lbd = new LerBaseDados(ce);
-        for (Utilizador u : ce.getRegistoUtilizadores()) {
-            System.out.println(u);
-        }
         JanelaPrincipal p = new JanelaPrincipal(ce);
     }
 

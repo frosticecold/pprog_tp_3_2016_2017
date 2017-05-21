@@ -45,6 +45,7 @@ public interface Constantes {
     public static final String ERRO_NAO_TEM_ATRIBUICOES = "O fae não tem atribuições associadas.";
     public static final String ERRO_INPUT_INVALIDO = "Erro, input inválido.";
     public static final String ERRO_ALG_SEMCAND_OU_FAE = "Erro sem dados para atribuir.";
+    public static final String ERRO_USER_N_E_REP_EMP = "Erro, user não é representante de empresa.";
     //public static final String ERRO_EXCLAMACAO = "Erro!";
 //Mensagens
     public static final String MENSAGEM_EVENTO = "Seleciona o Evento";

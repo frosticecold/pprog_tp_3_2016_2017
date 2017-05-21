@@ -242,10 +242,7 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
 
         }
         if (e.getSource() == login) {
-            JanelaLogin jl = new JanelaLogin(this, ce);
-            if (jl.getUsername() != null) {
-                username = jl.getUsername();
-            }
+            novaJanelaLogin(JanelaLogin.APRESENTAR_TODOS_UTILIZADORES);
         }
 
         if (e.getSource() == debug_limpar) {
@@ -266,13 +263,10 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         // Caso de uso decidir candidatura
         if (e.getSource() == decidir_cand) {
             if (ce.getRegistoUtilizadores().size() > 0) {
-                //Fae f = Teste.retornarFaeTeste(ce);
-                Fae f = new Fae("Utilizador c", "userc", "userc@user.pt", "123".toCharArray());
-
                 if (ce.getRegistoEventos()
-                        .verificarSeFaeTemAtribuicoes(f.getUsername())) {
+                        .verificarSeFaeTemAtribuicoes(username)) {
                     setVisible(false);
-                    new DecidirCandidatura(this, ce, f.getUsername());
+                    new DecidirCandidatura(this, ce, username);
                     setVisible(true);
                 } else {
                     Constantes.mensagemErro(Constantes.ERRO_NAO_TEM_ATRIBUICOES);
@@ -283,8 +277,11 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         // Caso de uso submeter candidatura
         if (e.getSource() == submeter_cand) {
             if (ce.getRegistoUtilizadores().size() > 0) {
-                RepresentanteEmpresa reptest = Teste.retornarRepEmpTeste(ce);
-                new SubmeterCandidatura(this, ce, reptest);
+                if (ce.getRegistoUtilizadores().verificarSeUserRepresentanteEmpresa(username)) {
+                    new SubmeterCandidatura(this, ce, ce.getRegistoUtilizadores().obterRepresentanteEmpresaPorUsername(username));
+                } else {
+                    Constantes.mensagemErro(Constantes.ERRO_USER_N_E_REP_EMP);
+                }
             }
         }
     }
@@ -295,5 +292,12 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
 
     public void definirIcon(JMenuItem cmp, String nomeficheiro) {
         cmp.setIcon(new ImageIcon(this.getClass().getClassLoader().getResource(Constantes.ICON_FOLDER + nomeficheiro)));
+    }
+
+    private void novaJanelaLogin(int tipo_user) {
+        JanelaLogin jl = new JanelaLogin(this, ce, tipo_user);
+        if (jl.getUsername() != null) {
+            username = jl.getUsername();
+        }
     }
 }

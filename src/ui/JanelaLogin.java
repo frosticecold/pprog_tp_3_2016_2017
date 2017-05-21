@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import model.CentroEventos;
+import model.user.RepresentanteEmpresa;
 import model.user.Utilizador;
 import ui.misc.CustomCellRenderer;
 import utils.Constantes;
@@ -32,17 +33,21 @@ public class JanelaLogin extends JDialog implements ActionListener {
     //Vars de Instancia
     private final CentroEventos centroEventos;
     private String username;
+    private int tipo_utilizador;
     //Vars de Classe
     private static final String TITULO_ERROR_MESSAGE = "Erro";
     private static final String ERROR_MESSAGE = "Utilizador inválido";
     private static final boolean MODAL = true, ISRESIZEABLE = true;
     private static final int N_LINHAS_A = 1, N_COL_A = 1;
     private static final int TAMANHO_TXTFIELD = 15;
-    private static final int GAP = 5;
+    public static final int APRESENTAR_TODOS_UTILIZADORES = 0;
+    public static final int APRESENTAR_APENAS_UTILIZADORES = 1;
+    public static final int APRESENTAR_REPRESENTANTES_EMPRESA = 2;
 
-    public JanelaLogin(Frame owner, CentroEventos ce) {
+    public JanelaLogin(Frame owner, CentroEventos ce, int tipo_utilizador) {
         super(owner, Constantes.TITULO_JANELA_LOGIN, MODAL);
         centroEventos = ce;
+        this.tipo_utilizador = tipo_utilizador;
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setResizable(ISRESIZEABLE);
         initComponentes();
@@ -89,10 +94,10 @@ public class JanelaLogin extends JDialog implements ActionListener {
     }
 
     private void initPainelPrincipal() {
-        pCentro = new JPanel(new BorderLayout(GAP, GAP));
+        pCentro = new JPanel(new BorderLayout(Constantes.GAP_CINCO, Constantes.GAP_CINCO));
         pCentro.add(initPainelSelecionarUtilizador(), BorderLayout.CENTER);
         pCentro.add(initPainelCentroSul(), BorderLayout.SOUTH);
-        pCentro.setBorder(new EmptyBorder(GAP, GAP, GAP, GAP));
+        pCentro.setBorder(new EmptyBorder(Constantes.GAP_CINCO, Constantes.GAP_CINCO, Constantes.GAP_CINCO, Constantes.GAP_CINCO));
     }
 
     private void adicionarPaineis() {
@@ -120,7 +125,7 @@ public class JanelaLogin extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == login) {
             if (verificarCredenciais()) {
-//                username = txtField.getText();
+                username = ((Utilizador) cmb_utilizador.getSelectedItem()).getUsername();
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(this, ERROR_MESSAGE, TITULO_ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
@@ -128,10 +133,23 @@ public class JanelaLogin extends JDialog implements ActionListener {
         }
 
     }
-    
-    private void copiarUtilizadoresParaListaModeloUtilizadores(){
+
+    private void copiarUtilizadoresParaListaModeloUtilizadores() {
         for (Utilizador u : centroEventos.getRegistoUtilizadores()) {
-            listaModeloUtilizadores.addElement(u);
+            switch (tipo_utilizador) {
+                case APRESENTAR_TODOS_UTILIZADORES:
+                    listaModeloUtilizadores.addElement(u);
+                    break;
+                case APRESENTAR_APENAS_UTILIZADORES:
+                    if (!(u instanceof RepresentanteEmpresa)) {
+                        listaModeloUtilizadores.addElement(u);
+                    }
+                    break;
+                case APRESENTAR_REPRESENTANTES_EMPRESA:
+                    if (u instanceof RepresentanteEmpresa) {
+                        listaModeloUtilizadores.addElement(u);
+                    }
+            }
         }
     }
 }

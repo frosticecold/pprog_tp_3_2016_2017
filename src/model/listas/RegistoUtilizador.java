@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import model.user.RepresentanteEmpresa;
 import model.user.Utilizador;
 
 /**
@@ -24,10 +25,6 @@ public class RegistoUtilizador implements Iterable<Utilizador>, Serializable {
             return lista.add(u);
         }
         return false;
-    }
-
-    public boolean removerUtilizador(Utilizador u) {
-        return lista.remove(u);
     }
 
     /**
@@ -58,8 +55,23 @@ public class RegistoUtilizador implements Iterable<Utilizador>, Serializable {
         return null;
     }
 
+    public RepresentanteEmpresa obterRepresentanteEmpresaPorUsername(String username) {
+        return (RepresentanteEmpresa) obterUtilizadorPorUsername(username);
+    }
+
     public int size() {
         return lista.size();
+    }
+
+    public boolean verificarSeUserRepresentanteEmpresa(String username) {
+        for (Utilizador u : lista) {
+            if (u instanceof RepresentanteEmpresa) {
+                if (u.getUsername().equals(username)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }
