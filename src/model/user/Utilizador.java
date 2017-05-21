@@ -13,9 +13,9 @@ public class Utilizador implements Comparable<Utilizador>, Serializable {
     private char[] password;
 
     //Vars de Classe
-    private String DEFAULT_PASSWORD = "123";
+    private static final String DEFAULT_PASSWORD = "123";
 
-    private static String NOME_OMISSAO = "Sem nome", USERNAME_OMISSAO = "Sem username",
+    private static final String NOME_OMISSAO = "Sem nome", USERNAME_OMISSAO = "Sem username",
             EMAIL_OMISSAO = "Sem email";
 
     public Utilizador() {

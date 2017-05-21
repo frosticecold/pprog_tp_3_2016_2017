@@ -37,20 +37,20 @@ public abstract class Evento implements Comparable<Evento>, Serializable {
     /**
      * Lista de Organizadores de um Evento
      */
-    private ListaOrganizador listaOrganizador = new ListaOrganizador();
+    private ListaOrganizador listaOrganizador;
     /**
      * Lista de Candidaturas de um Evento
      */
-    private ListaCandidatura listaCandidatura = new ListaCandidatura();
+    private ListaCandidatura listaCandidatura;
     /**
      * Lista de Fae de um Evento
      */
-    private ListaFae listaFae = new ListaFae();
+    private ListaFae listaFae;
 
     /**
      * Lista de Atribuição de um Evento
      */
-    private ListaAtribuicao listaAtribuicao = new ListaAtribuicao();
+    private ListaAtribuicao listaAtribuicao;
     /**
      * Valor por omissão do Titulo de um Evento
      */
@@ -75,6 +75,11 @@ public abstract class Evento implements Comparable<Evento>, Serializable {
         local = LOCAL_OMISSAO;
         dataInicio = new Data();
         dataFim = new Data();
+
+        listaOrganizador = new ListaOrganizador();
+        listaCandidatura = new ListaCandidatura();
+        listaAtribuicao = new ListaAtribuicao();
+        listaFae = new ListaFae();
     }
 
     /**
@@ -93,6 +98,11 @@ public abstract class Evento implements Comparable<Evento>, Serializable {
         this.local = nomeLocal;
         this.dataInicio = new Data(dataInicio);
         this.dataFim = new Data(dataFim);
+
+        listaOrganizador = new ListaOrganizador();
+        listaCandidatura = new ListaCandidatura();
+        listaAtribuicao = new ListaAtribuicao();
+        listaFae = new ListaFae();
     }
 
     /**

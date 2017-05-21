@@ -223,7 +223,7 @@ public class Teste {
     }
 
     public void testeEventoPorOrganizador(String username) {
-        List<Evento> le = re.getListaEventoPorOrganizador(username);
+        List<Evento> le = re.getListEventoPorUtilizadorPreDefinido(username, RegistoEvento.UTILIZADOR_ORGANIZADOR);
         for (Evento evento : le) {
             System.out.println("O utilizador " + username + " é organizador do evento: " + evento);
         }

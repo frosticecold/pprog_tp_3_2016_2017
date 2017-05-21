@@ -17,7 +17,7 @@ public class Exposicao extends Evento implements Serializable {
     }
 
     /**
-     * onstrutor completo de um objeto do tipo Exposição, que recebe como
+     * Construtor completo de um objeto do tipo Exposição, que recebe como
      * parâmetro um titulo, uma descriçao, nome do local, uma data de inicio e
      * uma data de fim
      *
@@ -33,11 +33,27 @@ public class Exposicao extends Evento implements Serializable {
 
     /**
      * Devolve a descrição de uma Exposição
+     *
      * @return Descrição de uma Exposição
      */
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (this == obj) {
+            return true;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        return true;
     }
 
 }

@@ -33,7 +33,7 @@ public interface Constantes {
     public static final String ICON_ABOUT = "about.gif";
 //Titulos
     public static final String TITULO_BORDER = "Decisão";
-    public static final String TITULO_JANELA = "Decidir Candidatura";
+    public static final String TITULO_BORDA_DECIDIR_CANDIDATURA = "Decidir Candidatura";
     public static final String TITULO_JANELA_LOGIN = "Janela Login";
     public static final String TITULO_JANELA_ATRIBUIR = "Atribuir Candidatura";
 //Erro

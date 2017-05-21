@@ -2,14 +2,10 @@ package model.listas;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import model.evento.Evento;
-import model.user.Fae;
-import model.user.Organizador;
-import utils.Data;
 
 /**
  *
@@ -17,6 +13,8 @@ import utils.Data;
  */
 public class RegistoEvento implements Iterable<Evento>, Serializable {
 
+    public static final int UTILIZADOR_ORGANIZADOR = 0;
+    public static final int UTILIZADOR_FAE = 1;
     /**
      * Lista de Eventos
      */
@@ -40,21 +38,6 @@ public class RegistoEvento implements Iterable<Evento>, Serializable {
             return lista.add(e);
         }
         return false;
-    }
-
-    /**
-     * Método que procura e retorna um evento por o título de um Evento
-     *
-     * @param tituloEvento Título de um Evento
-     * @return Evento ou null
-     */
-    public Evento procurarEvento(String tituloEvento) {
-        for (Evento e : lista) {
-            if (tituloEvento.equals(e.getTitulo())) {
-                return e;
-            }
-        }
-        return null;
     }
 
     /**
@@ -84,91 +67,48 @@ public class RegistoEvento implements Iterable<Evento>, Serializable {
     }
 
     /**
-     * Retorna uma lista de Eventos associados a um organizador
+     * Método que procura e retorna um evento por o título de um Evento
      *
-     * @param o Organizador ao qual se procura se Eventos lhe estão associados
-     * @return ListaEventos associados ao organizador
+     * @param tituloEvento Título de um Evento
+     * @return Evento ou null
      */
-    public List<Evento> getListaEventoPorOrganizador(Organizador o) {
-        List<Evento> le = new ArrayList<>();
-        for (Evento ev : lista) {
-            if (ev.getListaOrganizador().isOrganizadorEvento(o.getUsername())) {
-                le.add(ev);
+    public Evento procurarEvento(String tituloEvento) {
+        for (Evento e : lista) {
+            if (tituloEvento.equals(e.getTitulo())) {
+                return e;
             }
         }
-
-        return le;
+        return null;
     }
 
     /**
-     * Retorna uma lista de Eventos associados a um fae
-     *
-     * @param f Fae ao qual se procura se Eventos lhe estão associados
-     * @return ListaEventos associados ao fae
-     */
-    public List<Evento> getListaEventoPorFae(Fae f) {
-        List<Evento> le = new ArrayList<>();
-
-        for (Evento ev : lista) {
-            if (ev.getListaFae().isFaeEvento(f.getUsername())) {
-                le.add(ev);
-            }
-        }
-
-        return le;
-    }
-
-    /**
-     * Retorna uma lista de Eventos associados a um username
+     * Retorna uma lista de Eventos associados a um Tipo de Utilizador por
+     * username
      *
      * @param username Username ao qual se procura se Eventos lhe estão
      * associados
+     * @param TIPO_UTILIZADOR Tipo de utilizador a procurar
      * @return ListaEventos associados ao username
      */
-    public List<Evento> getListaEventoPorFae(String username) {
-        List<Evento> le = new ArrayList<>();
-
-        for (Evento ev : lista) {
-            if (ev.getListaFae().isFaeEvento(username)) {
-                le.add(ev);
-            }
-        }
-
-        return le;
-    }
-
-    /**
-     * Retorna uma lista de Eventos associados a um Organizador por username
-     *
-     * @param username Username ao qual se procura se Eventos lhe estão
-     * associados
-     * @return ListaEventos associados ao username
-     */
-    public List<Evento> getListaEventoPorOrganizador(String username) {
+    public List<Evento> getListEventoPorUtilizadorPreDefinido(String username, int TIPO_UTILIZADOR) {
         List<Evento> le = new ArrayList<>();
         for (Evento e : lista) {
-            if (e.getListaOrganizador().isOrganizadorEvento(username)) {
-                le.add(e);
+            switch (TIPO_UTILIZADOR) {
+                case UTILIZADOR_ORGANIZADOR:
+                    if (e.getListaOrganizador().isOrganizadorEvento(username)) {
+                        le.add(e);
+                    }
+                    break;
+                case UTILIZADOR_FAE:
+                    if (e.getListaFae().isFaeEvento(username)) {
+                        le.add(e);
+                        break;
+                    }
             }
         }
-
         return le;
     }
 
-//    public List<Evento> getListaEventoAtivoPorOrganizador(String username) {
-//        Calendar cal = Calendar.getInstance();
-//        Data dataHoje = new Data(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
-//        List<Evento> listaEventosAtivos = new ArrayList<>();
-//
-//        for (Evento e : lista) {
-//            if (e.getListaOrganizador().isOrganizadorEvento(username)) {
-//                if (dataHoje.diferenca(e.getDataInicio()) >= 0 && dataHoje.diferenca(e.getDataFim()) <= 0) {
-//                    listaEventosAtivos.add(e);
-//                }
-//            }
-//        }
-//        return listaEventosAtivos;
-//    }
     /**
      * Método que recebe um username e verefica se tem atribuições associadas
      *

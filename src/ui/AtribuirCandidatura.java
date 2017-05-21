@@ -328,10 +328,11 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
     /**
      * <ul>
      * <li>Inicializa/cria as combobox</li>
-     * <li>Define listasmodelo </li>
+     * <li>Define listasmodelo</li>
      * <li>Define tamanho das combobox</li>
      * <li>Adiciona actionlisteners</li>
-     * <li>Copia os dados necessários ao seu funcionamento</li></ul>
+     * <li>Copia os dados necessários ao seu funcionamento</li>
+     * </ul>
      */
     public void initComboBox() {
         //Criar combobox
@@ -420,15 +421,27 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         }
     }
 
-    private void copiarListaFaePorCandidaturaJaGuardada(ListaAtribuicao la, Candidatura c) {
+    /**
+     * Copia todas as atribuições de uma ListaAtribuição que contenha aquela
+     * candidatura
+     *
+     * @param listaAtrib ListraAtribuição com as aitribuições
+     * @param cd Candidatura a procurar
+     */
+    private void copiarListaFaePorCandidaturaJaGuardada(ListaAtribuicao listaAtrib, Candidatura cd) {
         listaModeloFaeAtribuidos.clear();
-        for (Atribuicao a : la) {
-            if (a.getCandidatura().equals(c)) {
+        for (Atribuicao a : listaAtrib) {
+            if (a.getCandidatura().equals(cd)) {
                 listaModeloFaeAtribuidos.addElement(a.getFae());
             }
         }
     }
 
+    /**
+     * Copia todos os algoritmos de atribuição para a combobox
+     *
+     * @param ra RegistoAlgoritmosAtribuicao Onde estão guardados os algoritmos
+     */
     private void copiarListaAlgoritmosParaComboBox(RegistoAlgoritmosAtribuicao ra) {
         listaModeloAlgoritmo.removeAllElements();
         for (String s : ra) {
@@ -443,6 +456,11 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
 
     }
 
+    /**
+     * Copia todos os eventos da lista RegistoEvento para a lista modelo
+     *
+     * @param registoEventos RegistoEventos onde estão guardado os eventos
+     */
     private void copiarListaEventosParaListaModeloEventos(RegistoEvento registoEventos) {
         listaModeloEvento.removeAllElements();
         for (Evento e : ce.getRegistoEventos()) {
@@ -450,6 +468,9 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         }
     }
 
+    /**
+     * Limpa todas as listas da janela AtribuirCandidatura
+     */
     private void limparListas() {
         listaModeloFaeDisponiveis.clear();
         listaModeloCandidatura.clear();
@@ -457,15 +478,25 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         ListaAtribuicoes.clear();
     }
 
+    /**
+     * Método onde é feito as decisões dos botões
+     *
+     * @param e Evento
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        //Se sair
         if (e.getSource() == sair) {
             dispose();
         }
+
+        //Se carregar no botão atribuir
         if (e.getSource() == atribui) {
             Evento ev = (Evento) eventoComboBox.getSelectedItem();
             if (ev.getListaCandidatura().tamanho() == 0) {
-                JOptionPane.showMessageDialog(this, Constantes.MENSAGEM_ERRO_SEM_CANDIDATURAS, Constantes.ERRO_TITULO, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Constantes.MENSAGEM_ERRO_SEM_CANDIDATURAS,
+                        Constantes.ERRO_TITULO, JOptionPane.ERROR_MESSAGE);
             } else {
                 ListaAtribuicoes = ((AlgoritmoAtribuicao) algoritmoComboBox.getSelectedItem()).atribui(ev);
                 if (jlistCandidaturas.getSelectedIndex() != -1) {
@@ -478,6 +509,8 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
 
             }
         }
+
+        //Se carregar no botão guardar
         if (e.getSource() == guardar) {
             if (!ListaAtribuicoes.isEmpty()) {
                 Evento ev = (Evento) eventoComboBox.getSelectedItem();
@@ -486,6 +519,7 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
             }
         }
 
+        //Se mexermos na combobox
         if (e.getSource() == eventoComboBox) {
             limparListas();
             Evento ev = (Evento) eventoComboBox.getSelectedItem();
@@ -495,6 +529,7 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         }
     }
 
+    //Método para verificar se foi carregado na jlist do meio
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (e.getSource() == jlistCandidaturas) {

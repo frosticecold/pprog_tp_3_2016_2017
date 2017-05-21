@@ -20,8 +20,8 @@ public class ListaTipoEvento implements InterfaceListaLerConfig<String>, Iterabl
 
     private List<String> lista;
     public static String CLASSPATH;
-    private static String START_CONFIG = "[tipoevento]";
-    private static String END_CONFIG = "[/tipoevento]";
+    private static final String START_CONFIG = "[tipoevento]";
+    private static final String END_CONFIG = "[/tipoevento]";
 
     public ListaTipoEvento() {
         lista = new ArrayList<>();

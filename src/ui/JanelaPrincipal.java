@@ -24,8 +24,6 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import model.CentroEventos;
 import model.Teste;
-import model.user.Fae;
-import model.user.RepresentanteEmpresa;
 import utils.Constantes;
 
 /**

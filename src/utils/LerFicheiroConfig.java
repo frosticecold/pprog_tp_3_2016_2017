@@ -14,8 +14,8 @@ import model.listas.ListaTipoEvento;
  */
 public class LerFicheiroConfig {
 
-    private static String CAMINHO_FICHEIRO_CONFIG_OMISSAO = "config.ini";
-    private static String CLASS_PATH_OMISSAO = "classpath=";
+    private static final String CAMINHO_FICHEIRO_CONFIG_OMISSAO = "config.ini";
+    private static final String CLASS_PATH_OMISSAO = "classpath=";
 
     public String lerFicheiroConfig(final String START_CONFIG, final String END_CONFIG, String CLASSPATH, InterfaceListaLerConfig rl) {
         BufferedReader br;

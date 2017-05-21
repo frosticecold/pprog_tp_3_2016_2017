@@ -101,8 +101,7 @@ public class AlgoritmoNumeroPessoasPorCandidatura extends AlgoritmoAtribuicao {
      */
     public Fae obterFaeListaAleatorio(Evento e) {
         int numRandom = (int) (Math.random() * e.getListaFae().tamanho());
-        Fae f = e.getListaFae().obterFae(numRandom);
-        return f;
+        return e.getListaFae().obterFae(numRandom);
     }
 
     /**

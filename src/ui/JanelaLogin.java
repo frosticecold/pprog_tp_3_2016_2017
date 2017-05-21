@@ -75,7 +75,7 @@ public class JanelaLogin extends JDialog implements ActionListener {
     }
 
     private void initJCombobox() {
-        listaModeloUtilizadores = new DefaultComboBoxModel<Utilizador>();
+        listaModeloUtilizadores = new DefaultComboBoxModel<>();
         cmb_utilizador = new JComboBox(listaModeloUtilizadores);
         cmb_utilizador.setRenderer(new CustomCellRenderer());
     }

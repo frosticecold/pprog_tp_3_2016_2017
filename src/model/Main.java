@@ -5,7 +5,6 @@
  */
 package model;
 
-import model.user.Utilizador;
 import ui.JanelaPrincipal;
 import utils.LerBaseDados;
 

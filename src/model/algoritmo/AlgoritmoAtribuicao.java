@@ -10,7 +10,7 @@ import model.evento.Evento;
  */
 public abstract class AlgoritmoAtribuicao {
 
-    private String nomeAlgoritmo;
+    private final String nomeAlgoritmo;
 
     public AlgoritmoAtribuicao(String nomeAlgoritmo) {
         this.nomeAlgoritmo = nomeAlgoritmo;
