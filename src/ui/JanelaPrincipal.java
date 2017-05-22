@@ -12,8 +12,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -23,8 +21,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import model.CentroEventos;
-import model.Teste;
 import utils.Constantes;
+import utils.LerBaseDados;
 
 /**
  *
@@ -32,40 +30,122 @@ import utils.Constantes;
  */
 public class JanelaPrincipal extends JFrame implements ActionListener {
 
+    /**
+     * JMenubar da aplicação
+     */
     private JMenuBar menubar;
-    private JMenu menu, ficheiro, iniciar, acerca_menu, debug_menu;
-    private JMenuItem login, sair, acerca, debug_item;
-    private JMenuItem atribuir_cand, decidir_cand, submeter_cand;
-    private JMenuItem carregar_ficheiro, gravar_ficheiro;
+    /**
+     * JMenu menu para interagir com a aplicação
+     */
+    private JMenu menu;
+
+    /**
+     * JMenu para interagir com métodos carregar e guardar ficheiro
+     */
+    private JMenu ficheiro;
+
+    /**
+     * JMenu para interagir com os casos de uso;
+     */
+    private JMenu iniciar;
+    /**
+     * JMenu com informações acerca da aplicação
+     */
+    private JMenu acerca_menu;
+
+    /**
+     * JMenu de debug
+     */
+    private JMenu debug_menu;
+    /**
+     * Opção de Login
+     */
+    private JMenuItem login;
+    /**
+     * Opção de Sair
+     */
+    private JMenuItem sair;
+    /**
+     * Opção Acerca
+     */
+    private JMenuItem acerca;
+    /**
+     * Opção para Recarregar Base de Dados
+     */
+    private JMenuItem reload_db;
+
+    /**
+     * Opção para o caso de uso Atribuir Candidatura
+     */
+    private JMenuItem atribuir_cand;
+    /**
+     * Opção para o caso de uso Decidir Candidatura;
+     */
+    private JMenuItem decidir_cand;
+    /**
+     * Opção para o caso de uso Submeter Candidatura
+     */
+    private JMenuItem submeter_cand;
+
+    /**
+     * Opção para carregar um ficheiro binário
+     */
+    private JMenuItem carregar_ficheiro;
+
+    /**
+     * Opção para gravar um ficheiro binário
+     */
+    private JMenuItem gravar_ficheiro;
+
+    /**
+     * Opção para limpar o centro de eventos
+     */
     private JMenuItem debug_limpar;
     //Vars instância
+    /**
+     * Referência ao centro de eventos
+     */
     private CentroEventos ce;
-    private String username;
-    //Vars classe
 
+    /**
+     * Username da pessoa logada
+     */
+    private String username;
+
+    /**
+     * Construtor da Janela Principal, que recebe como parâmetro o centro de
+     * eventos
+     *
+     * @param ce Centro de Eventos
+     */
     public JanelaPrincipal(CentroEventos ce) {
         super(Constantes.TITULO_JANELA_PRINCIPAL);
+
         this.ce = ce;
         initComponentes();
+
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setMinimumSize(Constantes.TAMANHO_JANELA_MINIMO_PRINCIPAL);
+        setMinimumSize(Constantes.TAMANHO_MINIMO_JANELA_PRINCIPAL);
         setLocationRelativeTo(null);
-//
-//        JanelaLogin jlg = new JanelaLogin(this, ce.getRegistoUtilizadores());
-//        if (jlg.getUsername() == null) {
-//            System.exit(0);
-//        } else {
+
         setVisible(true);
-//        }
+
     }
 
+    /**
+     * Cria e inicializa todos componentes da janela
+     */
     public void initComponentes() {
         initMenuBar();
     }
 
+    /**
+     * Cria e inicializa a menubar Adiciona todos os menus à menubar
+     */
     public void initMenuBar() {
         menubar = new JMenuBar();
+        setJMenuBar(menubar);
         initMenu();
         initMenuAcerca();
         initMenuDebug();
@@ -73,6 +153,9 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Adiciona ao menu o submenu Menu
+     */
     public void adicionarMenu() {
         menu.add(iniciar);
         menu.add(ficheiro);
@@ -83,14 +166,16 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         menubar.add(menu);
         menubar.add(debug_menu);
         menubar.add(acerca_menu);
-        setJMenuBar(menubar);
 
     }
 
+    /**
+     * Inicializar o Menu Principal
+     */
     public void initMenu() {
-        menu = new JMenu("Menu");
-        sair = new JMenuItem("Sair");
-        login = new JMenuItem("Mudar Login");
+        menu = new JMenu(Constantes.JP_MENU_PRINCIPAL);
+        sair = new JMenuItem(Constantes.JP_MENU_ITEM_SAIR);
+        login = new JMenuItem(Constantes.JP_MENU_ITEM_LOGIN);
         login.setMnemonic(KeyEvent.VK_L);
         login.addActionListener(this);
         login.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0, InputEvent.ALT_MASK));
@@ -105,13 +190,17 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         sair.addActionListener(this);
     }
 
+    /**
+     * Inicializa o submenu Iniciar Adiciona os casos de uso como menu items
+     * Define memónica Adiciona ActionListeners Adiciona teclas de atalho
+     */
     public void initSubmenuIniciar() {
         iniciar = new JMenu(Constantes.JP_MENU_INICIAR);
         iniciar.setMnemonic(KeyEvent.VK_I);
 
-        atribuir_cand = new JMenuItem(Constantes.JP_SUBMENU_ATRIB_CAND);
-        decidir_cand = new JMenuItem(Constantes.JP_SUBMENU_DECID_CAND);
-        submeter_cand = new JMenuItem(Constantes.JP_SUBMENU_SUB_CAND);
+        atribuir_cand = new JMenuItem(Constantes.JP_MENU_ITEM_ATRIB_CAND);
+        decidir_cand = new JMenuItem(Constantes.JP_MENU_ITEM_DECID_CAND);
+        submeter_cand = new JMenuItem(Constantes.JP_MENU_ITEM_SUB_CAND);
 
         //Definir Icons
         definirIcon(atribuir_cand, Constantes.ICON_ATRIBUIR_CANDIDATURA);
@@ -137,10 +226,14 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Inicializa o submenu Ficheiro Adiciona os casos de uso como menu items
+     * Define memónica Adiciona ActionListeners Adiciona teclas de atalho
+     */
     public void initSubmenuFicheiro() {
-        ficheiro = new JMenu(Constantes.MENU_INICIAR);
-        carregar_ficheiro = new JMenuItem(Constantes.MENU_ITEM_CARREGAR_FICHEIRO);
-        gravar_ficheiro = new JMenuItem(Constantes.MENU_ITEM_GRAVAR_FICHEIRO);
+        ficheiro = new JMenu(Constantes.JP_MENU_FICHEIRO);
+        carregar_ficheiro = new JMenuItem(Constantes.JP_MENU_ITEM_CARREGAR_FICHEIRO);
+        gravar_ficheiro = new JMenuItem(Constantes.JP_MENU_ITEM_GRAVAR_FICHEIRO);
 
         //Icon 
         definirIcon(carregar_ficheiro, Constantes.ICON_LOAD_FILE);
@@ -157,143 +250,192 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         ficheiro.add(gravar_ficheiro);
     }
 
+    /**
+     * Cria e incializa o menu acerca, adiciona o menu item acerca, define o
+     * icon e adiciona actionlistener
+     */
     public void initMenuAcerca() {
-        acerca_menu = new JMenu("?");
-        acerca = new JMenuItem("Acerca");
+        acerca_menu = new JMenu(Constantes.JP_MENU_PONTO_INTERROGACAO);
+        acerca = new JMenuItem(Constantes.ACERCA);
         definirIcon(acerca, Constantes.ICON_ABOUT);
         acerca.addActionListener(this);
         acerca_menu.add(acerca);
     }
 
+    /**
+     * Cria e inicializa o menu debug
+     */
     public void initMenuDebug() {
-        debug_menu = new JMenu("Debug");
-        debug_item = new JMenuItem("Carregador valores Debug");
-        debug_limpar = new JMenuItem("Limpar Centro Eventos");
+        debug_menu = new JMenu(Constantes.JP_MENU_DEBUG);
+        reload_db = new JMenuItem(Constantes.JP_MENU_ITEM_RELOAD_DB);
+        debug_limpar = new JMenuItem(Constantes.JP_MENU_ITEM_DEBUG_LIMPAR);
 
-        debug_menu.add(debug_item);
+        debug_menu.add(reload_db);
         debug_menu.add(debug_limpar);
 
         //Mnemonic
         debug_menu.setMnemonic(KeyEvent.VK_D);
         //ActionListeners
-        debug_item.addActionListener(this);
+        reload_db.addActionListener(this);
         debug_limpar.addActionListener(this);
 
     }
 
+    /**
+     * Onde é feita as decisões de todos os botões/menu
+     *
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == acerca) {
-            JOptionPane.showMessageDialog(this, Constantes.ACERCA_MENSAGEM, Constantes.TITULO_ACERCA, JOptionPane.QUESTION_MESSAGE);
-        }
-        if (e.getSource() == sair) {
-            System.exit(0);
-        }
-        if (e.getSource() == debug_item) {
-            Teste t = new Teste();
-            t.init(ce);
-        }
-        if (e.getSource() == carregar_ficheiro) {
-            JFileChooser jfc = new JFileChooser(diretorioAtual());
-            int returnval = jfc.showOpenDialog(this);
-            if (returnval == JFileChooser.APPROVE_OPTION) {
-                FileInputStream fInput = null;
-                try {
-                    File ficheiro = jfc.getSelectedFile();
-                    fInput = new FileInputStream(ficheiro);
-                    ObjectInputStream in = new ObjectInputStream(fInput);
-                    ce = (CentroEventos) in.readObject();
-                    in.close();
-
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    try {
-                        fInput.close();
-                    } catch (IOException ex) {
-                        Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-
-            }
-        }
-        if (e.getSource() == gravar_ficheiro) {
-            try {
+        switch (e.getActionCommand()) {
+            case Constantes.ACERCA:
+                JOptionPane.showMessageDialog(this, Constantes.ACERCA_MENSAGEM, Constantes.ACERCA, JOptionPane.QUESTION_MESSAGE);
+                break;
+            case Constantes.JP_MENU_ITEM_SAIR:
+                System.exit(0);
+                break;
+            case Constantes.JP_MENU_ITEM_RELOAD_DB:
+                LerBaseDados lbd = new LerBaseDados(ce);
+                break;
+            case Constantes.JP_MENU_ITEM_CARREGAR_FICHEIRO: {
                 JFileChooser jfc = new JFileChooser(diretorioAtual());
-
-                int returnval = jfc.showSaveDialog(this);
+                int returnval = jfc.showOpenDialog(this);
                 if (returnval == JFileChooser.APPROVE_OPTION) {
-                    FileOutputStream fileOut = new FileOutputStream(jfc.getSelectedFile());
-                    ObjectOutputStream out = new ObjectOutputStream(fileOut);
-                    out.writeObject(ce);
-                    out.close();
-                }
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                    FileInputStream fInput = null;
+                    try {
+                        File ficheiro = jfc.getSelectedFile();
+                        fInput = new FileInputStream(ficheiro);
+                        ObjectInputStream in = new ObjectInputStream(fInput);
+                        ce = (CentroEventos) in.readObject();
+                        in.close();
 
-        }
-        if (e.getSource() == login) {
-            novaJanelaLogin(JanelaLogin.APRESENTAR_TODOS_UTILIZADORES);
-        }
+                    } catch (FileNotFoundException ex) {
+                        Constantes.mensagemErro(Constantes.ERRO_FICHEIRO_NAO_ENCONTRADO);
+                    } catch (IOException ex) {
+                        Constantes.mensagemErro(Constantes.ERRO_FICHEIRO_IO_EXCEPTION);
+                    } catch (ClassNotFoundException ex) {
+                        Constantes.mensagemErro(Constantes.ERRO_CLASSE_NAO_ENCONTRADA);
+                    } finally {
+                        try {
+                            fInput.close();
+                        } catch (IOException ex) {
+                            Constantes.mensagemErro(Constantes.ERRO_FICHEIRO_IO_EXCEPTION);
+                        }
+                    }
 
-        if (e.getSource() == debug_limpar) {
-            ce = new CentroEventos();
-            System.out.println("O centro de eventos foi reinicializado");
-        }
-        //                      Casos de Uso
-        // Caso de uso atribuir candidatura
-        if (e.getSource() == atribuir_cand) {
-            if (ce.getRegistoEventos().tamanho() > 0 && username != null) {
-                if (ce.getRegistoEventos().verificarSeOrganizadorTemEventos(username)) {
-                    setVisible(false);
-                    AtribuirCandidatura ac = new AtribuirCandidatura(this, ce, username);
-                    setVisible(true);
-                } else {
-                    Constantes.mensagemErro(Constantes.ERRO_N_EXISTE_EVENTOS);
                 }
             }
-        }
-        // Caso de uso decidir candidatura
-        if (e.getSource() == decidir_cand) {
-            if (ce.getRegistoUtilizadores().size() > 0 && username != null) {
+            break;
+            case Constantes.JP_MENU_ITEM_GRAVAR_FICHEIRO:
+                try {
+                    JFileChooser jfc = new JFileChooser(diretorioAtual());
 
-                if (ce.getRegistoEventos()
-                        .verificarSeFaeTemAtribuicoes(username)) {
-                    setVisible(false);
-                    new DecidirCandidatura(this, ce, username);
-                    setVisible(true);
-                } else {
-                    Constantes.mensagemErro(Constantes.ERRO_NAO_TEM_ATRIBUICOES);
+                    int returnval = jfc.showSaveDialog(this);
+                    if (returnval == JFileChooser.APPROVE_OPTION) {
+                        FileOutputStream fileOut = new FileOutputStream(jfc.getSelectedFile());
+                        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                        out.writeObject(ce);
+                        out.close();
+                    }
+                } catch (FileNotFoundException ex) {
+                    Constantes.mensagemErro(Constantes.ERRO_FICHEIRO_NAO_ENCONTRADO);
+                } catch (IOException ex) {
+                    Constantes.mensagemErro(Constantes.ERRO_FICHEIRO_IO_EXCEPTION);
                 }
-            }
-        }
-        // Caso de uso submeter candidatura
-        if (e.getSource() == submeter_cand) {
-            if (ce.getRegistoUtilizadores().size() > 0 && username != null) {
-                if (ce.getRegistoUtilizadores().verificarSeUserRepresentanteEmpresa(username)) {
-                    new SubmeterCandidatura(this, ce, ce.getRegistoUtilizadores().obterRepresentanteEmpresaPorUsername(username));
+                break;
+            case Constantes.JP_MENU_ITEM_LOGIN:
+                novaJanelaLogin(JanelaLogin.APRESENTAR_TODOS_UTILIZADORES);
+                break;
+            case Constantes.JP_MENU_ITEM_DEBUG_LIMPAR:
+                ce = new CentroEventos();
+                break;
+
+            //                      Casos de Uso
+            // Caso de uso atribuir candidatura
+            case Constantes.JP_MENU_ITEM_ATRIB_CAND:
+                if (ce.getRegistoUtilizadores().tamanho() > 0) {
+                    if (ce.getRegistoEventos().tamanho() > 0) {
+                        if (username != null) {
+                            if (ce.getRegistoEventos().verificarSeOrganizadorTemEventos(username)) {
+                                setVisible(false);
+                                AtribuirCandidatura ac = new AtribuirCandidatura(this, ce, username);
+                                setVisible(true);
+                            }
+                        } else {
+                            Constantes.mensagemErro(Constantes.ERRO_UTILIZADOR_INVALIDO);
+                        }
+
+                    } else {
+                        Constantes.mensagemErro(Constantes.ERRO_N_EXISTE_EVENTOS);
+                    }
                 } else {
-                    Constantes.mensagemErro(Constantes.ERRO_USER_N_E_REP_EMP);
+                    Constantes.mensagemErro(Constantes.ERRO_SEM_UTILIZADORES);
                 }
-            }
+                break;
+
+            // Caso de uso decidir candidatura
+            case Constantes.JP_MENU_ITEM_DECID_CAND:
+                if (ce.getRegistoUtilizadores().tamanho() > 0) {
+                    if (username != null) {
+                        if (ce.getRegistoEventos()
+                                .verificarSeFaeTemAtribuicoes(username)) {
+                            setVisible(false);
+                            DecidirCandidatura dc = new DecidirCandidatura(this, ce, username);
+                            setVisible(true);
+                        } else {
+                            Constantes.mensagemErro(Constantes.ERRO_NAO_TEM_ATRIBUICOES);
+                        }
+                    } else {
+                        Constantes.mensagemErro(Constantes.ERRO_UTILIZADOR_INVALIDO);
+                    }
+                } else {
+                    Constantes.mensagemErro(Constantes.ERRO_SEM_UTILIZADORES);
+                }
+                break;
+            case Constantes.JP_MENU_ITEM_SUB_CAND:
+                // Caso de uso submeter candidatura
+                if (ce.getRegistoUtilizadores().tamanho() > 0) {
+                    if (username != null) {
+                        if (ce.getRegistoUtilizadores().verificarSeUserRepresentanteEmpresa(username)) {
+                            setVisible(false);
+                            SubmeterCandidatura sc = new SubmeterCandidatura(this, ce, ce.getRegistoUtilizadores().obterRepresentanteEmpresaPorUsername(username));
+                            setVisible(true);
+                        } else {
+                            Constantes.mensagemErro(Constantes.ERRO_USER_N_E_REP_EMP);
+                        }
+                    } else {
+                        Constantes.mensagemErro(Constantes.ERRO_UTILIZADOR_INVALIDO);
+                    }
+
+                } else {
+                    Constantes.mensagemErro(Constantes.ERRO_SEM_UTILIZADORES);
+                }
+                break;
         }
     }
 
+    /**
+     * Retorna o diretorio atual
+     * @return Diretorio Atual
+     */
     private static File diretorioAtual() {
         return new File(System.getProperty("user.dir"));
     }
 
+    /**
+     * Define um icon aos jmenuitems
+     * @param cmp JMenuItem
+     * @param nomeficheiro Nome do icon
+     */
     public void definirIcon(JMenuItem cmp, String nomeficheiro) {
         cmp.setIcon(new ImageIcon(this.getClass().getClassLoader().getResource(Constantes.ICON_FOLDER + nomeficheiro)));
     }
 
+    /**
+     * Cria a nova janela de login e vai buscar o username;
+     * @param tipo_user Filtro para o tipo de utilizador
+     */
     private void novaJanelaLogin(int tipo_user) {
         JanelaLogin jl = new JanelaLogin(this, ce, tipo_user);
         if (jl.getUsername() != null) {

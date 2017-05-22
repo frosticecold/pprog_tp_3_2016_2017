@@ -58,8 +58,8 @@ public class LerBaseDados {
             CAMPO_CAND_REP_USERNAME = 2;
 
     private static final String SPLIT_SYMBOL = ",";
-    private static final char SYMBOL_IGNORAR = '#';
     private static final String FILE_NAME = "dados.txt";
+    private static final char SYMBOL_IGNORAR = '#';
 
     public LerBaseDados(CentroEventos ce) {
         final int primeiroCaractere = 0;

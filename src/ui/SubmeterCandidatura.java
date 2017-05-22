@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -16,7 +9,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
@@ -27,119 +20,179 @@ import model.evento.Evento;
 import model.listas.ListaTipoEvento;
 import model.user.RepresentanteEmpresa;
 import ui.misc.CustomCellRenderer;
+import utils.Constantes;
 
 /**
  *
- * @author salva
+ * @author Raúl Correia 1090657@isep.ipp.pt
  */
 public class SubmeterCandidatura extends JDialog implements ActionListener {
 
-    JPanel pnorte = new JPanel(new BorderLayout()), pcentro = new JPanel(new BorderLayout()), psul = new JPanel(new BorderLayout()),
-            psuldir = new JPanel(new FlowLayout()),
-            painel = new JPanel(new BorderLayout(GAP, GAP));
+    private JPanel painel;
+    private JButton submeter;
+    private JButton sair;
+    private DefaultComboBoxModel<String> dcbmTipoEvento;
+    private DefaultComboBoxModel<Evento> dcbmEvento;
+    private JComboBox<String> tipoEventocmbox;
+    private JComboBox<Evento> eventoCombox;
+    private JTextArea txtArea;
 
-    JButton submeter = new JButton("Submeter"), sair = new JButton("Sair");
-    DefaultComboBoxModel<String> dcbmTipoEvento = new DefaultComboBoxModel<>();
-    DefaultComboBoxModel<Evento> dcbmEvento = new DefaultComboBoxModel<>();
-    JComboBox<String> tipoEventocmbox = new JComboBox<>(dcbmTipoEvento);
-    JComboBox<Evento> eventoCombox = new JComboBox<>(dcbmEvento);
-    JTextArea txtArea = new JTextArea();
     //Vars de instância
     private ListaTipoEvento listaTipoEvento;
     private RepresentanteEmpresa representante;
     private CentroEventos centroEventos;
-    //Vars de classe
-    private final static int GAP = 10;
-    private final static boolean MODAL = true;
-    private final static Dimension TAMANHO_JANELA = new Dimension(327, 266);
-    private final static String SEM_TEXTO = "";
-    private final static String TITULO_JANELA = "Submeter Candidatura";
-    private final static String MENSAGEM_ERRO = "Erro, texto inválido";
-    private final static String TITULO_ERRO = "Erro";
-    private final static String TOOLTIP_EVENTO = "Selecione o Evento";
-    private final static String TOOLTIP_TIPO_EVENTO = "Selecione o Tipo de Evento";
-    private final static String TOOLTIP_TXT_AREA = "Texto justificativo da candidatura";
-    private final static String TOOLTIP_SAIR = "Cancelar a submissão da candidatura";
-    private final static String TOOLTIP_SUBMETER = "Guardar a submissão da candidatura";
 
-    public SubmeterCandidatura(Frame owner, CentroEventos ce, RepresentanteEmpresa repEmpresa) {
-        super(owner, TITULO_JANELA, MODAL);
+    public SubmeterCandidatura(JFrame owner, CentroEventos ce, RepresentanteEmpresa repEmpresa) {
+        super(owner, Constantes.TITULO_JANELA_DECID_CAND, DEFAULT_MODALITY_TYPE);
 
         listaTipoEvento = new ListaTipoEvento();
         representante = repEmpresa;
         centroEventos = ce;
 
         initComponentes();
+
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setMinimumSize(TAMANHO_JANELA);
+        setMinimumSize(Constantes.TAMANHO_MINIMO_JANELA_DECIDIR_CAND);
         setLocationRelativeTo(owner);
         setVisible(true);
 
-        //Teste
     }
 
+    /**
+     * Cria e inicializa todos os componentes da janela
+     */
     private void initComponentes() {
         initCombobox();
         initBotoes();
         initTxtArea();
-        initPainelNorte();
-        initPainelCentro();
-        initPainelSul();
-        adicionarComponentes();
+        JPanel pnorte = initPainelNorte();
+        JPanel pcentro = initPainelCentro();
+        JPanel psul = initPainelSul();
+        criarPainelPrincipalAdicionarComponentes(pnorte, pcentro, psul);
         copiarTiposEventoParaCombobox();
         copiarEventoPorTipoParaCombobox();
     }
 
+    /**
+     * Cria as listas modelos e combobox tipoEvento e Evento
+     */
     private void initCombobox() {
-        tipoEventocmbox.setToolTipText(TOOLTIP_TIPO_EVENTO);
-        eventoCombox.setToolTipText(TOOLTIP_EVENTO);
+        //Inicializa lista modelo e combobox tipo evento
+        dcbmTipoEvento = new DefaultComboBoxModel<>();
+        tipoEventocmbox = new JComboBox<>(dcbmTipoEvento);
 
+        //Inicializa lista modelo e combobox eventos
+        dcbmEvento = new DefaultComboBoxModel<>();
+        eventoCombox = new JComboBox<>(dcbmEvento);
+
+        //Adiciona tooltiptext
+        tipoEventocmbox.setToolTipText(Constantes.TOOLTIP_DC_TIPO_EVENTO);
+        eventoCombox.setToolTipText(Constantes.TOOLTIP_DC_EVENTO);
+
+        //Adiciona actionlistener
         tipoEventocmbox.addActionListener(this);
         eventoCombox.addActionListener(this);
 
+        //Serve para fazer mostrar apenas o texto do evento em vez do toString() completo do objeto
         eventoCombox.setRenderer(new CustomCellRenderer());
+
+        //Set Action Command
+        tipoEventocmbox.setActionCommand(Constantes.CMBBOX_TIPOEVENTO);
+        eventoCombox.setActionCommand(Constantes.CMBBOX_EVENTO);
     }
 
+    /**
+     * Cria os botões submeter e sair
+     */
     private void initBotoes() {
-        sair.setToolTipText(TOOLTIP_SAIR);
-        submeter.setToolTipText(TOOLTIP_SUBMETER);
+
+        submeter = new JButton(Constantes.BTN_SUBMETER);
+        sair = new JButton(Constantes.BTN_SAIR);
+
+        sair.setToolTipText(Constantes.TOOLTIP_DC_SAIR);
+        submeter.setToolTipText(Constantes.TOOLTIP_DC_SUBMETER);
 
         sair.setMnemonic(KeyEvent.VK_S);
         submeter.setMnemonic(KeyEvent.VK_B);
 
         submeter.addActionListener(this);
         sair.addActionListener(this);
+
+        //SetActionCommands
+        submeter.setActionCommand(Constantes.BTN_SUBMETER);
+        sair.setActionCommand(Constantes.BTN_SAIR);
     }
 
+    /**
+     * Cria e inicializa a JTextArea
+     */
     private void initTxtArea() {
-        txtArea.setToolTipText(TOOLTIP_TXT_AREA);
+        txtArea = new JTextArea();
+        txtArea.setToolTipText(Constantes.TOOLTIP_DC_TXT_AREA);
     }
 
-    private void initPainelNorte() {
+    /**
+     * Cria e inicializa o painel norte Com combobox tipo de evento e evento
+     * combobox
+     *
+     * @return JPanel painel norte
+     */
+    private JPanel initPainelNorte() {
+        JPanel pnorte = new JPanel(new BorderLayout());
         pnorte.add(tipoEventocmbox, BorderLayout.WEST);
         pnorte.add(eventoCombox, BorderLayout.EAST);
+        return pnorte;
 
     }
 
-    private void initPainelCentro() {
+    /**
+     * Cria e inicializa o painel centro com uma txtarea e um border
+     *
+     * @return JPanel painel centro
+     */
+    private JPanel initPainelCentro() {
+        JPanel pcentro = new JPanel(new BorderLayout());
         pcentro.setBorder(new EtchedBorder());
         pcentro.add(txtArea);
+        return pcentro;
 
     }
 
-    private void initPainelSul() {
-        initPainelSulDir();
+    /**
+     * Cria e inicializa um psul
+     *
+     * @return
+     */
+    private JPanel initPainelSul() {
+        JPanel psul = new JPanel(new BorderLayout());
+        JPanel psuldir = initPainelSulDir();
         psul.add(psuldir, BorderLayout.EAST);
-
+        return psul;
     }
 
-    private void initPainelSulDir() {
+    /**
+     * Cria e inicializa o painel sul direito com os botões sair e submeter
+     *
+     * @return
+     */
+    private JPanel initPainelSulDir() {
+        JPanel psuldir = new JPanel(new FlowLayout());
         psuldir.add(sair);
         psuldir.add(submeter);
+        return psuldir;
     }
 
-    private void adicionarComponentes() {
-        painel.setBorder(new EmptyBorder(GAP, GAP, GAP, GAP));
+    /**
+     * Cria o painel principal e adiciona o painel norte, centro e sul ao
+     * painel. Por fim adiciona à JFrame
+     *
+     * @param pnorte JPanel painel norte
+     * @param pcentro JPanel painel centro
+     * @param psul JPanel painel sul
+     */
+    private void criarPainelPrincipalAdicionarComponentes(JPanel pnorte, JPanel pcentro, JPanel psul) {
+        painel = new JPanel(new BorderLayout(Constantes.GAP_DEZ, Constantes.GAP_DEZ));
+        painel.setBorder(new EmptyBorder(Constantes.GAP_DEZ, Constantes.GAP_DEZ, Constantes.GAP_DEZ, Constantes.GAP_DEZ));
         painel.add(pnorte, BorderLayout.NORTH);
         painel.add(pcentro, BorderLayout.CENTER);
         painel.add(psul, BorderLayout.SOUTH);
@@ -147,7 +200,7 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
     }
 
     /**
-     * Este método limpa a default model lista associada ao TipoEventoCombobox e
+     * Método que limpa a default model lista associada ao TipoEventoCombobox e
      * adiciona os tipos de Evento
      */
     private void copiarTiposEventoParaCombobox() {
@@ -159,7 +212,7 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
     }
 
     /**
-     * Este método limpa a default model lista associada ao EventoCombobox e
+     * Método que limpa a default model lista associada ao EventoCombobox e
      * adiciona os Eventos associados
      */
     private void copiarEventoPorTipoParaCombobox() {
@@ -172,34 +225,44 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
         }
     }
 
+    /**
+     * Método que limpa o texto da txtarea
+     */
     private void limparTxtArea() {
-        txtArea.setText(SEM_TEXTO);
+        txtArea.setText(Constantes.TXT_VAZIO);
     }
 
+    /**
+     * Método onde decide as ações dos botões
+     *
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == tipoEventocmbox) {
-            copiarEventoPorTipoParaCombobox();
-            limparTxtArea();
-        }
-        if (e.getSource() == eventoCombox) {
-            limparTxtArea();
-        }
-        if (e.getSource() == submeter) {
-            if (!txtArea.getText().isEmpty()) {
-                Evento ev = (Evento) dcbmEvento.getSelectedItem();
-                if (ev != null) {
-                    Candidatura c = new Candidatura();
-                    c.setDados(txtArea.getText(), representante);
-                    ev.getListaCandidatura().addCandidatura(c);
-                    System.out.println("Evento: " + ev + "Candidatura: " + c);
+        switch (e.getActionCommand()) {
+            case Constantes.CMBBOX_TIPOEVENTO:
+                copiarEventoPorTipoParaCombobox();
+                limparTxtArea();
+                break;
+            case Constantes.CMBBOX_EVENTO:
+                limparTxtArea();
+                break;
+            case Constantes.BTN_SUBMETER:
+                if (!txtArea.getText().isEmpty()) {
+                    Evento ev = (Evento) dcbmEvento.getSelectedItem();
+                    if (ev != null) {
+                        Candidatura c = new Candidatura();
+                        c.setDados(txtArea.getText(), representante);
+                        ev.getListaCandidatura().addCandidatura(c);
+                        Constantes.mensagemConfirmar(Constantes.MENSAGEM_CAND_CRIADO_SUCESSO);
+                    }
+                } else {
+                    Constantes.mensagemErro(Constantes.ERRO_TXT_INVALIDO);
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, MENSAGEM_ERRO, TITULO_ERRO, JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        if (e.getSource() == sair) {
-            dispose();
+                break;
+            case Constantes.BTN_SAIR:
+                dispose();
+                break;
         }
     }
 

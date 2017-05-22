@@ -59,7 +59,7 @@ public class RegistoUtilizador implements Iterable<Utilizador>, Serializable {
         return (RepresentanteEmpresa) obterUtilizadorPorUsername(username);
     }
 
-    public int size() {
+    public int tamanho() {
         return lista.size();
     }
 

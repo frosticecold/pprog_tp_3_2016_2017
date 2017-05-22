@@ -140,12 +140,17 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
 
         initComponentes();
 
-        setMinimumSize(Constantes.TAMANHO_DECIDIR_CANDIDATURA_MINIMO);
+        setMinimumSize(Constantes.TAMANHO_MINIMO_DECIDIR_CANDIDATURA);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
+    /**
+     * Inicializa todos os componentes utilizados na janela Copia os eventos
+     * associados para a combobox Por fim vai buscar a lista de atribuições
+     * associadas a um fae
+     */
     private void initComponentes() {
         initJLabel();
         initCheckboxes();
@@ -157,16 +162,25 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         JPanel p3 = initPainelSul();
         adicionarPaineis(p1, p2, p3);
 
-        copiarListaEventosParaListaComboBox();
+        copiarEventosParaListaComboBox();
         if (listaModeloEventos.getSize() > 0) {
             listaAtrib = ((Evento) eventoComboBox.getSelectedItem()).getListaAtribuicao().obterAtribuicoesAssociadaAoFae(username);
         }
     }
 
+    /**
+     * Inicializa a JLabel com o nome da empresa
+     */
     private void initJLabel() {
         lbEmpresa = new JLabel(Constantes.TXT_LBL_EMPRESA);
     }
 
+    /**
+     * <ul>
+     * <li>Inicializa as checkboxes aprovado e reprovado</li>
+     * <li>Adiciona memónicas</li>
+     * <li>Adiciona ActionListeners</li></ul>
+     */
     private void initCheckboxes() {
         aprovado = new JCheckBox(Constantes.TXT_APROVADO);
         reprovado = new JCheckBox(Constantes.TXT_REPROVADO);
@@ -174,31 +188,61 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         aprovado.setMnemonic(KeyEvent.VK_A);
         reprovado.setMnemonic(KeyEvent.VK_R);
 
+        //ActionCommands
+        aprovado.setActionCommand(Constantes.CHKBX_APROVADO);
+        reprovado.setActionCommand(Constantes.CHKBX_REPROVADO);
         //ActionListeners
         aprovado.addActionListener(this);
         reprovado.addActionListener(this);
 
     }
 
+    /**
+     * <ul>
+     * <li>Inicializa a combox de evento</li>
+     * <li>Inicializa a lista modelo de eventos</li>
+     * <li>Adiciona ActionListeners</li>
+     * </ul>
+     */
     private void initComboBox() {
         listaModeloEventos = new DefaultComboBoxModel<>();
         eventoComboBox = new JComboBox(listaModeloEventos);
         eventoComboBox.addActionListener(this);
         eventoComboBox.setRenderer(new CustomCellRenderer());
+        eventoComboBox.setActionCommand(Constantes.CMBBOX_EVENTO);
     }
 
+    /**
+     *
+     * Inicializa as textArea de Texto Justificativo e Texto Descrição
+     */
     private void initTxtArea() {
         txtJustificativo = new JTextArea();
         txtDescricao = new JTextArea();
 
     }
 
+    /**
+     * <ul>
+     * <li>Inicializa os botões</li>
+     * <li>Adicione os respetivos icones a cada botão</li>
+     * <li>Adiciona memónicas</li>
+     * <li>Action Listeners</li>
+     * <li>Botões:</li>
+     * <li>Guardar</li>
+     * <li>Sair</li>
+     * <li>Seguinte</li>
+     * <li>Anterior</li>
+     * </ul>
+     */
     private void initBotoes() {
         //Criar botões
-        guardar = new JButton(Constantes.TXT_GUARDAR);
-        sair = new JButton(Constantes.TXT_SAIR);
+        guardar = new JButton(Constantes.BTN_GUARDAR);
+        sair = new JButton(Constantes.BTN_SAIR);
         seguinte = new JButton();
+        seguinte.setActionCommand(Constantes.BTN_SEGUINTE);
         anterior = new JButton();
+        anterior.setActionCommand(Constantes.BTN_ANTERIOR);
 
         //Definir icon ,action listeners e memónica
         definirIcon(anterior, Constantes.ICON_ANTERIOR);
@@ -214,6 +258,12 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         guardar.setMnemonic(KeyEvent.VK_G);
     }
 
+    /**
+     * Inicializa o painel do topo com dois paineis, painel de informação e
+     * painel de aprovação Põe uma borda no painel
+     *
+     * @return JPanel
+     */
     private JPanel initPainelTopo() {
         final int NUM_COL = 1, NUM_LINHAS = 2;
         JPanel painelTopo = new JPanel(new GridLayout(NUM_LINHAS, NUM_COL, Constantes.EMPTY_BORDER_GAP_DEZ, Constantes.EMPTY_BORDER_GAP_DEZ));
@@ -223,6 +273,11 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         return painelTopo;
     }
 
+    /**
+     * Inicializa o painel das TxtAreas Adiciona ambas txtareas ao painel
+     *
+     * @return JPanel
+     */
     private JPanel initPainelTxtArea() {
         final int NUM_COL = 1, NUM_LINHAS = 2;
         JPanel painelTextArea = new JPanel(new GridLayout(NUM_LINHAS, NUM_COL, Constantes.GAP_CINCO, Constantes.GAP_CINCO)),
@@ -242,6 +297,11 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         return painelTextArea;
     }
 
+    /**
+     * Inicializa o painel com a informação de uma candidatura
+     *
+     * @return JPanel
+     */
     private JPanel initPainelInfo() {
         JPanel painelInfo = new JPanel(new FlowLayout(FlowLayout.LEFT));
         painelInfo.add(lbEmpresa);
@@ -249,17 +309,27 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
 
     }
 
+    /**
+     * <ul>
+     * <li>Inicializa o painel aprovação</li>
+     * <li>Tem duas checkboxes, aprovado e reprovado</li>
+     *
+     * @return
+     */
     private JPanel initPainelAprovacao() {
         JPanel painelAprovacao = new JPanel(new FlowLayout(FlowLayout.CENTER, GAP_FLOWLAYOUT_WIDTH, GAP_FLOWLAYOUT_HEIGHT));
         //Add components
         painelAprovacao.add(aprovado);
         painelAprovacao.add(reprovado);
 
-        //Border
-        //painelCheckbox.setBorder(new TitledBorder(new EtchedBorder(), TITULO_BORDA_DECIDIR_CANDIDATURA));
         return painelAprovacao;
     }
 
+    /**
+     * Inicializa o painel Sul Tem três paineis, psulesq,pscentro,psuldir
+     *
+     * @return
+     */
     private JPanel initPainelSul() {
         final int nrLinhas = 1, nrCol = 3;
         JPanel painelSul = new JPanel(new GridLayout(nrLinhas, nrCol)),
@@ -276,20 +346,43 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         return painelSul;
     }
 
+    /**
+     * Painel Sul Esquerdo com a combobox de eventos
+     *
+     * @param painelSulEsq JPanel a adicionar a combobox
+     */
     private void initPainelSulEsq(JPanel painelSulEsq) {
         painelSulEsq.add(eventoComboBox);
     }
 
+    /**
+     * Painel Sul Centrado com botões anterior e seguinte
+     *
+     * @param painelSulCentro JPanel a adicionar os botões
+     */
     private void initPainelSulCentro(JPanel painelSulCentro) {
         painelSulCentro.add(anterior);
         painelSulCentro.add(seguinte);
     }
 
+    /**
+     * Painel Sul Direita com botões sair e guardar
+     *
+     * @param painelSulDir JPanel a adicionar os botões
+     */
     private void initPainelSulDir(JPanel painelSulDir) {
         painelSulDir.add(sair);
         painelSulDir.add(guardar);
     }
 
+    /**
+     * Adiciona os paineis PainelTopo PainelTxtArea e PainelSul ao painel
+     * principal
+     *
+     * @param painelTopo JPanel Topo com informação da candidatura e decisão
+     * @param pTxtArea JPanel com textareas
+     * @param pSul JPanel Sul com combobox e botões
+     */
     private void adicionarPaineis(JPanel painelTopo, JPanel pTxtArea, JPanel pSul) {
         principal.add(painelTopo, BorderLayout.NORTH);
         principal.add(pTxtArea, BorderLayout.CENTER);
@@ -298,7 +391,11 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         add(principal);
     }
 
-    private void copiarListaEventosParaListaComboBox() {
+    /**
+     * Limpa a lista modelo de eventos e copia todos os eventos com atribuições
+     * atribuidas ao fae
+     */
+    private void copiarEventosParaListaComboBox() {
         listaModeloEventos.removeAllElements();
         for (Evento e : centroEventos.getRegistoEventos()) {
             if (e.getListaFae().isFaeEvento(username) && e.getListaAtribuicao().verificarSeFaeTemAtribuicoes(username)) {
@@ -307,6 +404,11 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         }
     }
 
+    /**
+     * Valida se o texto tem mais de 5 caracteres
+     *
+     * @return Verdadeiro ou Falso
+     */
     private boolean validarTexto() {
         if (txtJustificativo.getText().length() > 5) {
             return true;
@@ -315,6 +417,9 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         return false;
     }
 
+    /**
+     * Limpa a informação de todos os componentes da janela
+     */
     private void limparComponentes() {
         txtJustificativo.setText(Constantes.TXT_VAZIO);
         txtDescricao.setText(Constantes.TXT_VAZIO);
@@ -324,6 +429,10 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
 
     }
 
+    /**
+     * Verifica se existem atribuições, se existirem, carrega a informação de
+     * uma atribuição para os respetivos componentes
+     */
     private void obterInformacaoJaGuardada() {
         Evento ev = (Evento) eventoComboBox.getSelectedItem();
         listaAtrib = ev.getListaAtribuicao().obterAtribuicoesAssociadaAoFae(username);
@@ -335,6 +444,9 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
         }
     }
 
+    /**
+     * Carrega a informação para os respetivos componentes
+     */
     private void carregarInfoAtribuicao() {
         decisao_utilizador = atrib.getDecisao().getDecisao();
         switch (decisao_utilizador) {
@@ -357,58 +469,73 @@ public class DecidirCandidatura extends JDialog implements ActionListener {
 
     }
 
+    /**
+     * ActionListeners
+     *
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == sair) {
-            dispose();
-        }
-        if (e.getSource() == guardar) {
-            if (aprovado.isSelected() || reprovado.isSelected()) {
-                Evento ev = (Evento) eventoComboBox.getSelectedItem();
-                if (validarTexto()) {
-                    atrib.setDecisao(new Decisao(decisao_utilizador, txtJustificativo.getText()));
+        switch (e.getActionCommand()) {
+            case Constantes.BTN_SAIR:
+                dispose();
+                break;
+            case Constantes.BTN_GUARDAR:
+                if (aprovado.isSelected() || reprovado.isSelected()) {
+                    Evento ev = (Evento) eventoComboBox.getSelectedItem();
+                    if (validarTexto()) {
+                        atrib.setDecisao(new Decisao(decisao_utilizador, txtJustificativo.getText()));
+                    } else {
+                        Constantes.mensagemErro(Constantes.ERRO_GUARDAR);
+                    }
                 } else {
-                    Constantes.mensagemErro(Constantes.ERRO_GUARDAR);
+                    Constantes.mensagemErro(Constantes.ERRO_SELECIONAR);
                 }
-            } else {
-                Constantes.mensagemErro(Constantes.ERRO_SELECIONAR);
-            }
-        }
-        if (e.getSource() == aprovado) {
-            if (reprovado.isSelected()) {
-                reprovado.setSelected(false);
-            }
-            decisao_utilizador = Decisao.APROVADO;
-        }
-        if (e.getSource() == reprovado) {
-            if (aprovado.isSelected()) {
-                aprovado.setSelected(false);
-            }
-            decisao_utilizador = Decisao.NAO_APROVADO;
-        }
-        if (e.getSource() == eventoComboBox) {
-            limparComponentes();
-            obterInformacaoJaGuardada();
 
-        }
-        if (e.getSource() == anterior) {
-            if (indice > 0) {
-                indice--;
-                atrib = listaAtrib.get(indice);
+                break;
+            case Constantes.CHKBX_APROVADO:
+                if (reprovado.isSelected()) {
+                    reprovado.setSelected(false);
+                }
+                decisao_utilizador = Decisao.APROVADO;
+                break;
+            case Constantes.CHKBX_REPROVADO:
+                if (aprovado.isSelected()) {
+                    aprovado.setSelected(false);
+                }
+                decisao_utilizador = Decisao.NAO_APROVADO;
+                break;
+            case Constantes.CMBBOX_EVENTO:
                 limparComponentes();
-                carregarInfoAtribuicao();
-            }
-        }
-        if (e.getSource() == seguinte) {
-            if (indice < listaAtrib.size() - 1) {
-                indice++;
-                atrib = listaAtrib.get(indice);
-                limparComponentes();
-                carregarInfoAtribuicao();
-            }
+                obterInformacaoJaGuardada();
+
+                break;
+            case Constantes.BTN_ANTERIOR:
+
+                if (indice > 0) {
+                    indice--;
+                    atrib = listaAtrib.get(indice);
+                    limparComponentes();
+                    carregarInfoAtribuicao();
+                }
+                break;
+            case Constantes.BTN_SEGUINTE:
+                if (indice < listaAtrib.size() - 1) {
+                    indice++;
+                    atrib = listaAtrib.get(indice);
+                    limparComponentes();
+                    carregarInfoAtribuicao();
+                }
+                break;
         }
     }
 
+    /**
+     * Define um icon de um botão
+     *
+     * @param cmp JButton a mudar o ícone
+     * @param nomeficheiro Nome do ficheiro do icon
+     */
     public void definirIcon(JButton cmp, String nomeficheiro) {
         cmp.setIcon(new ImageIcon(this.getClass().getClassLoader().getResource(Constantes.ICON_FOLDER + nomeficheiro)));
     }

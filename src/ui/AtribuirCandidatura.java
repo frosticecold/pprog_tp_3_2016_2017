@@ -138,7 +138,7 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
     /**
      * Lista de atribuições
      */
-    private List<Atribuicao> ListaAtribuicoes;
+    private List<Atribuicao> listaAtribuicoes;
 
     //Vars Estáticos
     /**
@@ -161,7 +161,7 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         initComponents();
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setMinimumSize(Constantes.TAMANHO_JANELA_MINIMO_ATRIBUIR_CAND);
+        setMinimumSize(Constantes.TAMANHO_MINIMO_JANELA_ATRIBUIR_CAND);
         setLocationRelativeTo(null);
 
         pack();
@@ -186,7 +186,7 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
      */
     public void initLists() {
         //Iniciar ArrayLists
-        ListaAtribuicoes = new ArrayList<>();
+        listaAtribuicoes = new ArrayList<>();
 
         //Criar lista modelos
         listaModeloFaeDisponiveis = new DefaultListModel<>();
@@ -221,9 +221,9 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         //Listeners
         jlistCandidaturas.addListSelectionListener(this);
 
-        jlistFaeDisponiveis.setToolTipText(Constantes.ATRIB_CAND_TOOLTIP_JLIST_FAEDISPONIVEIS);
-        jlistCandidaturas.setToolTipText(Constantes.ATRIB_CAND_TOOLTIP_JLIST_LISTA_CANDIDATURAS);
-        jlistFaeAtribuidos.setToolTipText(Constantes.ATRIB_CAND_TOOLTIP_JLIST_FAE_ATRIB_POR_CAND);
+        jlistFaeDisponiveis.setToolTipText(Constantes.TOOLTIP_ATRIB_CAND_JLIST_FAEDISPONIVEIS);
+        jlistCandidaturas.setToolTipText(Constantes.TOOLTIP_ATRIB_CAND_JLIST_LISTA_CANDIDATURAS);
+        jlistFaeAtribuidos.setToolTipText(Constantes.TOOLTIP_ATRIB_CAND_JLIST_FAE_ATRIB_POR_CAND);
 
     }
 
@@ -320,9 +320,9 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         guardar.setMnemonic(KeyEvent.VK_G);
 
         //Adicionar Tooltips
-        atribui.setToolTipText(Constantes.ATRIB_CAND_TOOLTIP_ATRIBUIR);
-        sair.setToolTipText(Constantes.ATRIB_CAND_TOOLTIP_SAIR);
-        guardar.setToolTipText(Constantes.ATRIB_CAND_TOOLTIP_GUARDAR);
+        atribui.setToolTipText(Constantes.TOOLTIP_ATRIB_CAND_ATRIBUIR);
+        sair.setToolTipText(Constantes.TOOLTIP_ATRIB_CAND_SAIR);
+        guardar.setToolTipText(Constantes.TOOLTIP_ATRIB_CAND_GUARDAR);
 
         //Adicionar os actionlisteners
         atribui.addActionListener(this);
@@ -480,13 +480,13 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         listaModeloFaeDisponiveis.clear();
         listaModeloCandidatura.clear();
         listaModeloFaeAtribuidos.clear();
-        ListaAtribuicoes.clear();
+        listaAtribuicoes.clear();
     }
 
     /**
      * Método onde é feito as decisões dos botões
      *
-     * @param e Evento
+     * @param e ActionEvent
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -503,7 +503,7 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
                 JOptionPane.showMessageDialog(this, Constantes.MENSAGEM_ERRO_SEM_CANDIDATURAS,
                         Constantes.ERRO_TITULO, JOptionPane.ERROR_MESSAGE);
             } else {
-                ListaAtribuicoes = ((AlgoritmoAtribuicao) algoritmoComboBox.getSelectedItem()).atribui(ev);
+                listaAtribuicoes = ((AlgoritmoAtribuicao) algoritmoComboBox.getSelectedItem()).atribui(ev);
                 if (jlistCandidaturas.getSelectedIndex() != -1) {
                     int num = jlistCandidaturas.getSelectedIndex();
                     jlistCandidaturas.clearSelection();
@@ -517,10 +517,10 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
 
         //Se carregar no botão guardar
         if (e.getSource() == guardar) {
-            if (!ListaAtribuicoes.isEmpty()) {
+            if (!listaAtribuicoes.isEmpty()) {
                 Evento ev = (Evento) eventoComboBox.getSelectedItem();
                 ev.getListaAtribuicao().limparLista();
-                ev.getListaAtribuicao().guardarAtribuicoes(ListaAtribuicoes);
+                ev.getListaAtribuicao().guardarAtribuicoes(listaAtribuicoes);
             }
         }
 
@@ -540,10 +540,10 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
         if (e.getSource() == jlistCandidaturas) {
             Evento ev = (Evento) eventoComboBox.getSelectedItem();
             Candidatura c = (Candidatura) jlistCandidaturas.getSelectedValue();
-            if (ev.getListaAtribuicao().tamanho() > 0 && ListaAtribuicoes.isEmpty()) {
+            if (ev.getListaAtribuicao().tamanho() > 0 && listaAtribuicoes.isEmpty()) {
                 copiarListaFaePorCandidaturaJaGuardada(ev.getListaAtribuicao(), c);
             } else {
-                copiarListaFaePorCandidatura(ListaAtribuicoes, c);
+                copiarListaFaePorCandidatura(listaAtribuicoes, c);
             }
         }
     }

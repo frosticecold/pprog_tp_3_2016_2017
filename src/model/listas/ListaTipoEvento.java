@@ -28,12 +28,6 @@ public class ListaTipoEvento implements InterfaceListaLerConfig<String>, Iterabl
         LerFicheiroConfig lf = new LerFicheiroConfig();
         CLASSPATH = lf.lerFicheiroConfig(START_CONFIG, END_CONFIG, CLASSPATH, this);
     }
-    public void escreverOutput() {
-        for (String string : lista) {
-            System.out.println(string);
-
-        }
-    }
 
     @Override
     public boolean add(String s) {

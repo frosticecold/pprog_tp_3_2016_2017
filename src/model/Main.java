@@ -23,9 +23,10 @@ public class Main {
 
 //        Teste t = new Teste();
 //        t.init(ce);
-
         LerBaseDados lbd = new LerBaseDados(ce);
         JanelaPrincipal p = new JanelaPrincipal(ce);
+
+        //Na candidatura não se guarda o representante da empresa mas sim o nome da empresa
     }
 
 }
