@@ -125,6 +125,22 @@ public class RegistoEvento implements Iterable<Evento>, Serializable {
     }
 
     /**
+     * Método que recebe um username e verefica se é organizador e tem eventos
+     * associados
+     *
+     * @param username Username do organizador
+     * @return
+     */
+    public boolean verificarSeOrganizadorTemEventos(String username) {
+        for (Evento ev : lista) {
+            if (ev.getListaOrganizador().isOrganizadorEvento(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Método iterator para que a classe RegistoEvento possa ser percorrida por
      * um for enchanced loop
      *

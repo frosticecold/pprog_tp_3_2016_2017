@@ -250,17 +250,20 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
         //                      Casos de Uso
         // Caso de uso atribuir candidatura
         if (e.getSource() == atribuir_cand) {
-            if (ce.getRegistoEventos().tamanho() > 0) {
-                setVisible(false);
-                AtribuirCandidatura ac = new AtribuirCandidatura(this, ce);
-                setVisible(true);
-            } else {
-                Constantes.mensagemErro(Constantes.ERRO_N_EXISTE_EVENTOS);
+            if (ce.getRegistoEventos().tamanho() > 0 && username != null) {
+                if (ce.getRegistoEventos().verificarSeOrganizadorTemEventos(username)) {
+                    setVisible(false);
+                    AtribuirCandidatura ac = new AtribuirCandidatura(this, ce, username);
+                    setVisible(true);
+                } else {
+                    Constantes.mensagemErro(Constantes.ERRO_N_EXISTE_EVENTOS);
+                }
             }
         }
         // Caso de uso decidir candidatura
         if (e.getSource() == decidir_cand) {
-            if (ce.getRegistoUtilizadores().size() > 0) {
+            if (ce.getRegistoUtilizadores().size() > 0 && username != null) {
+
                 if (ce.getRegistoEventos()
                         .verificarSeFaeTemAtribuicoes(username)) {
                     setVisible(false);
@@ -270,11 +273,10 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
                     Constantes.mensagemErro(Constantes.ERRO_NAO_TEM_ATRIBUICOES);
                 }
             }
-
         }
         // Caso de uso submeter candidatura
         if (e.getSource() == submeter_cand) {
-            if (ce.getRegistoUtilizadores().size() > 0) {
+            if (ce.getRegistoUtilizadores().size() > 0 && username != null) {
                 if (ce.getRegistoUtilizadores().verificarSeUserRepresentanteEmpresa(username)) {
                     new SubmeterCandidatura(this, ce, ce.getRegistoUtilizadores().obterRepresentanteEmpresaPorUsername(username));
                 } else {

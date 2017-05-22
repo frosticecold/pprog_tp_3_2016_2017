@@ -131,6 +131,11 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
     private final CentroEventos ce;
 
     /**
+     * Username do organizador
+     */
+    private String username;
+
+    /**
      * Lista de atribuições
      */
     private List<Atribuicao> ListaAtribuicoes;
@@ -148,11 +153,11 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
      * @param frame referência à jframe
      * @param ce referência ao centro de eventos
      */
-    public AtribuirCandidatura(JFrame frame, CentroEventos ce) {
+    public AtribuirCandidatura(JFrame frame, CentroEventos ce, String username) {
         super(frame, Constantes.TITULO_JANELA_ATRIBUIR, true);
 
         this.ce = ce;
-
+        this.username = username;
         initComponents();
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -463,7 +468,7 @@ public class AtribuirCandidatura extends JDialog implements ActionListener, List
      */
     private void copiarListaEventosParaListaModeloEventos(RegistoEvento registoEventos) {
         listaModeloEvento.removeAllElements();
-        for (Evento e : ce.getRegistoEventos()) {
+        for (Evento e : ce.getRegistoEventos().getListEventoPorUtilizadorPreDefinido(username, RegistoEvento.UTILIZADOR_ORGANIZADOR)) {
             listaModeloEvento.addElement(e);
         }
     }
