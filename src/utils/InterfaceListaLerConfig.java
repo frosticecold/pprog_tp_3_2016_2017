@@ -6,6 +6,11 @@ package utils;
  */
 public interface InterfaceListaLerConfig<T> {
     
+    /**
+     * Adiciona um objeto genérico definida na interface
+     * @param obj Objeto a adicionar
+     * @return Retorna verdadeiro ou falso se foi adicionado
+     */
     public boolean add(T obj);
     
 }

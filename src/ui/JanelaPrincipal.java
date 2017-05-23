@@ -298,6 +298,7 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
                 break;
             case Constantes.JP_MENU_ITEM_RELOAD_DB:
                 LerBaseDados lbd = new LerBaseDados(ce);
+                lbd.lerBaseDados();
                 break;
             case Constantes.JP_MENU_ITEM_CARREGAR_FICHEIRO: {
                 MyJFileChooser jfc = new MyJFileChooser();
