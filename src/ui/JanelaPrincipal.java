@@ -21,6 +21,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import model.CentroEventos;
+import ui.misc.MyJFileChooser;
 import utils.Constantes;
 import utils.LerBaseDados;
 
@@ -299,42 +300,36 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
                 LerBaseDados lbd = new LerBaseDados(ce);
                 break;
             case Constantes.JP_MENU_ITEM_CARREGAR_FICHEIRO: {
-                JFileChooser jfc = new JFileChooser(diretorioAtual());
+                MyJFileChooser jfc = new MyJFileChooser();
                 int returnval = jfc.showOpenDialog(this);
                 if (returnval == JFileChooser.APPROVE_OPTION) {
-                    FileInputStream fInput = null;
+                    ObjectInputStream in = null;
                     try {
                         File ficheiro = jfc.getSelectedFile();
-                        fInput = new FileInputStream(ficheiro);
-                        ObjectInputStream in = new ObjectInputStream(fInput);
-                        ce = (CentroEventos) in.readObject();
-                        in.close();
+                        in = new ObjectInputStream(
+                                new FileInputStream(ficheiro));
 
+                        ce = (CentroEventos) in.readObject();
+                        //Caso adicione um finally ele pede mais um try catch
+                        in.close();
                     } catch (FileNotFoundException ex) {
                         Constantes.mensagemErro(Constantes.ERRO_FICHEIRO_NAO_ENCONTRADO);
                     } catch (IOException ex) {
                         Constantes.mensagemErro(Constantes.ERRO_FICHEIRO_IO_EXCEPTION);
                     } catch (ClassNotFoundException ex) {
                         Constantes.mensagemErro(Constantes.ERRO_CLASSE_NAO_ENCONTRADA);
-                    } finally {
-                        try {
-                            fInput.close();
-                        } catch (IOException ex) {
-                            Constantes.mensagemErro(Constantes.ERRO_FICHEIRO_IO_EXCEPTION);
-                        }
                     }
-
                 }
+
             }
+
             break;
             case Constantes.JP_MENU_ITEM_GRAVAR_FICHEIRO:
                 try {
-                    JFileChooser jfc = new JFileChooser(diretorioAtual());
-
+                    MyJFileChooser jfc = new MyJFileChooser();
                     int returnval = jfc.showSaveDialog(this);
                     if (returnval == JFileChooser.APPROVE_OPTION) {
-                        FileOutputStream fileOut = new FileOutputStream(jfc.getSelectedFile());
-                        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(jfc.getSelectedFile()));
                         out.writeObject(ce);
                         out.close();
                     }
@@ -416,15 +411,8 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
     }
 
     /**
-     * Retorna o diretorio atual
-     * @return Diretorio Atual
-     */
-    private static File diretorioAtual() {
-        return new File(System.getProperty("user.dir"));
-    }
-
-    /**
      * Define um icon aos jmenuitems
+     *
      * @param cmp JMenuItem
      * @param nomeficheiro Nome do icon
      */
@@ -434,6 +422,7 @@ public class JanelaPrincipal extends JFrame implements ActionListener {
 
     /**
      * Cria a nova janela de login e vai buscar o username;
+     *
      * @param tipo_user Filtro para o tipo de utilizador
      */
     private void novaJanelaLogin(int tipo_user) {

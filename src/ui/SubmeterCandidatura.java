@@ -27,7 +27,7 @@ import utils.Constantes;
  * @author Raúl Correia 1090657@isep.ipp.pt
  */
 public class SubmeterCandidatura extends JDialog implements ActionListener {
-
+    
     private JPanel painel;
     private JButton submeter;
     private JButton sair;
@@ -41,21 +41,21 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
     private ListaTipoEvento listaTipoEvento;
     private RepresentanteEmpresa representante;
     private CentroEventos centroEventos;
-
+    
     public SubmeterCandidatura(JFrame owner, CentroEventos ce, RepresentanteEmpresa repEmpresa) {
         super(owner, Constantes.TITULO_JANELA_DECID_CAND, DEFAULT_MODALITY_TYPE);
-
+        
         listaTipoEvento = new ListaTipoEvento();
         representante = repEmpresa;
         centroEventos = ce;
-
+        
         initComponentes();
-
+        
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setMinimumSize(Constantes.TAMANHO_MINIMO_JANELA_DECIDIR_CAND);
         setLocationRelativeTo(owner);
         setVisible(true);
-
+        
     }
 
     /**
@@ -105,16 +105,16 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
      * Cria os botões submeter e sair
      */
     private void initBotoes() {
-
+        
         submeter = new JButton(Constantes.BTN_SUBMETER);
         sair = new JButton(Constantes.BTN_SAIR);
-
+        
         sair.setToolTipText(Constantes.TOOLTIP_DC_SAIR);
         submeter.setToolTipText(Constantes.TOOLTIP_DC_SUBMETER);
-
+        
         sair.setMnemonic(KeyEvent.VK_S);
         submeter.setMnemonic(KeyEvent.VK_B);
-
+        
         submeter.addActionListener(this);
         sair.addActionListener(this);
 
@@ -142,7 +142,7 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
         pnorte.add(tipoEventocmbox, BorderLayout.WEST);
         pnorte.add(eventoCombox, BorderLayout.EAST);
         return pnorte;
-
+        
     }
 
     /**
@@ -155,7 +155,7 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
         pcentro.setBorder(new EtchedBorder());
         pcentro.add(txtArea);
         return pcentro;
-
+        
     }
 
     /**
@@ -208,7 +208,7 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
         for (String s : listaTipoEvento) {
             dcbmTipoEvento.addElement(s);
         }
-
+        
     }
 
     /**
@@ -221,7 +221,7 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
             if (ev.getClass().getSimpleName().equalsIgnoreCase(dcbmTipoEvento.getSelectedItem().toString())) {
                 dcbmEvento.addElement(ev);
             }
-
+            
         }
     }
 
@@ -265,5 +265,5 @@ public class SubmeterCandidatura extends JDialog implements ActionListener {
                 break;
         }
     }
-
+    
 }
