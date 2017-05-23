@@ -17,8 +17,9 @@ public class LerFicheiroConfig {
     private static final String CAMINHO_FICHEIRO_CONFIG_OMISSAO = "config.ini";
     private static final String CLASS_PATH_OMISSAO = "classpath=";
 
-    public String lerFicheiroConfig(final String START_CONFIG, final String END_CONFIG, String CLASSPATH, InterfaceListaLerConfig rl) {
+    public String lerFicheiroConfig(final String START_CONFIG, final String END_CONFIG, InterfaceListaLerConfig rl) {
         BufferedReader br;
+        String CLASSPATH = null;
         try {
             //File file = new File(CAMINHO_FICHEIRO_CONFIG);
             //br = new BufferedReader(new FileReader(file));

@@ -24,6 +24,12 @@ public class Teste {
     RegistoEvento re;
     private final static char[] DEFAULT_PASSWORD = "123".toCharArray();
 
+    /**
+     * Método que inicializa todos os dados de teste e Reinicializa o
+     * RegistoUtilizador e Registo de Evento
+     *
+     * @param ce Referência ao centro de eventos
+     */
     public void init(CentroEventos ce) {
 
         ru = new RegistoUtilizador();
@@ -208,20 +214,20 @@ public class Teste {
 //        compararSeDoisUtilizadoresIguais(u15, u16);
     }
 
-    public RegistoUtilizador getRu() {
-        return ru;
-    }
-
-    public RegistoEvento getRe() {
-        return re;
-    }
-
+    /**
+     * Escreve todos os utilizadores
+     */
     public void escreverRegistoUtilizador() {
         for (Utilizador utilizador : ru) {
             System.out.println(utilizador);
         }
     }
 
+    /**
+     * Testa se um utilizador é organizador de eventos guardados
+     *
+     * @param username String username a procurar
+     */
     public void testeEventoPorOrganizador(String username) {
         List<Evento> le = re.getListEventoPorUtilizadorPreDefinido(username, RegistoEvento.UTILIZADOR_ORGANIZADOR);
         for (Evento evento : le) {
@@ -229,6 +235,12 @@ public class Teste {
         }
     }
 
+    /**
+     * Testa se retorna o Fae anicolau
+     *
+     * @param ce CentroEventos
+     * @return Fae "anicolau2 ou null
+     */
     public static Fae retornarFaeTeste(CentroEventos ce) {
         String anic = "anicolau";
         for (Evento ev : ce.getRegistoEventos()) {
@@ -239,15 +251,12 @@ public class Teste {
         return null;
     }
 
-    public static RepresentanteEmpresa retornarRepEmpTeste(CentroEventos ce) {
-        for (Utilizador utilizador : ce.getRegistoUtilizadores()) {
-            if (utilizador instanceof RepresentanteEmpresa) {
-                return (RepresentanteEmpresa) utilizador;
-            }
-        }
-        return null;
-    }
-
+    /**
+     * Compara se dois utilizadores são iguais e escreve para a consola
+     *
+     * @param u1 Utilizador 1
+     * @param u2 Utilizador 2
+     */
     private void compararSeDoisUtilizadoresIguais(Utilizador u1, Utilizador u2) {
         System.out.println(String.format("O Utilizador %s é igual ao %s ? \n %b", u1.getNome(), u2.getNome(), u1.equals(u2)));
     }

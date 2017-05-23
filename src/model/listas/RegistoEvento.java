@@ -13,7 +13,13 @@ import model.evento.Evento;
  */
 public class RegistoEvento implements Iterable<Evento>, Serializable {
 
+    /**
+     * Constantes para filtrar utilizadores organizadores
+     */
     public static final int UTILIZADOR_ORGANIZADOR = 0;
+    /**
+     * Constante para filtrar utilizadores faes
+     */
     public static final int UTILIZADOR_FAE = 1;
     /**
      * Lista de Eventos
