@@ -1,0 +1,150 @@
+#Gestor
+#gestor,admin a,admina,admina@admin.pt,123
+#gestor,admin b,adminb,adminb@admin.pt,123
+#Utilizadores
+utilizador,Utilizador a,usera,usera@user.pt,123
+utilizador,Utilizador b,userb,userb@user.pt,123
+utilizador,Utilizador c,userc,userc@user.pt,123
+utilizador,Utilizador d,userd,userd@user.pt,123
+utilizador,Utilizador e,usere,usere@user.pt,123
+utilizador,Utilizador f,userf,userf@user.pt,123
+utilizador,Utilizador g,userg,userg@user.pt,123
+utilizador,Utilizador h,userh,userh@user.pt,123
+utilizador,Utilizador i,useri,useri@user.pt,123
+utilizador,Utilizador j,userj,userj@user.pt,123
+utilizador,Utilizador k,userk,userk@user.pt,123
+utilizador,Utilizador l,userl,userl@user.pt,123
+utilizador,Utilizador m,userm,userm@user.pt,123
+utilizador,Utilizador n,usern,usern@user.pt,123
+utilizador,Utilizador o,usero,usero@user.pt,123
+utilizador,Utilizador p,userp,userp@user.pt,123
+utilizador,Utilizador q,userq,userq@user.pt,123
+utilizador,Utilizador r,userr,userr@user.pt,123
+utilizador,Utilizador s,users,users@user.pt,123
+utilizador,Utilizador t,usert,usert@user.pt,123
+utilizador,Utilizador u,useru,useru@user.pt,123
+utilizador,Utilizador v,userv,userv@user.pt,123
+utilizador,Utilizador w,userw,userw@user.pt,123
+utilizador,Utilizador x,userx,userx@user.pt,123
+utilizador,Utilizador y,usery,usery@user.pt,123
+utilizador,Utilizador z,userz,userz@user.pt,123
+utilizador,Ana Maria,ana.maria,anamaria@abc.pt,123
+utilizador,Bernardo Noé,b.noe,bnoe@abc.pt,123
+utilizador,Carlos Costa,ccosta,ccosta@abc.pt,123
+utilizador,Domingos Neves,domingos,domingos@abc.pt,123
+utilizador,Fábia Lopes,flopes,flopes@abc.pt,123
+utilizador,Hércules,herc,herc@abc.pt,123
+utilizador,Joana Silva,jsilva,jsilva@abc.pt,123
+utilizador,Jorge Mendes,jorgemendes,jmendes@abc.pt,123
+utilizador,André Nicolau,anicolau,anicolau@abc.pt,123
+utilizador,Catia Ariana,catiaa,catiaa@abc.pt,123
+utilizador,Miguel Lopes,miguellopes,miguellopes@abc.pt,123
+utilizador,Luis Sousa,luiss,luiss@abc.pt,123
+utilizador,Tiago Silva,tiagosilva,tiagosilva@abc.pt,123
+utilizador,Andreia Antunes,andreiaa,andreiaa@abc.pt,123
+#Representante
+representante,Representante A,repa,rea@repa.pt,123,Empresa a
+representante,Representante B,repb,reb@repb.pt,123,Empresa b
+representante,Representante C,repc,rec@repc.pt,123,Empresa c
+representante,Representante D,repd,red@repd.pt,123,Empresa d
+representante,Representante E,repe,ree@repe.pt,123,Empresa e
+representante,Representante F,repf,ref@repf.pt,123,Empresa f
+representante,Representante G,repg,reg@repg.pt,123,Empresa g
+representante,Representante H,reph,reh@reph.pt,123,Empresa h
+representante,Representante I,repi,rei@repi.pt,123,Empresa i
+representante,Representante J,repj,rej@repj.pt,123,Empresa j
+representante,Representante K,repk,rek@repk.pt,123,Empresa k
+representante,Representante L,repl,rel@repl.pt,123,Empresa l
+representante,Representante M,repm,rem@repm.pt,123,Empresa m
+#Congresso 1
+congresso,Congresso 1,O congresso 1,Local 1,2016,8,11,2018,9,24
+organizador,Utilizador a,usera,usera@user.pt,123
+organizador,Utilizador b,userb,userb@user.pt,123
+fae,Utilizador c,userc,userc@user.pt,123,5
+fae,Utilizador d,userd,userd@user.pt,123,4
+fae,Utilizador e,usere,usere@user.pt,123,6
+fae,Utilizador f,userf,userf@user.pt,123,3
+fae,Utilizador g,userg,userg@user.pt,123,2
+fae,Utilizador h,userh,userh@user.pt,123,1
+fae,Utilizador i,useri,useri@user.pt,123,4
+fae,Utilizador j,userj,userj@user.pt,123,5
+fae,Utilizador k,userk,userk@user.pt,123,8
+candidatura,Candidatura A,repa
+candidatura,Candidatura B,repb
+candidatura,Candidatura C,repc
+#Congresso 2
+congresso,Congresso 2,O congresso 2,Local 2,2015,12,25,2017,12,25
+organizador,Utilizador a,usera,usera@user.pt,123
+organizador,Utilizador b,userb,userb@user.pt,123
+fae,Catia Ariana,catiaa,catiaa@abc.pt,123,3
+fae,Miguel Lopes,miguellopes,miguellopes@abc.pt,123,2
+fae,Luis Sousa,luiss,luiss@abc.pt,123,4
+fae,Tiago Silva,tiagosilva,tiagosilva@abc.pt,123,1
+fae,Andreia Antunes,andreiaa,andreiaa@abc.pt,123,4
+candidatura,Candidatura D,repa
+candidatura,Candidatura E,repb
+candidatura,Candidatura F,repc
+#Congresso 3
+congresso,Congresso 3,O congresso 3,Local 3,2016,2,22,2017,07,15
+organizador,Utilizador l,userl,userl@user.pt,123
+organizador,Utilizador m,userm,userm@user.pt,123
+fae,Utilizador u,useru,useru@user.pt,123,2
+fae,Utilizador v,userv,userv@user.pt,123,3
+fae,Utilizador w,userw,userw@user.pt,123,4
+fae,Utilizador x,userx,userx@user.pt,123,5
+fae,Utilizador y,usery,usery@user.pt,123,6
+fae,Utilizador z,userz,userz@user.pt,123,7
+fae,Ana Maria,ana.maria,anamaria@abc.pt,123,2
+fae,Bernardo Noé,b.noe,bnoe@abc.pt,123,3
+fae,Carlos Costa,ccosta,ccosta@abc.pt,123,4
+candidatura,Candidatura G,repd
+candidatura,Candidatura H,repe
+candidatura,Candidatura I,repf
+#Exposicao 1
+exposicao,Exposicao 1,A exposicao 1,Local 4,2017,2,11,2017,7,24
+organizador,Ana Maria,ana.maria,anamaria@abc.pt,123
+organizador,Bernardo Noé,b.noe,bnoe@abc.pt,123
+fae,Utilizador s,users,users@user.pt,123,2
+fae,Utilizador t,usert,usert@user.pt,123,3
+fae,Utilizador u,useru,useru@user.pt,123,4
+fae,Utilizador v,userv,userv@user.pt,123,5
+fae,Utilizador w,userw,userw@user.pt,123,6
+fae,Utilizador x,userx,userx@user.pt,123,7
+fae,Utilizador y,usery,usery@user.pt,123,8
+fae,Utilizador z,userz,userz@user.pt,123,9
+candidatura,Candidatura J,repg
+candidatura,Candidatura K,reph
+candidatura,Candidatura L,repi
+#Exposicao 2
+exposicao,Exposicao 2,A exposicao 2,Local 5,2016,1,1,2018,1,1
+organizador,Utilizador g,userg,userg@user.pt,123
+organizador,Utilizador h,userh,userh@user.pt,123
+fae,Ana Maria,ana.maria,anamaria@abc.pt,123,2
+fae,Bernardo Noé,b.noe,bnoe@abc.pt,123,3
+fae,Carlos Costa,ccosta,ccosta@abc.pt,123,4
+fae,Domingos Neves,domingos,domingos@abc.pt,123,5
+fae,Fábia Lopes,flopes,flopes@abc.pt,123,6
+fae,Hércules,herc,herc@abc.pt,123,7
+candidatura,Candidatura 1,repa
+candidatura,Candidatura 2,repc
+candidatura,Candidatura 3,repd
+#Exposicao 3
+exposicao,Exposicao 3,A exposicao 3,Local 6,2017,02,02,2018,05,01
+organizador,Utilizador a,usera,usera@user.pt,123
+organizador,Utilizador b,userb,userb@user.pt,123
+fae,Bernardo Noé,b.noe,bnoe@abc.pt,123,2
+fae,Carlos Costa,ccosta,ccosta@abc.pt,123,3
+fae,Domingos Neves,domingos,domingos@abc.pt,123,4
+fae,Fábia Lopes,flopes,flopes@abc.pt,123,5
+fae,Hércules,herc,herc@abc.pt,123,6
+fae,Joana Silva,jsilva,jsilva@abc.pt,123,5
+fae,Jorge Mendes,jorgemendes,jmendes@abc.pt,123,4
+fae,André Nicolau,anicolau,anicolau@abc.pt,123,3
+fae,Catia Ariana,catiaa,catiaa@abc.pt,123,2
+fae,Miguel Lopes,miguellopes,miguellopes@abc.pt,123,1
+fae,Luis Sousa,luiss,luiss@abc.pt,123,2
+fae,Tiago Silva,tiagosilva,tiagosilva@abc.pt,123,3
+fae,Andreia Antunes,andreiaa,andreiaa@abc.pt,123,4
+candidatura,Candidatura 4,repi
+candidatura,Candidatura 5,repj
+candidatura,Candidatura 6,repk
