@@ -12,7 +12,6 @@ public interface Constantes {
     //JanelaPrincipal
     public static final String JP_MENU_PRINCIPAL = "Menu";
     public static final String JP_MENU_DEBUG = "Debug";
-
     public static final String JP_MENU_INICIAR = "Iniciar";
     public static final String JP_MENU_ITEM_LOGIN = "Mudar Login";
     public static final String JP_MENU_ITEM_SAIR = "Sair";
@@ -102,17 +101,22 @@ public interface Constantes {
     public static final String CMBBOX_EVENTO = "CBX_Evento";
     public static final String CMBBOX_TIPOEVENTO = "CBX_TipoEvento";
 
-//Ints
+    //Ints
+    // GAPS
     public static final int GAP_ZERO = 0;
     public static final int GAP_CINCO = 5;
     public static final int GAP_DEZ = 10;
     public static final int EMPTY_BORDER_GAP_DEZ = 10;
+    
+    //PRIMEIRO INDICE
     public static final int INDICE_ZERO = 0;
-//Dimensões Janela
+    
+    //Dimensões Janela
     public static final Dimension TAMANHO_MINIMO_DECIDIR_CANDIDATURA = new Dimension(650, 450);
     public static final Dimension TAMANHO_MINIMO_JANELA_PRINCIPAL = new Dimension(450, 300);
     public static final Dimension TAMANHO_MINIMO_JANELA_ATRIBUIR_CAND = new Dimension(650, 350);
     public static final Dimension TAMANHO_MINIMO_JANELA_DECIDIR_CAND = new Dimension(327, 266);
+    
     //Outras dimensões
     public static final Dimension ATRIB_CAND_BTN_DIMENSION = new Dimension(95, 30);
     public static final Dimension ATRIB_CAND_COMBOBOX_DIMENSION = new Dimension(150, 30);

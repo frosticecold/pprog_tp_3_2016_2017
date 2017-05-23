@@ -91,7 +91,12 @@ public class RegistoUtilizador implements Iterable<Utilizador>, Serializable {
      * @return Representante de Empresa ou null
      */
     public RepresentanteEmpresa obterRepresentanteEmpresaPorUsername(String username) {
-        RepresentanteEmpresa re = obterRepresentanteEmpresaPorUsername(username);
+        RepresentanteEmpresa re = null;
+        Utilizador u;
+        u = obterUtilizadorPorUsername(username);
+        if (u != null) {
+            re = (RepresentanteEmpresa) u;
+        }
         return re;
     }
 
