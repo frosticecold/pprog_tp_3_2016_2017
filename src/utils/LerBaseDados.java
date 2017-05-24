@@ -154,10 +154,10 @@ public class LerBaseDados {
      * Método que recebe uma string e decide o que fazer com ela Se adiciona
      * utilizador,evento ou candidatura
      *
-     * @param decidir String a receber para decisão
+     * @param linha String a receber para decisão
      */
-    public void decidirString(String decidir) {
-        final String[] array = decidir.split(SPLIT_SYMBOL);
+    public void decidirString(String linha) {
+        final String[] array = linha.split(SPLIT_SYMBOL);
         switch (array[0].toLowerCase()) {
             case ORGANIZADOR:
                 Organizador o = lerOrganizador(array);
