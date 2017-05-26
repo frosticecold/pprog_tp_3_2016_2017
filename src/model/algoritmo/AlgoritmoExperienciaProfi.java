@@ -40,6 +40,10 @@ public class AlgoritmoExperienciaProfi extends AlgoritmoAtribuicao {
                 if (input != null) {
                     int expMin = Integer.parseInt(input);
 
+                    while (expMin < min_exp || expMin > max_exp) {
+                        input = JOptionPane.showInputDialog(null, MSG_INPUT, TITULO_INPUT, JOptionPane.QUESTION_MESSAGE);
+                        expMin = Integer.parseInt(input);
+                    }
                     if (expMin > e.getListaFae().tamanho()) {
                         throw new NumberFormatException();
                     }
@@ -85,17 +89,4 @@ public class AlgoritmoExperienciaProfi extends AlgoritmoAtribuicao {
             }
         }
     }
-
-//    private void lerInput(Evento e) {
-//        obterMaxMin(e);
-//        String input = JOptionPane.showInputDialog(null, MSG_INPUT, TITULO_INPUT, JOptionPane.QUESTION_MESSAGE);
-//
-//        if (input != null) {
-//            int expMin = Integer.parseInt(input);
-//            while(expMin<min_exp && expMin>max_exp){
-//                System.out.println(MSG_INPUT);
-//            }
-//
-//        }
-//    }
 }
