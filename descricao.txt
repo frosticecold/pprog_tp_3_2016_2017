@@ -1,0 +1,32 @@
+Breve descrição das funcionalidades
+
+Login
+O programa pede que se faça o login de utilizadores adequada a cada função do UC;
+    * UC3 - Um utilizador seja organizador do evento
+    * UC4 - O utilizador seja fae de um evento
+    * UC5 - O utilizador seja representante de empresa;
+
+
+UC3 Atribuir Candidatura
+    *Mostra uma lista de eventos
+    *Mostra uma lista de faes associados ao eventos
+    *Mostra uma lista de candidaturas associadas ao eventos
+    *Mostra uma lista de algoritmos para atribuição de faes
+    *Após seleção do evento/algoritmo, pede-se para atribuir.
+    *Mostra uma lista dos faes atribuidos e pede para confirmar/guardar;
+
+UC4 Decidir Candidatura
+    *Mostra uma lista de eventos
+    *Mostra botões de anterior/seguinte para percorrer as candidaturas
+     associadas a um evento;
+    *Mostra o nome da empresa que se candidata
+    *Mostra a descrição da Candidatura
+    *Pede uma decisão de aprovado/reprovado
+    *Pede um texto justificativo
+    *Pede para confirmar/guardar
+
+UC5 Submeter Candidatura
+    *Mostra uma lista dos tipos de evento
+    *Mostra uma lista dos eventos que são do tipo evento escolhido existentes
+    *Pede um pequeno texto descritivo da candidaturas
+    *Pede para Guardar/Submeter
